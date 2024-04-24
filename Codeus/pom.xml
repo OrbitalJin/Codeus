@@ -39,6 +39,11 @@
             <artifactId>hibernate-community-dialects</artifactId>
             <version>6.1.7.Final</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
     </dependencies>
 
     <properties>
