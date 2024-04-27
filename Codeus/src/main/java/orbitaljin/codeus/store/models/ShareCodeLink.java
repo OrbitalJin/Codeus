@@ -7,17 +7,25 @@ import jakarta.persistence.Id;
 public class ShareCodeLink {
     @Id
     private String shortLink;
-    private int snippetId;
+    private long snippetId;
 
     public ShareCodeLink() {
     }
 
     public ShareCodeLink(
             String shortLink,
-            int snippetId
+            long snippetId
     ) {
         this.shortLink = shortLink;
         this.snippetId = snippetId;
+    }
+
+    public void setId(long shortLink) {
+        this.snippetId = shortLink;
+    }
+
+    public long getId() {
+        return snippetId;
     }
 
     public void setShortLink(String shortLink) {
@@ -26,14 +34,6 @@ public class ShareCodeLink {
 
     public String getShortLink() {
         return shortLink;
-    }
-
-    public int getSnippetId() {
-        return snippetId;
-    }
-
-    public void setSnippetId(int snippetId) {
-        this.snippetId = snippetId;
     }
 
     @Override
