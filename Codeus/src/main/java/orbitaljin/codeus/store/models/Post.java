@@ -7,14 +7,11 @@ import jakarta.persistence.Id;
 import java.sql.Date;
 
 @Entity
-public class Post {
+public class Post extends Model {
     public enum PostType {
         QUESTION,
         SNIPPET,
     }
-    @Id
-    @GeneratedValue
-    private Long id;
     private Long userId;
     private String title;
     private String content;
@@ -40,14 +37,6 @@ public class Post {
         this.title = title;
         this.content = content;
         this.postType = postType;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Long getUserId() {
@@ -85,7 +74,7 @@ public class Post {
     @Override
     public String toString() {
         return "Post{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", userId=" + userId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +

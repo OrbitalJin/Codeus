@@ -5,10 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class UpVote {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class UpVote extends Model {
     private Long userId;
     private Long postId;
 
@@ -21,14 +18,6 @@ public class UpVote {
     ) {
         this.userId = userId;
         this.postId = postId;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Long getUserId() {
@@ -50,7 +39,7 @@ public class UpVote {
     @Override
     public String toString() {
         return "UpVote{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", userId=" + userId +
                 ", postId=" + postId +
                 '}';

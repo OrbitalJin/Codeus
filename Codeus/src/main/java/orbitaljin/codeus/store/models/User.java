@@ -1,16 +1,11 @@
 package orbitaljin.codeus.store.models;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 
 import java.sql.Date;
 
 @Entity
-public class User {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class User extends Model {
     private String username;
     private String password;
     private Date registeredAt;
@@ -26,14 +21,6 @@ public class User {
         this.username = username;
         this.password = password;
         this.registeredAt = registeredAt;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getUsername() {
@@ -62,7 +49,7 @@ public class User {
 
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", registeredAt=" + registeredAt +

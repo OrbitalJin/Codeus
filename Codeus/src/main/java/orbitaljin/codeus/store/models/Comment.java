@@ -1,14 +1,12 @@
 package orbitaljin.codeus.store.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class Comment {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Comment extends Model {
     private Long userId;
     private Long postId;
     private String content;
@@ -24,14 +22,6 @@ public class Comment {
         this.userId = userId;
         this.postId = postId;
         this.content = content;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Long getUserId() {
@@ -61,7 +51,7 @@ public class Comment {
     @Override
     public String toString() {
         return "Comment{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", userId=" + userId +
                 ", postId=" + postId +
                 ", content='" + content + '\'' +

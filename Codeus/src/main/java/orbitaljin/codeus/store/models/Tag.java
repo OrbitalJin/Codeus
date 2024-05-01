@@ -5,10 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class Tag {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Tag extends Model {
     private String name;
     private String color;
 
@@ -21,14 +18,6 @@ public class Tag {
     ) {
         this.name = name;
         this.color = color;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {
@@ -50,7 +39,7 @@ public class Tag {
     @Override
     public String toString() {
         return "Tag{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", name='" + name + '\'' +
                 ", color='" + color + '\'' +
                 '}';
