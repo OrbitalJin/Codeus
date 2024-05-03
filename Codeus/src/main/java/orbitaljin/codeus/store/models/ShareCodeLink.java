@@ -2,8 +2,10 @@ package orbitaljin.codeus.store.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "share_code_links")
 public class ShareCodeLink {
     @Id
     private String shortLink;

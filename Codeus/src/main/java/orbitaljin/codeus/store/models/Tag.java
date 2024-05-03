@@ -3,9 +3,15 @@ package orbitaljin.codeus.store.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-public class Tag extends Model {
+@Table(name = "tags")
+public class Tag  {
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private String name;
     private String color;
 
@@ -18,6 +24,14 @@ public class Tag extends Model {
     ) {
         this.name = name;
         this.color = color;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -39,7 +53,7 @@ public class Tag extends Model {
     @Override
     public String toString() {
         return "Tag{" +
-                "id=" + this.getId() +
+                "id=" + this.id +
                 ", name='" + name + '\'' +
                 ", color='" + color + '\'' +
                 '}';

@@ -3,15 +3,20 @@ package orbitaljin.codeus.store.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.sql.Date;
 
 @Entity
-public class Post extends Model {
+@Table(name = "posts")
+public class Post {
     public enum PostType {
         QUESTION,
         SNIPPET,
     }
+    @Id
+    @GeneratedValue
+    private Long id;
     private Long userId;
     private String title;
     private String content;
@@ -37,6 +42,14 @@ public class Post extends Model {
         this.title = title;
         this.content = content;
         this.postType = postType;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getUserId() {
@@ -74,7 +87,7 @@ public class Post extends Model {
     @Override
     public String toString() {
         return "Post{" +
-                "id=" + this.getId() +
+                "id=" + this.id +
                 ", userId=" + userId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +

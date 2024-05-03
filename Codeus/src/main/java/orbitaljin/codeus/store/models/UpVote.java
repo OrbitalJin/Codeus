@@ -3,9 +3,16 @@ package orbitaljin.codeus.store.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-public class UpVote extends Model {
+@Table(name = "up_votes")
+public class UpVote  {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
     private Long userId;
     private Long postId;
 
@@ -18,6 +25,14 @@ public class UpVote extends Model {
     ) {
         this.userId = userId;
         this.postId = postId;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getUserId() {
@@ -39,7 +54,7 @@ public class UpVote extends Model {
     @Override
     public String toString() {
         return "UpVote{" +
-                "id=" + this.getId() +
+                "id=" + this.id +
                 ", userId=" + userId +
                 ", postId=" + postId +
                 '}';
