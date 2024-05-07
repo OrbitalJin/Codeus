@@ -1,5 +1,10 @@
 package orbitaljin.codeus.store.repositories;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import orbitaljin.codeus.store.models.Post;
 import orbitaljin.codeus.store.models.Tag;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -79,16 +84,47 @@ public class TagRepository implements Repository<Tag>{
     @Override
     public List<Tag> findAll() {
         Transaction transaction = null;
+        List<Tag> tags = null;
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
-            List<Tag> tags = session.createQuery("from tags", Tag.class).list();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Tag> criteriaQuery = builder.createQuery(Tag.class);
+            Root<Tag> root = criteriaQuery.from(Tag.class);
+            criteriaQuery.select(root);
+
+            tags = session.createQuery(criteriaQuery).getResultList();
+
             transaction.commit();
-            return tags;
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         }
-        return null;
+        return tags;
+    }
+
+    public List<Tag> fuzzySearch(String fuzzy) {
+        Transaction transaction = null;
+        List<Tag> posts = null;
+
+        try (Session session = this.sf.openSession()) {
+            transaction = session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Tag> query = builder.createQuery(Tag.class);
+            Root<Tag> root = query.from(Tag.class);
+
+            Predicate predicate = builder.like(root.get("name"), "%" + fuzzy + "%");
+            query.where(predicate);
+
+            posts = session.createQuery(query).getResultList();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
+
+        return posts;
     }
 }
