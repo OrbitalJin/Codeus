@@ -72,7 +72,7 @@ public class CommentRepository implements Repository<Comment> {
     @Override
     public List<Comment> findAll() {
         try (Session session = this.sf.openSession()) {
-            return session.createQuery("from Comment", Comment.class).list();
+            return session.createQuery("from comments", Comment.class).list();
         } catch (Exception e) {
             e.printStackTrace();
         }

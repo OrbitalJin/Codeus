@@ -86,7 +86,7 @@ public class ShareCodeLinkRepository implements Repository<ShareCodeLink> {
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
-            List<ShareCodeLink> shareCodeLinks = session.createQuery("from ShareCodeLink", ShareCodeLink.class).list();
+            List<ShareCodeLink> shareCodeLinks = session.createQuery("from share_code_links", ShareCodeLink.class).list();
             transaction.commit();
             return shareCodeLinks;
         }

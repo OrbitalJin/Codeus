@@ -81,7 +81,7 @@ public class PostRepository implements Repository<Post>{
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
-            List<Post> posts = session.createQuery("from Post", Post.class).list();
+            List<Post> posts = session.createQuery("from posts", Post.class).list();
             transaction.commit();
             return posts;
         } catch (Exception e) {

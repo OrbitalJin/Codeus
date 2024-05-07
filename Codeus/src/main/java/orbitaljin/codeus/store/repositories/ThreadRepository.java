@@ -82,7 +82,7 @@ public class ThreadRepository implements Repository<Thread>{
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
-            List<Thread> threads = session.createQuery("from Thread", Thread.class).list();
+            List<Thread> threads = session.createQuery("from threads", Thread.class).list();
             transaction.commit();
             return threads;
         } catch (Exception e) {

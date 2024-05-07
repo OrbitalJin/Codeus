@@ -81,7 +81,7 @@ public class UserRepository implements Repository<User> {
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
-            List<User> users = session.createQuery("from User").list();
+            List<User> users = session.createQuery("from users", User.class).list();
             transaction.commit();
             return users;
         } catch (Exception e) {

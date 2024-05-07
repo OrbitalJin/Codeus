@@ -82,7 +82,7 @@ public class TagRepository implements Repository<Tag>{
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
-            List<Tag> tags = session.createQuery("from Tag", Tag.class).list();
+            List<Tag> tags = session.createQuery("from tags", Tag.class).list();
             transaction.commit();
             return tags;
         } catch (Exception e) {

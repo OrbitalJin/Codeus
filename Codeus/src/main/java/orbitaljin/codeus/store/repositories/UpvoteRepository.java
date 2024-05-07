@@ -80,7 +80,7 @@ public class UpvoteRepository implements Repository <UpVote>{
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
-            List<UpVote> upvotes = session.createQuery("from UpVote", UpVote.class).list();
+            List<UpVote> upvotes = session.createQuery("from upvotes", UpVote.class).list();
             transaction.commit();
             return upvotes;
         } catch (Exception e) {
