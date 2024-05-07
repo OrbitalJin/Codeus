@@ -1,5 +1,9 @@
 package orbitaljin.codeus.store.repositories;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
+import orbitaljin.codeus.store.models.Post;
 import orbitaljin.codeus.store.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -78,16 +82,24 @@ public class UserRepository implements Repository<User> {
     @Override
     public List<User> findAll() {
         Transaction transaction = null;
+        List<User> users = null;
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
-            List<User> users = session.createQuery("from users", User.class).list();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
+            Root<User> root = criteriaQuery.from(User.class);
+            criteriaQuery.select(root);
+
+            users = session.createQuery(criteriaQuery).getResultList();
+
             transaction.commit();
-            return users;
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         }
-        return null;
+
+        return users;
     }
 }

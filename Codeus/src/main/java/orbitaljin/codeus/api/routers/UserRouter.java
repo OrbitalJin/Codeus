@@ -1,7 +1,5 @@
 package orbitaljin.codeus.api.routers;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.websocket.server.PathParam;
 import orbitaljin.codeus.store.DBHandler;
 import orbitaljin.codeus.store.models.User;
 import orbitaljin.codeus.store.repositories.Repository;
@@ -16,10 +14,15 @@ public class UserRouter {
     public UserRouter() {
         this.service = DBHandler.getInstance().userRepository;
     }
-    @PostMapping()
-    public void createUser(HttpServletRequest request) {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+    @GetMapping("/")
+    public List<User> getUsers() {
+        System.out.println("Getting users...");
+        List<User> users = service.findAll();
+        System.out.println(users);
+        return users;
+    }
+    @PostMapping("/")
+    public void createUser(@RequestParam String username, @RequestParam String password) {
         if (username == null || password == null) {
             System.out.println("Username or password is null");
             return;
@@ -42,13 +45,5 @@ public class UserRouter {
         User user = service.findById(id);
         System.out.println(user);
         return user;
-    }
-
-    @GetMapping("/all")
-    public List<User> getUsers() {
-        System.out.println("Getting users...");
-        List<User> users = service.findAll();
-        System.out.println(users);
-        return users;
     }
 }
