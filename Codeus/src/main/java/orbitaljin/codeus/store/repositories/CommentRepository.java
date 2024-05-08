@@ -1,5 +1,9 @@
 package orbitaljin.codeus.store.repositories;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import orbitaljin.codeus.store.models.Comment;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -77,5 +81,29 @@ public class CommentRepository implements Repository<Comment> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Comment> fuzzySearch(String fuzzy) {
+        Transaction transaction = null;
+        List<Comment> comments = null;
+
+        try(Session session = this.sf.openSession()) {
+            transaction = session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Comment> query = builder.createQuery(Comment.class);
+            Root<Comment> root = query.from(Comment.class);
+
+            Predicate predicate = builder.like(root.get("content"), "%" + fuzzy + "%");
+            query.where(predicate);
+
+            comments = session.createQuery(query).getResultList();
+            transaction.commit();
+
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
+        return comments;
     }
 }
