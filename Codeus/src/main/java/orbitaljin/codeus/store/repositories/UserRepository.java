@@ -2,6 +2,7 @@ package orbitaljin.codeus.store.repositories;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import orbitaljin.codeus.store.models.Post;
 import orbitaljin.codeus.store.models.User;
@@ -100,6 +101,30 @@ public class UserRepository implements Repository<User> {
             e.printStackTrace();
         }
 
+        return users;
+    }
+
+//    @Override
+    public List<User> fuzzySearch(String fuzzy) {
+        Transaction transaction = null;
+        List<User> users = null;
+
+        try(Session session = this.sf.openSession()) {
+            transaction = session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<User> query = builder.createQuery(User.class);
+            Root<User> root = query.from(User.class);
+
+            Predicate predicate = builder.like(root.get("username"), "%" + fuzzy + "%");
+            query.where(predicate);
+
+            users = session.createQuery(query).getResultList();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
         return users;
     }
 }

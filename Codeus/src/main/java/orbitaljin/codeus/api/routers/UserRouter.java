@@ -3,6 +3,7 @@ package orbitaljin.codeus.api.routers;
 import orbitaljin.codeus.store.DBHandler;
 import orbitaljin.codeus.store.models.User;
 import orbitaljin.codeus.store.repositories.Repository;
+import orbitaljin.codeus.store.repositories.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserRouter {
-    private final Repository<User> service;
+    private final UserRepository service;
     public UserRouter() {
         this.service = DBHandler.getInstance().userRepository;
     }
@@ -45,5 +46,10 @@ public class UserRouter {
         User user = service.findById(id);
         System.out.println(user);
         return user;
+    }
+
+    @GetMapping("/search")
+    public List<User> fuzzySearch(@RequestParam String query) {
+        return this.service.fuzzySearch(query);
     }
 }
