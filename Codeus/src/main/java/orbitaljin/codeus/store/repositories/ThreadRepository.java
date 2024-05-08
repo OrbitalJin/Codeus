@@ -1,5 +1,9 @@
 package orbitaljin.codeus.store.repositories;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import orbitaljin.codeus.store.models.Thread;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -79,16 +83,47 @@ public class ThreadRepository implements Repository<Thread>{
     @Override
     public List<Thread> findAll() {
         Transaction transaction = null;
+        List<Thread> threads = null;
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
-            List<Thread> threads = session.createQuery("from threads", Thread.class).list();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Thread> query = builder.createQuery(Thread.class);
+            Root<Thread> root = query.from(Thread.class);
+            query.select(root);
+
+            threads = session.createQuery(query).getResultList();
             transaction.commit();
-            return threads;
+
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         }
-        return null;
+        return threads;
+    }
+
+    public List<Thread> fuzzySearch(String fuzzy) {
+        Transaction transaction = null;
+        List<Thread> threads = null;
+
+        try (Session session = this.sf.openSession()) {
+            transaction = session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Thread> query = builder.createQuery(Thread.class);
+            Root<Thread> root = query.from(Thread.class);
+
+            Predicate predicate = builder.like(root.get("title"), "%" + fuzzy + "%");
+            query.where(predicate);
+
+            threads = session.createQuery(query).getResultList();
+            transaction.commit();
+
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
+        return threads;
     }
 }
