@@ -111,4 +111,9 @@ public class CommentRepository implements Repository<Comment> {
     public boolean exists(String label) {
         return false;
     }
+
+    @Override
+    public List<Comment> findByField(String field, String value) {
+        return null;
+    }
 }

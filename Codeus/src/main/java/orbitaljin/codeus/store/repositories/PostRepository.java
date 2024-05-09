@@ -2,8 +2,10 @@ package orbitaljin.codeus.store.repositories;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import orbitaljin.codeus.store.models.Post;
+import orbitaljin.codeus.store.models.Tag;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -126,8 +128,35 @@ public class PostRepository implements Repository<Post>{
         return posts;
     }
     @Override
-    public boolean exists(String label) {
-        return false;
+    public List<Post> findByField(String field, String value) {
+        Transaction transaction = null;
+        List<Post> posts = null;
+
+        try (Session session = this.sf.openSession()) {
+            transaction = session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Post> query = builder.createQuery(Post.class);
+            Root<Post> root = query.from(Post.class);
+
+            Predicate predicate = builder.equal(
+                    builder.lower(root.get(field)),
+                    value.toLowerCase()
+            );
+
+            query.where(predicate);
+            posts = session.createQuery(query).getResultList();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
+        return posts;
     }
 
+    @Override
+    public boolean exists(String label) {
+        List<Post> posts = this.findByField("title", label);
+        return posts.size() > 0;
+    }
 }

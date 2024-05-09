@@ -91,6 +91,11 @@ public class UpvoteRepository implements Repository <UpVote>{
     }
 
     @Override
+    public List<UpVote> findByField(String field, String value) {
+        return null;
+    }
+
+    @Override
     public boolean exists(String label) {
         return false;
     }

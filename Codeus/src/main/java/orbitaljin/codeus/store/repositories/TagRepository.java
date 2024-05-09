@@ -129,9 +129,9 @@ public class TagRepository implements Repository<Tag>{
         return posts;
     }
 
-    public boolean exists(String label) {
+    public List<Tag> findByField(String field, String value) {
         Transaction transaction = null;
-        List<Tag> tags;
+        List<Tag> tags = null;
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
@@ -141,8 +141,8 @@ public class TagRepository implements Repository<Tag>{
             Root<Tag> root = query.from(Tag.class);
 
             Predicate predicate = builder.equal(
-                    builder.lower(root.get("name")),
-                    label.toLowerCase()
+                    builder.lower(root.get(field)),
+                    value.toLowerCase()
             );
 
             query.where(predicate);
@@ -152,9 +152,13 @@ public class TagRepository implements Repository<Tag>{
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
-            return false;
         }
-        return tags.size() > 0;
+        return tags;
     }
 
+    @Override
+    public boolean exists(String label) {
+        List<Tag> tags = this.findByField("name", label);
+        return tags.size() > 0;
+    }
 }

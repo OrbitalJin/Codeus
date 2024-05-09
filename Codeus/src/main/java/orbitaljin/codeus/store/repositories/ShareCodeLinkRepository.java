@@ -106,5 +106,10 @@ public class ShareCodeLinkRepository implements Repository<ShareCodeLink> {
         return null;
     }
 
+    @Override
+    public List<ShareCodeLink> findByField(String field, String value) {
+        return null;
+    }
+
 }
 

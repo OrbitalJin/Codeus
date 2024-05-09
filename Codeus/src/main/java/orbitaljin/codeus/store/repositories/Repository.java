@@ -10,4 +10,5 @@ public interface Repository<T> {
     public List<T> findAll();
     public List<T> fuzzySearch(String query);
     public boolean exists(String label);
+    public List<T> findByField(String field, String value);
 }

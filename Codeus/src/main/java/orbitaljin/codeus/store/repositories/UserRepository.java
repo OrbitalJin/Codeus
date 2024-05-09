@@ -130,8 +130,14 @@ public class UserRepository implements Repository<User> {
 
     @Override
     public boolean exists(String label) {
+        List<User> users = this.findByField("username", label);
+        return users.size() > 0;
+    }
+
+    @Override
+    public List<User> findByField(String field, String value) {
         Transaction transaction = null;
-        List<User> users;
+        List<User> users = null;
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
@@ -141,8 +147,8 @@ public class UserRepository implements Repository<User> {
             Root<User> root = query.from(User.class);
 
             Predicate predicate = builder.equal(
-                    builder.lower(root.get("username")),
-                    label.toLowerCase()
+                    builder.lower(root.get(field)),
+                    value.toLowerCase()
             );
 
             query.where(predicate);
@@ -152,8 +158,7 @@ public class UserRepository implements Repository<User> {
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
-            return false;
         }
-        return users.size() > 0;
+        return users;
     }
 }

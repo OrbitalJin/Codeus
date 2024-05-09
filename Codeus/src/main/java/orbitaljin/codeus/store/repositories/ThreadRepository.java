@@ -129,7 +129,13 @@ public class ThreadRepository implements Repository<Thread>{
     }
 
     @Override
-    public boolean exists(String name) {
+    public boolean exists(String label) {
+        List<Thread> threads = this.findByField("title", label);
+        return threads.size() > 0;
+    }
+
+    @Override
+    public List<Thread> findByField(String field, String value) {
         Transaction transaction = null;
         List<Thread> threads = null;
 
@@ -140,7 +146,10 @@ public class ThreadRepository implements Repository<Thread>{
             CriteriaQuery<Thread> query = builder.createQuery(Thread.class);
             Root<Thread> root = query.from(Thread.class);
 
-            Predicate predicate = builder.equal(builder.lower(root.get("title")), name.toLowerCase());
+            Predicate predicate = builder.equal(
+                    builder.lower(root.get(field)),
+                    value.toLowerCase()
+            );
             query.where(predicate);
 
             threads = session.createQuery(query).getResultList();
@@ -149,9 +158,8 @@ public class ThreadRepository implements Repository<Thread>{
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
-            return false;
         }
-        return threads.size() > 0;
+        return threads;
     }
 
 }
