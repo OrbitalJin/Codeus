@@ -8,7 +8,7 @@ public interface Repository<T> {
     public T update(T entity);
     public T findById(Long id);
     public List<T> findAll();
-    public List<T> fuzzySearch(String query);
-    public boolean exists(String label);
+    public List<T> search(String query);
+    public boolean exists(T entity);
     public List<T> findByField(String field, String value);
 }

@@ -110,7 +110,7 @@ public class UserRepository implements Repository<User> {
     }
 
     @Override
-    public List<User> fuzzySearch(String fuzzy) {
+    public List<User> search(String fuzzy) {
         Transaction transaction = null;
         List<User> users = null;
 
@@ -134,9 +134,8 @@ public class UserRepository implements Repository<User> {
     }
 
     @Override
-    public boolean exists(String label) {
-        List<User> users = this.findByField("username", label);
-        return users.size() > 0;
+    public boolean exists(User entity) {
+        return this.findById(entity.getId()) != null;
     }
 
     @Override

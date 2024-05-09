@@ -108,7 +108,7 @@ public class ThreadRepository implements Repository<Thread>{
     }
 
     @Override
-    public List<Thread> fuzzySearch(String fuzzy) {
+    public List<Thread> search(String fuzzy) {
         Transaction transaction = null;
         List<Thread> threads = null;
 
@@ -133,9 +133,8 @@ public class ThreadRepository implements Repository<Thread>{
     }
 
     @Override
-    public boolean exists(String label) {
-        List<Thread> threads = this.findByField("title", label);
-        return threads.size() > 0;
+    public boolean exists(Thread entity) {
+        return this.findById(entity.getId()) != null;
     }
 
     @Override

@@ -13,13 +13,14 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/threads")
-public class ThreadRouter {
+public class ThreadRouter implements Router<Thread>{
     private final ThreadRepository service;
 
     public ThreadRouter() {
         this.service = DBHandler.getInstance().threadRepository;
     }
 
+    @Override
     @GetMapping("/")
     public ResponseEntity<?> getAll() {
         // Return a 200 OK response with all the threads
@@ -30,8 +31,9 @@ public class ThreadRouter {
 
     }
 
+    @Override
     @GetMapping("/{id}")
-    public ResponseEntity<?> getThread(@PathVariable Long id) {
+    public ResponseEntity<?> get(@PathVariable Long id) {
         // if the id is null, return a 400 Bad Request response
         if (id == null) return new APIResponse<Thread>(
                 HttpStatus.BAD_REQUEST,
@@ -51,19 +53,17 @@ public class ThreadRouter {
         ).toReponseEntity();
     }
 
+    @Override
     @PostMapping("/")
-    public ResponseEntity<?> createThread(
-        @RequestParam String title,
-        @RequestParam String description
-    ) {
+    public ResponseEntity<?> create(@RequestBody Thread thread) {
         // If the title is empty, return a 400 Bad Request response
-        if (Objects.equals(title, "")) return new APIResponse<Thread>(
+        if (Objects.equals(thread.getTitle(), "")) return new APIResponse<Thread>(
                 HttpStatus.BAD_REQUEST,
                 "Title cannot be empty"
         ).toReponseEntity();
 
         // Check if the name is already taken
-        if (this.service.exists(title)) return new APIResponse<Thread>(
+        if (this.service.exists(thread)) return new APIResponse<Thread>(
                 HttpStatus.BAD_REQUEST,
                 "Title already taken"
         ).toReponseEntity();
@@ -71,16 +71,62 @@ public class ThreadRouter {
         // Oterhwise, create the thread and return a 201 Created response
         return new APIResponse<Thread>(
                 HttpStatus.CREATED,
-                this.service.create(new Thread(
-                        title,
-                        description
-                ))
+                "Thread created successfully",
+                this.service.create(thread)
         ).toReponseEntity();
     }
+
+    @Override
+    @PatchMapping("/")
+    public ResponseEntity<?> update(@RequestBody Thread thread) {
+        // if the id or title is null, return a 400 Bad Request response
+        if (thread.getId() == null || Objects.equals(thread.getTitle(), "")) return new APIResponse<Thread>(
+                HttpStatus.BAD_REQUEST,
+                "ID and title cannot be null"
+        ).toReponseEntity();
+
+        // if the thread does not exist, return a 404 Not Found response
+        if (this.service.exists(thread)) return new APIResponse<Thread>(
+                HttpStatus.NOT_FOUND,
+                "Thread not found"
+        ).toReponseEntity();
+
+        // otherwise, update the thread and return a 200 OK response
+        return new APIResponse<Thread>(
+                HttpStatus.OK,
+                "Thread updated successfully",
+                this.service.update(thread)
+        ).toReponseEntity();
+    }
+
+    @Override
+    @DeleteMapping("/")
+    public ResponseEntity<?> delete(@RequestBody Thread thread) {
+        // if the id is null, return a 400 Bad Request response
+        if (thread.getId() == null) return new APIResponse<Thread>(
+                HttpStatus.BAD_REQUEST,
+                "ID cannot be null"
+        ).toReponseEntity();
+
+        // if the thread does not exist, return a 404 Not Found response
+        if (!this.service.exists(thread)) return new APIResponse<Thread>(
+                HttpStatus.NOT_FOUND,
+                "Thread not found"
+        ).toReponseEntity();
+
+        // otherwise, delete the thread and return a 200 OK response
+        return new APIResponse<Thread>(
+                HttpStatus.OK,
+                "Thread deleted successfully",
+                this.service.delete(thread.getId())
+        ).toReponseEntity();
+    }
+
+    @Override
     @GetMapping("/search")
-    public ResponseEntity<?> fuzzySearch(String fuzzy) {
+    public ResponseEntity<?> search(String query) {
         // If the query is empty, return a 400 Bad Request response
-        if (Objects.equals(fuzzy, "")) return new APIResponse<List<Thread>>(
+        if (Objects.equals(query, "")) return new APIResponse<List<Thread>>(
                 HttpStatus.BAD_REQUEST,
                 "Query cannot be empty"
         ).toReponseEntity();
@@ -88,7 +134,7 @@ public class ThreadRouter {
         // Otherwise, return a 200 OK response with the search results
         return new APIResponse<List<Thread>>(
                 HttpStatus.OK,
-                this.service.fuzzySearch(fuzzy)
+                this.service.search(query)
         ).toReponseEntity();
     }
 }

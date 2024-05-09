@@ -13,13 +13,14 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
-public class UserRouter {
+public class UserRouter implements Router<User> {
     private final Repository<User> service;
     public UserRouter() {
         this.service = DBHandler.getInstance().userRepository;
     }
+    @Override
     @GetMapping("/")
-    public ResponseEntity<?> getUsers() {
+    public ResponseEntity<?> getAll() {
         // Return all users
         return new APIResponse<List<User>>(
                 HttpStatus.OK,
@@ -28,8 +29,9 @@ public class UserRouter {
 
     }
 
+    @Override
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUser(@PathVariable Long id) {
+    public ResponseEntity<?> get(@PathVariable Long id) {
         // If the id is null, return a 400 Bad Request response
         if (id == null) return new APIResponse<User>(
                 HttpStatus.BAD_REQUEST,
@@ -49,13 +51,11 @@ public class UserRouter {
         ).toReponseEntity();
     }
 
+    @Override
     @PostMapping("/")
-    public ResponseEntity<?> createUser(
-            @RequestParam String username,
-            @RequestParam String password
-    ) {
+    public ResponseEntity<?> create(@RequestBody User user) {
         // If the username or password is null, return a 400 Bad Request response
-        if (Objects.equals(username, "") || Objects.equals(password, "")) {
+        if (Objects.equals(user.getUsername(), "") || Objects.equals(user.getPassword(), "")) {
             return new APIResponse<User>(
                     HttpStatus.BAD_REQUEST,
                     "Username and password cannot be null"
@@ -63,7 +63,7 @@ public class UserRouter {
         }
 
         // Check if the username already exists
-        if (this.service.exists(username)) {
+        if (!this.service.findByField("username", user.getUsername()).isEmpty()) {
             return new APIResponse<User>(
                     HttpStatus.CONFLICT,
                     "Username already exists"
@@ -73,21 +73,19 @@ public class UserRouter {
         // Otherwise, create the user and return a 201 Created response
         return new APIResponse<User>(
                 HttpStatus.CREATED,
-                this.service.create(new User(
-                        username,
-                        password
-                ))
+                "User created successfully",
+                this.service.create(user)
         ).toReponseEntity();
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<?> updateUser(
-            @PathVariable Long id,
-            @RequestParam String username,
-            @RequestParam String password
-    ) {
+    @Override
+    @PatchMapping("/")
+    public ResponseEntity<?> update(@RequestBody User user) {
         // Check if the id is null, username or password is null, return a 400 Bad Request response
-        if (id == null || Objects.equals(username, "") || Objects.equals(password, "")) {
+        if (user.getId() == null ||
+                        Objects.equals(user.getUsername(), "") ||
+                        Objects.equals(user.getPassword(), "")
+        ) {
             return new APIResponse<User>(
                     HttpStatus.BAD_REQUEST,
                     "ID, username and password cannot be null"
@@ -95,7 +93,7 @@ public class UserRouter {
         }
 
         // Check if the user exists, return a 404 Not Found response
-        if (this.service.findById(id) == null) return new APIResponse<User>(
+        if (this.service.findById(user.getId()) == null) return new APIResponse<User>(
                 HttpStatus.NOT_FOUND,
                 "User not found"
         ).toReponseEntity();
@@ -104,21 +102,15 @@ public class UserRouter {
         return new APIResponse<User>(
                 HttpStatus.OK,
                 "User updated successfully",
-                this.service.update(new User(
-                        id,
-                        username,
-                        password
-                ))
+                this.service.update(user)
         ).toReponseEntity();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(
-            @PathVariable Long id,
-            @RequestParam String password
-            ) {
+    @Override
+    @DeleteMapping("/")
+    public ResponseEntity<?> delete(@RequestBody User user) {
         // Check if the id or password is null, return a 400 Bad Request response
-        if (id == null || Objects.equals(password, "")) {
+        if (user.getId() == null || Objects.equals(user.getPassword(), "")) {
             return new APIResponse<User>(
                     HttpStatus.BAD_REQUEST,
                     "ID and password cannot be null"
@@ -126,13 +118,13 @@ public class UserRouter {
         }
 
         // Check if the user exists, return a 404 Not Found response
-        if (this.service.findById(id) == null) return new APIResponse<User>(
+        if (this.service.findById(user.getId()) == null) return new APIResponse<User>(
                 HttpStatus.NOT_FOUND,
                 "User not found"
         ).toReponseEntity();
 
         // Check if the password is correct, return a 401 Unauthorized response
-        if (!this.service.findById(id).getPassword().equals(password)) return new APIResponse<User>(
+        if (!this.service.findById(user.getId()).getPassword().equals(user.getPassword())) return new APIResponse<User>(
                 HttpStatus.UNAUTHORIZED,
                 "Incorrect password"
         ).toReponseEntity();
@@ -141,12 +133,13 @@ public class UserRouter {
         return new APIResponse<User>(
                 HttpStatus.OK,
                 "User deleted successfully",
-                this.service.delete(id)
+                this.service.delete(user.getId())
         ).toReponseEntity();
     }
 
+    @Override
     @GetMapping("/search")
-    public ResponseEntity<?> fuzzySearch(@RequestParam String query) {
+    public ResponseEntity<?> search(@RequestParam String query) {
         // If the query is empty, return a 400 Bad Request response
         if (query == null) return new APIResponse<List<User>>(
                 HttpStatus.BAD_REQUEST,
@@ -156,7 +149,7 @@ public class UserRouter {
         // Otherwise, return a 200 OK response with the search results
         return new APIResponse<List<User>>(
                 HttpStatus.OK,
-                this.service.fuzzySearch(query)
+                this.service.search(query)
         ).toReponseEntity();
     }
 }
