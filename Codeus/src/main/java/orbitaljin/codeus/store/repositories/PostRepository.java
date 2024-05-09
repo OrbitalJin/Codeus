@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import javax.swing.text.html.Option;
+import javax.xml.crypto.dsig.TransformService;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,6 +103,31 @@ public class PostRepository implements Repository<Post>{
         }
 
         return posts;
+    }
+
+    @Override
+    public List<Post> fuzzySearch(String keyword) {
+        Transaction transaction = null;
+        List<Post> posts = null;
+
+        try (Session session = this.sf.openSession()) {
+            transaction = session.beginTransaction();
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Post> criteriaQuery = builder.createQuery(Post.class);
+            Root<Post> root = criteriaQuery.from(Post.class);
+            criteriaQuery.select(root).where(builder.like(root.get("title"), "%" + keyword + "%"));
+            posts = session.createQuery(criteriaQuery).getResultList();
+            transaction.commit();
+
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        }
+        return posts;
+    }
+    @Override
+    public boolean exists(String label) {
+        return false;
     }
 
 }

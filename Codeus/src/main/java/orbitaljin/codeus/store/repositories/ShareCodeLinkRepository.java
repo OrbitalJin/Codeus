@@ -96,4 +96,15 @@ public class ShareCodeLinkRepository implements Repository<ShareCodeLink> {
         }
         return null;
     }
+    @Override
+    public boolean exists(String label) {
+        return false;
+    }
+
+    @Override
+    public List<ShareCodeLink> fuzzySearch(String keyword) {
+        return null;
+    }
+
 }
+

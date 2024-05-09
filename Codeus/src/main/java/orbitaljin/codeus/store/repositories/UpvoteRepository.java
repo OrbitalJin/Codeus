@@ -89,4 +89,15 @@ public class UpvoteRepository implements Repository <UpVote>{
         }
         return null;
     }
+
+    @Override
+    public boolean exists(String label) {
+        return false;
+    }
+
+    @Override
+    public List<UpVote> fuzzySearch(String query) {
+        return null;
+    }
+
 }

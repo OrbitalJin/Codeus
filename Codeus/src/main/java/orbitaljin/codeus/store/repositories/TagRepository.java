@@ -6,6 +6,7 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import orbitaljin.codeus.store.models.Post;
 import orbitaljin.codeus.store.models.Tag;
+import orbitaljin.codeus.store.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -127,4 +128,33 @@ public class TagRepository implements Repository<Tag>{
 
         return posts;
     }
+
+    public boolean exists(String label) {
+        Transaction transaction = null;
+        List<Tag> tags;
+
+        try (Session session = this.sf.openSession()) {
+            transaction = session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Tag> query = builder.createQuery(Tag.class);
+            Root<Tag> root = query.from(Tag.class);
+
+            Predicate predicate = builder.equal(
+                    builder.lower(root.get("name")),
+                    label.toLowerCase()
+            );
+
+            query.where(predicate);
+            tags = session.createQuery(query).getResultList();
+            transaction.commit();
+
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+            return false;
+        }
+        return tags.size() > 0;
+    }
+
 }

@@ -104,7 +104,7 @@ public class UserRepository implements Repository<User> {
         return users;
     }
 
-//    @Override
+    @Override
     public List<User> fuzzySearch(String fuzzy) {
         Transaction transaction = null;
         List<User> users = null;
@@ -126,5 +126,34 @@ public class UserRepository implements Repository<User> {
             e.printStackTrace();
         }
         return users;
+    }
+
+    @Override
+    public boolean exists(String label) {
+        Transaction transaction = null;
+        List<User> users;
+
+        try (Session session = this.sf.openSession()) {
+            transaction = session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<User> query = builder.createQuery(User.class);
+            Root<User> root = query.from(User.class);
+
+            Predicate predicate = builder.equal(
+                    builder.lower(root.get("username")),
+                    label.toLowerCase()
+            );
+
+            query.where(predicate);
+            users = session.createQuery(query).getResultList();
+            transaction.commit();
+
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+            return false;
+        }
+        return users.size() > 0;
     }
 }

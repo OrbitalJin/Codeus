@@ -106,4 +106,9 @@ public class CommentRepository implements Repository<Comment> {
         }
         return comments;
     }
+
+    @Override
+    public boolean exists(String label) {
+        return false;
+    }
 }

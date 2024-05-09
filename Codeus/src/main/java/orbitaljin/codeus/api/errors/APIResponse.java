@@ -12,6 +12,15 @@ public class APIResponse<T>{
     private String message;
     private T data;
 
+    public APIResponse(HttpStatus status, String message) {
+        this.message = message;
+        this.status = status;
+        this.payload = new HashMap<String, Object>(){{
+            put("statusCode", status.value());
+            put("message", message);
+        }};
+    }
+
     public APIResponse(HttpStatus status, String message, T data) {
         this.message = message;
         this.status = status;

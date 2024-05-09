@@ -103,6 +103,7 @@ public class ThreadRepository implements Repository<Thread>{
         return threads;
     }
 
+    @Override
     public List<Thread> fuzzySearch(String fuzzy) {
         Transaction transaction = null;
         List<Thread> threads = null;
@@ -125,6 +126,32 @@ public class ThreadRepository implements Repository<Thread>{
             e.printStackTrace();
         }
         return threads;
+    }
+
+    @Override
+    public boolean exists(String name) {
+        Transaction transaction = null;
+        List<Thread> threads = null;
+
+        try (Session session = this.sf.openSession()) {
+            transaction = session.beginTransaction();
+
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Thread> query = builder.createQuery(Thread.class);
+            Root<Thread> root = query.from(Thread.class);
+
+            Predicate predicate = builder.equal(builder.lower(root.get("title")), name.toLowerCase());
+            query.where(predicate);
+
+            threads = session.createQuery(query).getResultList();
+            transaction.commit();
+
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+            return false;
+        }
+        return threads.size() > 0;
     }
 
 }
