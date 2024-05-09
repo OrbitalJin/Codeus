@@ -11,12 +11,7 @@ import org.hibernate.SessionFactory;
 public class DBHandler {
     private static DBHandler instance;
     private SessionFactory sessionFactory;
-    public CommentRepository commentRepository;
-    public PostRepository postRepository;
-    public ShareCodeLinkRepository shareCodeLinkRepository;
-    public TagRepository tagRepository;
     public ThreadRepository threadRepository;
-    public UpvoteRepository upvoteRepository;
     public UserRepository userRepository;
 
     private DBHandler() {
@@ -41,12 +36,7 @@ public class DBHandler {
             // Create SessionFactory
             sessionFactory = configuration.buildSessionFactory();
             // Create Repositories
-            commentRepository = new CommentRepository(sessionFactory);
-            postRepository = new PostRepository(sessionFactory);
-            shareCodeLinkRepository = new ShareCodeLinkRepository(sessionFactory);
-            tagRepository = new TagRepository(sessionFactory);
             threadRepository = new ThreadRepository(sessionFactory);
-            upvoteRepository = new UpvoteRepository(sessionFactory);
             userRepository = new UserRepository(sessionFactory);
         } catch (Throwable e) {
             System.out.println("Initial SessionFactory creation failed." + e);

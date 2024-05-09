@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface Repository<T> {
     public T create(T entity);
-    public void delete(T entity);
-    public void update(T entity);
+    public T delete(Long id);
+    public T update(T entity);
     public T findById(Long id);
     public List<T> findAll();
     public List<T> fuzzySearch(String query);

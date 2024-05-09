@@ -27,6 +27,28 @@ public class UserRouter {
         ).toReponseEntity();
 
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getUser(@PathVariable Long id) {
+        // If the id is null, return a 400 Bad Request response
+        if (id == null) return new APIResponse<User>(
+                HttpStatus.BAD_REQUEST,
+                "ID cannot be null"
+        ).toReponseEntity();
+
+        // If the user does not exist, return a 404 Not Found response
+        if (this.service.findById(id) == null) return new APIResponse<User>(
+                HttpStatus.NOT_FOUND,
+                "User not found"
+        ).toReponseEntity();
+
+        // Otherwise, return a 200 OK response with the user
+        return new APIResponse<User>(
+                HttpStatus.OK,
+                this.service.findById(id)
+        ).toReponseEntity();
+    }
+
     @PostMapping("/")
     public ResponseEntity<?> createUser(
             @RequestParam String username,
@@ -58,24 +80,68 @@ public class UserRouter {
         ).toReponseEntity();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getUser(@PathVariable Long id) {
-        // If the id is null, return a 400 Bad Request response
-        if (id == null) return new APIResponse<User>(
-                HttpStatus.BAD_REQUEST,
-                "ID cannot be null"
-        ).toReponseEntity();
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> updateUser(
+            @PathVariable Long id,
+            @RequestParam String username,
+            @RequestParam String password
+    ) {
+        // Check if the id is null, username or password is null, return a 400 Bad Request response
+        if (id == null || Objects.equals(username, "") || Objects.equals(password, "")) {
+            return new APIResponse<User>(
+                    HttpStatus.BAD_REQUEST,
+                    "ID, username and password cannot be null"
+            ).toReponseEntity();
+        }
 
-        // If the user does not exist, return a 404 Not Found response
+        // Check if the user exists, return a 404 Not Found response
         if (this.service.findById(id) == null) return new APIResponse<User>(
                 HttpStatus.NOT_FOUND,
                 "User not found"
         ).toReponseEntity();
 
-        // Otherwise, return a 200 OK response with the user
+        // Update the user and return a 200 OK response
         return new APIResponse<User>(
                 HttpStatus.OK,
-                this.service.findById(id)
+                "User updated successfully",
+                this.service.update(new User(
+                        id,
+                        username,
+                        password
+                ))
+        ).toReponseEntity();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteUser(
+            @PathVariable Long id,
+            @RequestParam String password
+            ) {
+        // Check if the id or password is null, return a 400 Bad Request response
+        if (id == null || Objects.equals(password, "")) {
+            return new APIResponse<User>(
+                    HttpStatus.BAD_REQUEST,
+                    "ID and password cannot be null"
+            ).toReponseEntity();
+        }
+
+        // Check if the user exists, return a 404 Not Found response
+        if (this.service.findById(id) == null) return new APIResponse<User>(
+                HttpStatus.NOT_FOUND,
+                "User not found"
+        ).toReponseEntity();
+
+        // Check if the password is correct, return a 401 Unauthorized response
+        if (!this.service.findById(id).getPassword().equals(password)) return new APIResponse<User>(
+                HttpStatus.UNAUTHORIZED,
+                "Incorrect password"
+        ).toReponseEntity();
+
+        // Delete the user and return a 200 OK response
+        return new APIResponse<User>(
+                HttpStatus.OK,
+                "User deleted successfully",
+                this.service.delete(id)
         ).toReponseEntity();
     }
 

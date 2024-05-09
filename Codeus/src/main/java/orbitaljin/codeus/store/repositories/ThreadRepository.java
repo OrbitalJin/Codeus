@@ -37,21 +37,24 @@ public class ThreadRepository implements Repository<Thread>{
     }
 
     @Override
-    public void delete(Thread entity) {
+    public Thread delete(Long id) {
         Transaction transaction = null;
+        Thread thread = null;
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
-            session.remove(entity);
+            thread = session.get(Thread.class, id);
+            session.remove(thread);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         }
+        return thread;
     }
 
     @Override
-    public void update(Thread entity) {
+    public Thread update(Thread entity) {
         Transaction transaction = null;
 
         try (Session session = this.sf.openSession()) {
@@ -62,6 +65,7 @@ public class ThreadRepository implements Repository<Thread>{
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         }
+        return entity;
     }
 
     @Override

@@ -37,21 +37,25 @@ public class UserRepository implements Repository<User> {
     }
 
     @Override
-    public void delete(User entity) {
+    public User delete(Long id) {
         Transaction transaction = null;
+        User user = null;
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
-            session.remove(entity);
+            user = session.get(User.class, id);
+            session.remove(user);
+
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         }
+        return user;
     }
 
     @Override
-    public void update(User entity) {
+    public User update(User entity) {
         Transaction transaction = null;
 
         try (Session session = this.sf.openSession()) {
@@ -62,6 +66,7 @@ public class UserRepository implements Repository<User> {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         }
+        return entity;
     }
 
     @Override
