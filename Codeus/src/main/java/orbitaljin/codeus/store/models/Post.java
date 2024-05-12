@@ -9,25 +9,16 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "posts")
-public class Post {
+public class Post extends Model{
     public enum PostType {
         QUESTION,
         SNIPPET,
     }
-    @Id
-    @GeneratedValue
-    private Long id;
     private Long userId;
     private String title;
     private String content;
     private PostType postType;
-    private int tagId;
-
     private int threadId;
-
-    private Date createdAt;
-
-    private int upVoteCount;
 
     public Post() {
     }
@@ -42,14 +33,6 @@ public class Post {
         this.title = title;
         this.content = content;
         this.postType = postType;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Long getUserId() {
@@ -87,7 +70,7 @@ public class Post {
     @Override
     public String toString() {
         return "Post{" +
-                "id=" + this.id +
+                "id=" + this.getId() +
                 ", userId=" + userId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +

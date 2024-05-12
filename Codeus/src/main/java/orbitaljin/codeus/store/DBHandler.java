@@ -25,12 +25,8 @@ public class DBHandler {
                     .setProperty("hibernate.show_sql", "true")
                     .setProperty("hibernate.hbm2ddl.auto", "update")
                     .setProperty("hibernate.jdbc.use_get_generated_keys", "false")
-                    .addAnnotatedClass(Comment.class)
-                    .addAnnotatedClass(ShareCodeLink.class)
                     .addAnnotatedClass(Post.class)
-                    .addAnnotatedClass(Tag.class)
                     .addAnnotatedClass(Thread.class)
-                    .addAnnotatedClass(UpVote.class)
                     .addAnnotatedClass(User.class);
 
             // Create SessionFactory

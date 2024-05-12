@@ -7,11 +7,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "threads")
-public class Thread  {
-    @Id
-    @GeneratedValue
-    private Long id;
-
+public class Thread extends Model {
     private String title;
     private String description;
 
@@ -31,19 +27,10 @@ public class Thread  {
             String title,
             String description
     ) {
-        this.id = id;
+        this.setId(id);
         this.title = title;
         this.description = description;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -62,7 +49,7 @@ public class Thread  {
     @Override
     public String toString() {
         return "Thread{" +
-                "id=" + this.id +
+                "id=" + this.getId() +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 '}';

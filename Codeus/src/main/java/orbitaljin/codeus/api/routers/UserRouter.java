@@ -149,7 +149,7 @@ public class UserRouter implements Router<User> {
         // Otherwise, return a 200 OK response with the search results
         return new APIResponse<List<User>>(
                 HttpStatus.OK,
-                this.service.search(query)
+                this.service.search("username", query)
         ).toReponseEntity();
     }
 }

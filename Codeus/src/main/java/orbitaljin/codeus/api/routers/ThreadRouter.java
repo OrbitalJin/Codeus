@@ -134,7 +134,7 @@ public class ThreadRouter implements Router<Thread>{
         // Otherwise, return a 200 OK response with the search results
         return new APIResponse<List<Thread>>(
                 HttpStatus.OK,
-                this.service.search(query)
+                this.service.search("title", query)
         ).toReponseEntity();
     }
 }

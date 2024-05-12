@@ -8,13 +8,9 @@ import jakarta.persistence.Table;
 import java.sql.Date;
 
 @Entity(name = "users")
-public class User {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class User extends Model{
     private String username;
     private String password;
-    private Date registeredAt;
 
     public User() {
     }
@@ -32,17 +28,9 @@ public class User {
             String username,
             String password
     ) {
-        this.id = id;
+        this.setId(id);
         this.username = username;
         this.password = password;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUsername() {
@@ -61,20 +49,12 @@ public class User {
         this.password = password;
     }
 
-    public Date getRegisteredAt() {
-        return registeredAt;
-    }
-
-    public void setRegisteredAt(Date registeredAt) {
-        this.registeredAt = registeredAt;
-    }
-
     public String toString() {
         return "User{" +
-                "id=" + this.id +
+                "id=" + this.getId() +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", registeredAt=" + registeredAt +
+                ", registeredAt=" + this.getCreatedAt() +
                 '}';
     }
 }
