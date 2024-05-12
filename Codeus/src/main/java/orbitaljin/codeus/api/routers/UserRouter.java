@@ -1,6 +1,6 @@
 package orbitaljin.codeus.api.routers;
 
-import orbitaljin.codeus.api.errors.APIResponse;
+import orbitaljin.codeus.api.APIResponse;
 import orbitaljin.codeus.store.DBHandler;
 import orbitaljin.codeus.store.models.User;
 import orbitaljin.codeus.store.repositories.Repository;

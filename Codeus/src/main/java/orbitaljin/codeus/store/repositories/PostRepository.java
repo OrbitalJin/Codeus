@@ -5,60 +5,60 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import orbitaljin.codeus.store.models.Post;
-import orbitaljin.codeus.store.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class UserRepository implements Repository<User> {
-    private SessionFactory sf;
+public class PostRepository implements Repository<Post> {
+    private final SessionFactory sf;
 
-    public UserRepository(SessionFactory sf) {
+    public PostRepository(SessionFactory sf) {
         this.sf = sf;
     }
 
     @Override
-    public User create(User entity) {
+    public Post create(Post entity) {
         Transaction transaction = null;
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
+
             Long id = (Long) session.save(entity);
             entity.setId(id);
+
             transaction.commit();
-            return entity;
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         }
-        return null;
+        return entity;
     }
 
     @Override
-    public User delete(Long id) {
+    public Post delete(Long id) {
         Transaction transaction = null;
-        User user = null;
+        Post post = null;
 
-        try (Session session = this.sf.openSession()) {
+        try(Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
-            user = session.get(User.class, id);
-            session.detach(user);
+            post = session.get(Post.class, id);
+            session.detach(post);
 
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         }
-        return user;
+        return post;
     }
 
     @Override
-    public User update(User entity) {
+    public Post update(Post entity) {
         Transaction transaction = null;
 
-        try (Session session = this.sf.openSession()) {
+        try(Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
             session.update(entity);
             transaction.commit();
@@ -70,101 +70,81 @@ public class UserRepository implements Repository<User> {
     }
 
     @Override
-    public User findById(Long id) {
+    public Post findById(Long id) {
         Transaction transaction = null;
+        Post post = null;
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
-            User user = session.get(User.class, id);
-            transaction.commit();
-            return user;
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public List<User> findAll() {
-        Transaction transaction = null;
-        List<User> users = null;
-
-        try (Session session = this.sf.openSession()) {
-            transaction = session.beginTransaction();
-
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
-            Root<User> root = criteriaQuery.from(User.class);
-            criteriaQuery.select(root);
-
-            users = session.createQuery(criteriaQuery).getResultList();
-
+            post = session.get(Post.class, id);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         }
-
-        return users;
+        return post;
     }
 
     @Override
-    public List<User> search(String fuzzy) {
+    public List<Post> findAll() {
         Transaction transaction = null;
-        List<User> users = null;
+        List<Post> posts = null;
 
-        try(Session session = this.sf.openSession()) {
+        try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
 
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<User> query = builder.createQuery(User.class);
-            Root<User> root = query.from(User.class);
+            CriteriaBuilder builder = this.sf.getCriteriaBuilder();
+            CriteriaQuery<Post> query = builder.createQuery(Post.class);
+            Root<Post> root = query.from(Post.class);
+            query.select(root);
+            posts = session.createQuery(query).getResultList();
 
-            Predicate predicate = builder.like(root.get("username"), "%" + fuzzy + "%");
-            query.where(predicate);
-
-            users = session.createQuery(query).getResultList();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         }
-        return users;
+        return posts;
     }
 
     @Override
-    public boolean exists(User entity) {
-        return this.findById(entity.getId()) != null;
-    }
-
-    @Override
-    public List<User> findByField(String field, Object value) {
+    public List<Post> findByField(String field, Object value) {
         Transaction transaction = null;
-        List<User> users = null;
+        List<Post> posts = null;
 
         try (Session session = this.sf.openSession()) {
             transaction = session.beginTransaction();
 
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<User> query = builder.createQuery(User.class);
-            Root<User> root = query.from(User.class);
+            CriteriaBuilder builder = this.sf.getCriteriaBuilder();
+            CriteriaQuery<Post> query = builder.createQuery(Post.class);
+            Root<Post> root = query.from(Post.class);
 
             Predicate predicate = builder.equal(
                     builder.lower(root.get(field)),
                     (value instanceof String) ?
                             ((String) value).toLowerCase() :
                             value
+
             );
-
             query.where(predicate);
-            users = session.createQuery(query).getResultList();
-            transaction.commit();
+            posts = session.createQuery(query).getResultList();
 
+            transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
             e.printStackTrace();
         }
-        return users;
+        return posts;
     }
+
+    @Override
+    public List<Post> search(String query) {
+        return this.findByField("title", query);
+    }
+
+    @Override
+    public boolean exists(Post entity) {
+        return this.findById(entity.getId()) != null;
+    }
+
 }

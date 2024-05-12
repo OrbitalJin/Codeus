@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.util.List;
+import java.util.Objects;
 
 
 public class ThreadRepository implements Repository<Thread>{
@@ -138,7 +139,7 @@ public class ThreadRepository implements Repository<Thread>{
     }
 
     @Override
-    public List<Thread> findByField(String field, String value) {
+    public List<Thread> findByField(String field, Object value) {
         Transaction transaction = null;
         List<Thread> threads = null;
 
@@ -151,7 +152,10 @@ public class ThreadRepository implements Repository<Thread>{
 
             Predicate predicate = builder.equal(
                     builder.lower(root.get(field)),
-                    value.toLowerCase()
+                    (value instanceof String) ?
+                            ((String) value).toLowerCase() :
+                            value
+
             );
             query.where(predicate);
 

@@ -1,4 +1,4 @@
-package orbitaljin.codeus.api.errors;
+package orbitaljin.codeus.api;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
