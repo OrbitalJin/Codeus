@@ -34,14 +34,14 @@ public class ThreadRouter implements Router<Thread>{
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<?> get(@PathVariable Long id) {
-        // if the id is null, return a 400 Bad Request response
+        // if the id is null, return a 400 Bad Request status
         if (id == null) return new APIResponse<Thread>(
                 HttpStatus.BAD_REQUEST,
                 "ID cannot be null"
         ).toReponseEntity();
 
-        // If the thread does not exist, return a 404 Not Found response
-        if (this.service.findById(id) == null) return new APIResponse<Thread>(
+        // If the thread does not exist, return a 404 Not Found status
+        if (!this.service.exists(id)) return new APIResponse<Thread>(
                 HttpStatus.NOT_FOUND,
                 "Thread not found"
         ).toReponseEntity();
@@ -56,19 +56,20 @@ public class ThreadRouter implements Router<Thread>{
     @Override
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody Thread thread) {
-        // If the title is empty, return a 400 Bad Request response
-        if (Objects.equals(thread.getTitle(), "")) return new APIResponse<Thread>(
+        // If the title is empty, return a 400 Bad Request status
+        if (thread.getTitle().isEmpty()) return new APIResponse<Thread>(
                 HttpStatus.BAD_REQUEST,
                 "Title cannot be empty"
         ).toReponseEntity();
 
-        // Check if the name is already taken
-        if (this.service.exists(thread)) return new APIResponse<Thread>(
-                HttpStatus.BAD_REQUEST,
+        // Check if the name is already taken, return a Conflict status
+        if (!this.service.findByField("title", thread.getTitle()).isEmpty()
+        ) return new APIResponse<Thread>(
+                HttpStatus.CONFLICT,
                 "Title already taken"
         ).toReponseEntity();
 
-        // Oterhwise, create the thread and return a 201 Created response
+        // Otherwise, create the thread and return a 201 Created response
         return new APIResponse<Thread>(
                 HttpStatus.CREATED,
                 "Thread created successfully",
@@ -79,19 +80,19 @@ public class ThreadRouter implements Router<Thread>{
     @Override
     @PatchMapping("/")
     public ResponseEntity<?> update(@RequestBody Thread thread) {
-        // if the id or title is null, return a 400 Bad Request response
-        if (thread.getId() == null || Objects.equals(thread.getTitle(), "")) return new APIResponse<Thread>(
+        // if the id or title is null, return a 400 Bad Request status
+        if (thread.getId() == null || thread.getTitle().isEmpty()) return new APIResponse<Thread>(
                 HttpStatus.BAD_REQUEST,
                 "ID and title cannot be null"
         ).toReponseEntity();
 
-        // if the thread does not exist, return a 404 Not Found response
-        if (this.service.exists(thread)) return new APIResponse<Thread>(
+        // if the thread does not exist, return a 404 Not Found status
+        if (!this.service.exists(thread)) return new APIResponse<Thread>(
                 HttpStatus.NOT_FOUND,
                 "Thread not found"
         ).toReponseEntity();
 
-        // otherwise, update the thread and return a 200 OK response
+        // otherwise, update the thread and return a 200 OK status
         return new APIResponse<Thread>(
                 HttpStatus.OK,
                 "Thread updated successfully",
@@ -102,23 +103,23 @@ public class ThreadRouter implements Router<Thread>{
     @Override
     @DeleteMapping("/")
     public ResponseEntity<?> delete(@RequestBody Thread thread) {
-        // if the id is null, return a 400 Bad Request response
+        // if the id is null, return a 400 Bad Request status
         if (thread.getId() == null) return new APIResponse<Thread>(
                 HttpStatus.BAD_REQUEST,
                 "ID cannot be null"
         ).toReponseEntity();
 
-        // if the thread does not exist, return a 404 Not Found response
+        // if the thread does not exist, return a 404 Not Found status
         if (!this.service.exists(thread)) return new APIResponse<Thread>(
                 HttpStatus.NOT_FOUND,
                 "Thread not found"
         ).toReponseEntity();
 
-        // otherwise, delete the thread and return a 200 OK response
+        // otherwise, delete the thread and return a 200 OK status
         return new APIResponse<Thread>(
                 HttpStatus.OK,
                 "Thread deleted successfully",
-                this.service.delete(thread.getId())
+                this.service.delete(thread)
         ).toReponseEntity();
     }
 
@@ -126,7 +127,7 @@ public class ThreadRouter implements Router<Thread>{
     @GetMapping("/search")
     public ResponseEntity<?> search(String query) {
         // If the query is empty, return a 400 Bad Request response
-        if (Objects.equals(query, "")) return new APIResponse<List<Thread>>(
+        if (query.isEmpty()) return new APIResponse<List<Thread>>(
                 HttpStatus.BAD_REQUEST,
                 "Query cannot be empty"
         ).toReponseEntity();

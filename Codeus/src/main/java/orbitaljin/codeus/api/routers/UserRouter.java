@@ -109,16 +109,16 @@ public class UserRouter implements Router<User> {
     @Override
     @DeleteMapping("/")
     public ResponseEntity<?> delete(@RequestBody User user) {
-        // Check if the id or password is null, return a 400 Bad Request response
-        if (user.getId() == null || Objects.equals(user.getPassword(), "")) {
+        // Check if the id is null, return a 400 Bad Request response
+        if (user.getId() == null ||  user.getPassword().isEmpty()) {
             return new APIResponse<User>(
                     HttpStatus.BAD_REQUEST,
-                    "ID and password cannot be null"
+                    "ID cannot be null"
             ).toReponseEntity();
         }
 
         // Check if the user exists, return a 404 Not Found response
-        if (this.service.findById(user.getId()) == null) return new APIResponse<User>(
+        if (!this.service.exists(user)) return new APIResponse<User>(
                 HttpStatus.NOT_FOUND,
                 "User not found"
         ).toReponseEntity();

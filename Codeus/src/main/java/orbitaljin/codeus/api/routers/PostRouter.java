@@ -39,7 +39,7 @@ public class PostRouter implements Router<Post> {
         ).toReponseEntity();
 
         // If the Post does not exist, return a 404 Not Found response
-        if (this.service.findById(id) == null) return new APIResponse<Post>(
+        if (!this.service.exists(id)) return new APIResponse<Post>(
                 HttpStatus.NOT_FOUND,
                 "post not found"
         ).toReponseEntity();
@@ -79,16 +79,16 @@ public class PostRouter implements Router<Post> {
     @DeleteMapping("/")
     public ResponseEntity<?> delete(@RequestBody Post post) {
         // if the Post does not exist, return a 404 Not Found response
-        if (this.service.findById(post.getId()) == null) return new APIResponse<Post>(
+        if (!this.service.exists(post)) return new APIResponse<Post>(
                 HttpStatus.NOT_FOUND,
                 "post not found"
         ).toReponseEntity();
 
         // Otherwise, delete the Post and return a 200 OK response
-        this.service.delete(post.getId());
         return new APIResponse<Post>(
                 HttpStatus.OK,
-                "post deleted successfully"
+                "post deleted successfully",
+                this.service.delete(post)
         ).toReponseEntity();
     }
 
@@ -102,7 +102,7 @@ public class PostRouter implements Router<Post> {
         ).toReponseEntity();
 
         // if the Post does not exist, return a 404 Not Found response
-        if (this.service.findById(post.getId()) == null) return new APIResponse<Post>(
+        if (!this.service.exists(post)) return new APIResponse<Post>(
                 HttpStatus.NOT_FOUND,
                 "post not found"
         ).toReponseEntity();

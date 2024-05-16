@@ -15,6 +15,7 @@ public class DBHandler {
     private final UserRepository userRepository;
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
+    private final TagRepository tagRepository;
 
     private DBHandler() {
         try {
@@ -30,6 +31,7 @@ public class DBHandler {
                     .addAnnotatedClass(Post.class)
                     .addAnnotatedClass(Thread.class)
                     .addAnnotatedClass(Comment.class)
+                    .addAnnotatedClass(Tag.class)
                     .addAnnotatedClass(User.class);
 
             // Create SessionFactory
@@ -39,6 +41,7 @@ public class DBHandler {
             userRepository = new UserRepository(sessionFactory);
             commentRepository = new CommentRepository(sessionFactory);
             postRepository = new PostRepository(sessionFactory);
+            tagRepository = new TagRepository(sessionFactory);
         } catch (Throwable e) {
             System.out.println("Initial SessionFactory creation failed." + e);
             throw new ExceptionInInitializerError(e);
@@ -68,5 +71,9 @@ public class DBHandler {
 
     public PostRepository getPostRepository() {
         return postRepository;
+    }
+
+    public TagRepository getTagRepository() {
+        return tagRepository;
     }
 }

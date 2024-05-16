@@ -60,6 +60,11 @@ public class RepositoryImpl<T extends Model> implements Repository<T> {
     }
 
     @Override
+    public T delete(T entity) {
+        return this.delete(entity.getId());
+    }
+
+    @Override
     public T update(T entity) {
         Transaction transaction = null;
 
@@ -174,5 +179,10 @@ public class RepositoryImpl<T extends Model> implements Repository<T> {
     @Override
     public boolean exists(T entity) {
         return this.findById(entity.getId()) != null;
+    }
+
+    @Override
+    public boolean exists(Long id) {
+        return this.findById(id) != null;
     }
 }

@@ -39,7 +39,7 @@ public class CommentRouter implements Router<Comment> {
         ).toReponseEntity();
 
         // If the comment does not exist, return a 404 Not Found response
-        if (this.service.findById(id) == null) return new APIResponse<Comment>(
+        if (!this.service.exists(id)) return new APIResponse<Comment>(
             HttpStatus.NOT_FOUND,
             "Comment not found"
         ).toReponseEntity();
@@ -56,7 +56,7 @@ public class CommentRouter implements Router<Comment> {
     // TODO: Check if user exists
     public ResponseEntity<?> create(@RequestBody Comment comment) {
         // if the content is empty, return a 400 Bad Request response
-        if (comment.getContent().equals("")) return new APIResponse<Comment>(
+        if (comment.getContent().isEmpty()) return new APIResponse<Comment>(
             HttpStatus.BAD_REQUEST,
             "Content cannot be empty"
         ).toReponseEntity();
@@ -85,16 +85,16 @@ public class CommentRouter implements Router<Comment> {
     @DeleteMapping("/")
     public ResponseEntity<?> delete(@RequestBody Comment comment) {
         // if the comment does not exist, return a 404 Not Found response
-        if (this.service.findById(comment.getId()) == null) return new APIResponse<Comment>(
+        if (!this.service.exists(comment)) return new APIResponse<Comment>(
             HttpStatus.NOT_FOUND,
             "Comment not found"
         ).toReponseEntity();
 
         // Otherwise, delete the comment and return a 200 OK response
-        this.service.delete(comment.getId());
         return new APIResponse<Comment>(
             HttpStatus.OK,
-            "Comment deleted successfully"
+            "Comment deleted successfully",
+            this.service.delete(comment)
         ).toReponseEntity();
     }
 
@@ -102,13 +102,13 @@ public class CommentRouter implements Router<Comment> {
     @PatchMapping("/")
     public ResponseEntity<?> update(@RequestBody Comment comment) {
         // if the id or content is null, return a 400 Bad Request response
-        if (comment.getId() == null || comment.getContent().equals("")) return new APIResponse<Comment>(
+        if (comment.getId() == null || comment.getContent().isEmpty()) return new APIResponse<Comment>(
             HttpStatus.BAD_REQUEST,
             "ID and content cannot be null"
         ).toReponseEntity();
 
         // if the comment does not exist, return a 404 Not Found response
-        if (this.service.findById(comment.getId()) == null) return new APIResponse<Comment>(
+        if (!this.service.exists(comment)) return new APIResponse<Comment>(
             HttpStatus.NOT_FOUND,
             "Comment not found"
         ).toReponseEntity();
@@ -125,7 +125,7 @@ public class CommentRouter implements Router<Comment> {
     @GetMapping("/search")
     public ResponseEntity<?> search(@RequestParam String query) {
         // if the query is empty, return a 400 Bad Request response
-        if (query.equals("")) return new APIResponse<Comment>(
+        if (query.isEmpty()) return new APIResponse<Comment>(
             HttpStatus.BAD_REQUEST,
             "Query cannot be empty"
         ).toReponseEntity();
