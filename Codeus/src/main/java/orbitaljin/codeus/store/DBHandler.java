@@ -9,10 +9,12 @@ import org.hibernate.SessionFactory;
 
 // I Used the Singleton pattern to ensure that only one instance of the DBHandler is created
 public class DBHandler {
-    private static DBHandler instance;
     private SessionFactory sessionFactory;
-    public ThreadRepository threadRepository;
-    public UserRepository userRepository;
+
+    private final ThreadRepository threadRepository;
+    private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
+    private final PostRepository postRepository;
 
     private DBHandler() {
         try {
@@ -27,6 +29,7 @@ public class DBHandler {
                     .setProperty("hibernate.jdbc.use_get_generated_keys", "false")
                     .addAnnotatedClass(Post.class)
                     .addAnnotatedClass(Thread.class)
+                    .addAnnotatedClass(Comment.class)
                     .addAnnotatedClass(User.class);
 
             // Create SessionFactory
@@ -34,19 +37,36 @@ public class DBHandler {
             // Create Repositories
             threadRepository = new ThreadRepository(sessionFactory);
             userRepository = new UserRepository(sessionFactory);
+            commentRepository = new CommentRepository(sessionFactory);
+            postRepository = new PostRepository(sessionFactory);
         } catch (Throwable e) {
             System.out.println("Initial SessionFactory creation failed." + e);
             throw new ExceptionInInitializerError(e);
         }
     }
+
+    // Singleton pattern
+    private static final class InstanceHolder {
+        private static final DBHandler instance = new DBHandler();
+    }
+
     public static DBHandler getInstance() {
-        if (instance == null) {
-            synchronized (DBHandler.class) {
-                if (instance == null) {
-                    instance = new DBHandler();
-                }
-            }
-        }
-        return instance;
+        return InstanceHolder.instance;
+    }
+
+    public ThreadRepository getThreadRepository() {
+        return threadRepository;
+    }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
+
+    public CommentRepository getCommentRepository() {
+        return commentRepository;
+    }
+
+    public PostRepository getPostRepository() {
+        return postRepository;
     }
 }

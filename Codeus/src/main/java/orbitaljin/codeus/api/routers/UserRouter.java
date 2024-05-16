@@ -16,7 +16,7 @@ import java.util.Objects;
 public class UserRouter implements Router<User> {
     private final Repository<User> service;
     public UserRouter() {
-        this.service = DBHandler.getInstance().userRepository;
+        this.service = DBHandler.getInstance().getUserRepository();
     }
     @Override
     @GetMapping("/")

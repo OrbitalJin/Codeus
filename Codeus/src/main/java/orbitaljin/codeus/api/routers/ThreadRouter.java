@@ -17,7 +17,7 @@ public class ThreadRouter implements Router<Thread>{
     private final ThreadRepository service;
 
     public ThreadRouter() {
-        this.service = DBHandler.getInstance().threadRepository;
+        this.service = DBHandler.getInstance().getThreadRepository();
     }
 
     @Override
