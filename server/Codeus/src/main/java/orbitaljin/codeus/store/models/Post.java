@@ -17,8 +17,9 @@ public class Post extends Model{
     private Long userId;
     private String title;
     private String content;
-    private PostType postType;
-    private int threadId;
+    private String language;
+    private Long threadId;
+    private String description;
 
     public Post() {
     }
@@ -27,12 +28,30 @@ public class Post extends Model{
             Long userId,
             String title,
             String content,
-            PostType postType
+            String description,
+            String language
     ) {
         this.userId = userId;
         this.title = title;
         this.content = content;
-        this.postType = postType;
+        this.description = description;
+        this.language = language;
+    }
+
+    public Post (
+            Long userId,
+            String title,
+            String content,
+            String language,
+            String description,
+            Long threadId
+    ) {
+        this.userId = userId;
+        this.threadId = threadId;
+        this.title = title;
+        this.content = content;
+        this.description = description;
+        this.language = language;
     }
 
     public Long getUserId() {
@@ -59,13 +78,31 @@ public class Post extends Model{
         this.content = content;
     }
 
-    public PostType getPostType() {
-        return postType;
+    public Long getThreadId() {
+        return threadId;
     }
 
-    public void setPostType(PostType postType) {
-        this.postType = postType;
+    public void setThreadId(Long threadId) {
+        this.threadId = threadId;
     }
+
+    public String getLanguage() {
+        return this.language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
 
     @Override
     public String toString() {
@@ -74,7 +111,6 @@ public class Post extends Model{
                 ", userId=" + userId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", postType=" + postType +
                 '}';
     }
 }
