@@ -1,3 +1,4 @@
+import LeftBar from "@/components/LeftBar";
 import Post from "@/components/Post";
 import PostModel from "@/models/Post";
 import { useEffect, useState } from "react";
@@ -20,15 +21,7 @@ const Home: React.FC = () => {
     }, []);
 
     return (
-        <div className="flex flex-row">
-            <div className="basis-1/6 bg-yellow-300">
-                <p>hi</p>
-                <p>hi</p>
-                <p>hi</p>
-                <p>hi</p>
-                <p>hi</p>
-                <p>hi</p>
-            </div>
+        <div className="flex flex-row" id="left-bar">
             <div className="flex flex-col place-content-center justify-center basis-1/2 space-y-1 px-1 py-1  bg-red-400">
                 {posts.map(post => (
                     <Post key={post.id} post={post} />
