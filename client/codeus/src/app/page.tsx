@@ -1,19 +1,14 @@
-import SideBar, { SideBarItem } from "@/components/Sidebar";
+import SideBar from "@/components/Sidebar/Sidebar";
 import {
     AtSignIcon,
-    BookMarkedIcon,
     BookmarkIcon,
-    ClipboardIcon,
     HomeIcon,
-    Paperclip,
     PaperclipIcon,
     SearchIcon,
-    SettingsIcon,
-    User2Icon,
     UserIcon,
-    UserXIcon,
 } from "lucide-react";
 import { ThemeProvider } from "@/providers/ThemeProvider";
+import SideBarItem from "@/components/Sidebar/SidebarItem";
 
 export default function Home() {
     return (
@@ -25,7 +20,7 @@ export default function Home() {
         >
             <div className="flex flex-row">
                 <SideBar
-                    userFooter={{
+                    sidebarFooter={{
                         image: "https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true",
                         displayName: "John Doe",
                         handle: "@johndoe",
