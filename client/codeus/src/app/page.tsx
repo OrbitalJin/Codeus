@@ -21,47 +21,41 @@ export default function Home() {
             <div className="flex flex-row">
                 <SideBar
                     sidebarFooter={{
-                        image: "https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true",
-                        displayName: "John Doe",
-                        handle: "@johndoe",
+                        image: "https://i.ibb.co/L6fNFqW/images.webp",
+                        displayName: "Witow Kiwi",
+                        handle: "@bunimawl",
                     }}
                 >
                     <SideBarItem
                         icon={<HomeIcon />}
                         text="Home"
-                        alert={true}
                         active={false}
                     />
                     <SideBarItem
                         icon={<SearchIcon />}
                         text="Explore"
-                        alert={false}
                         active={false}
                     />
 
                     <SideBarItem
                         icon={<AtSignIcon />}
                         text="Threads"
-                        alert={true}
                         active={false}
                     />
                     <SideBarItem
                         icon={<PaperclipIcon />}
                         text="Snippets"
-                        alert={true}
                         active={false}
                     />
 
                     <SideBarItem
                         icon={<BookmarkIcon />}
                         text="Bookmarks"
-                        alert={true}
                         active={false}
                     />
                     <SideBarItem
                         icon={<UserIcon />}
                         text="Profile"
-                        alert={true}
                         active={false}
                     />
                 </SideBar>

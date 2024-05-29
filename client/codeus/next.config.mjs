@@ -10,7 +10,7 @@ const nextConfig = {
             },
             {
                 protocol: "https",
-                hostname: "randomuser.me",
+                hostname: "i.ibb.co",
                 pathname: "**",
             },
         ],

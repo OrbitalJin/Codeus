@@ -7,22 +7,18 @@ interface SideBarItemProps {
     icon: React.ReactNode;
     active: boolean;
     text: string;
-    alert: boolean;
 }
 
 export default function SideBarItem(props: SideBarItemProps) {
-    const expanded = useContext(SidebarContext);
-    const [active, setActive] = useState<boolean>(props.active);
+    const { expanded, setExpanded } = useContext(SidebarContext);
+
     return (
         <li
-            onClick={() => {
-                setActive(!active);
-            }}
             className={`
-          relative flex items-center py-4 px-3 my-1
-          font-large rounded-full cursor-pointer
-          bg-transparent hover:bg-muted transition-all
-      `}
+                relative flex items-center py-5 px-3 my-1 font-large rounded-full 
+                cursor-pointerbg-transparent hover:bg-muted transition-all ${
+                    expanded ? "justify-start" : "justify-center"
+                }`}
         >
             {props.icon}
             <span
@@ -32,13 +28,6 @@ export default function SideBarItem(props: SideBarItemProps) {
             >
                 {props.text}
             </span>
-            {props.alert && (
-                <div
-                    className={`absolute right-5 w-2 h-2 rounded bg-indigo-400 ${
-                        expanded ? "" : "top-3"
-                    }`}
-                ></div>
-            )}
         </li>
     );
 }
