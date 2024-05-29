@@ -79,4 +79,8 @@ public class DBHandler {
     public TagRepository getTagRepository() {
         return tagRepository;
     }
+
+    public BookmarkRepository getBookmarkRepository() {
+        return bookmarkRepository;
+    }
 }
