@@ -10,22 +10,9 @@ import {
 } from "lucide-react";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import SideBarItem from "@/components/sidebar/SidebarItem";
-import Post from "@/components/post/Post";
-import { useEffect, useState } from "react";
-import { PostModel } from "@/lib/schema";
-import { InfinitySpin } from "react-loader-spinner";
+import PostList from "@/components/post/PostList";
 
 export default function Home() {
-    const [posts, setPosts] = useState<PostModel[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-
-    useEffect(() => {
-        fetch("http://localhost:8080/posts/")
-            .then(res => res.json())
-            .then(data => setPosts(data?.data));
-        setLoading(false);
-    }, []);
-
     return (
         <ThemeProvider
             attribute="class"
@@ -76,19 +63,7 @@ export default function Home() {
                 </SideBar>
                 {/* Create a scrollable list of <Post /> components */}
                 <main className="flex justify-center flex-1 overflow-y-auto">
-                    <div
-                        className={`flex-1 flex flex-col p-5 space-y-3 transition-all ${
-                            loading ? "justify-center items-center" : ""
-                        }`}
-                    >
-                        {loading ? (
-                            <InfinitySpin color="grey" />
-                        ) : (
-                            posts.map((post: PostModel) => (
-                                <Post key={post.id} post={post} />
-                            ))
-                        )}
-                    </div>
+                    <PostList />
                     <div className="grow border-l h-full "></div>
                 </main>
             </div>
