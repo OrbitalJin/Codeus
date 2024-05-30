@@ -1,5 +1,5 @@
 "use client";
-import SideBar from "@/components/Sidebar/Sidebar";
+import SideBar from "@/components/sidebar/Sidebar";
 import {
     AtSignIcon,
     BookmarkIcon,
@@ -9,20 +9,14 @@ import {
     UserIcon,
 } from "lucide-react";
 import { ThemeProvider } from "@/providers/ThemeProvider";
-import SideBarItem from "@/components/Sidebar/SidebarItem";
-import PostItem from "@/components/PostItem";
+import SideBarItem from "@/components/sidebar/SidebarItem";
+import Post from "@/components/Post";
 import { useEffect, useState } from "react";
-import { Post } from "@/lib/schema";
-import {
-    DotLoader,
-    GridLoader,
-    HashLoader,
-    MoonLoader,
-    PulseLoader,
-} from "react-spinners";
+import { PostModel } from "@/lib/schema";
+import { InfinitySpin } from "react-loader-spinner";
 
 export default function Home() {
-    const [posts, setPosts] = useState<Post[]>([]);
+    const [posts, setPosts] = useState<PostModel[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -80,7 +74,7 @@ export default function Home() {
                         active={false}
                     />
                 </SideBar>
-                {/* Create a scrollable list of <PostItem /> components */}
+                {/* Create a scrollable list of <Post /> components */}
                 <main className="flex justify-center flex-1 overflow-y-auto">
                     <div
                         className={`flex-1 flex flex-col p-5 space-y-3 transition-all ${
@@ -88,10 +82,10 @@ export default function Home() {
                         }`}
                     >
                         {loading ? (
-                            <HashLoader />
+                            <InfinitySpin color="grey" />
                         ) : (
-                            posts.map((post: Post) => (
-                                <PostItem key={post.id} post={post} />
+                            posts.map((post: PostModel) => (
+                                <Post key={post.id} post={post} />
                             ))
                         )}
                     </div>

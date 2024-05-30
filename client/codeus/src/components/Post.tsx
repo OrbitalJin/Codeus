@@ -1,4 +1,4 @@
-import { Post, User } from "@/lib/schema";
+import { PostModel, UserModel } from "@/lib/schema";
 import {
     Card,
     CardContent,
@@ -28,10 +28,10 @@ import {
 } from "./ui/dropdown-menu";
 
 interface PostProps {
-    post: Post;
+    post: PostModel;
 }
 
-export default function PostItem({ post }: PostProps) {
+export default function Post({ post }: PostProps) {
     return (
         <Card className="shadow-sm">
             <CardHeader>
@@ -61,7 +61,7 @@ export default function PostItem({ post }: PostProps) {
     );
 }
 
-const UserHeader: React.FC<User> = ({ id, username }: User) => {
+const UserHeader: React.FC<UserModel> = ({ id, username }: UserModel) => {
     return (
         <div className="flex flex-row justify-between items-center w-full">
             <div className="flex items-center pb-1 cursor-pointer">

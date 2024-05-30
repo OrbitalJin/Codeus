@@ -1,5 +1,5 @@
 // Post schema
-export type Post = {
+export type PostModel = {
     id: string;
     title: string;
     description: string;
@@ -11,7 +11,7 @@ export type Post = {
     updatedAt: string;
 };
 
-export type User = {
+export type UserModel = {
     id: string;
     username: string;
     email?: string;
