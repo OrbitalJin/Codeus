@@ -13,6 +13,13 @@ import SideBarItem from "@/components/Sidebar/SidebarItem";
 import PostItem from "@/components/PostItem";
 import { useEffect, useState } from "react";
 import { Post } from "@/lib/schema";
+import {
+    DotLoader,
+    GridLoader,
+    HashLoader,
+    MoonLoader,
+    PulseLoader,
+} from "react-spinners";
 
 export default function Home() {
     const [posts, setPosts] = useState<Post[]>([]);
@@ -75,10 +82,18 @@ export default function Home() {
                 </SideBar>
                 {/* Create a scrollable list of <PostItem /> components */}
                 <main className="flex justify-center flex-1 overflow-y-auto">
-                    <div className="flex-1 flex flex-col p-5 space-y-3 bg">
-                        {posts.map((post: Post) => (
-                            <PostItem key={post.id} post={post} />
-                        ))}
+                    <div
+                        className={`flex-1 flex flex-col p-5 space-y-3 transition-all ${
+                            loading ? "justify-center items-center" : ""
+                        }`}
+                    >
+                        {loading ? (
+                            <HashLoader />
+                        ) : (
+                            posts.map((post: Post) => (
+                                <PostItem key={post.id} post={post} />
+                            ))
+                        )}
                     </div>
                     <div className="grow border-l h-full "></div>
                 </main>
