@@ -40,7 +40,7 @@ export default function PostItem({ post }: PostProps) {
                 />
             </CardContent>
             <CardFooter>
-                <CarInteractions />
+                <CardInteractions />
             </CardFooter>
         </Card>
     );
@@ -70,7 +70,7 @@ const UserHeader: React.FC<User> = ({ id, username }: User) => {
     );
 };
 
-const CarInteractions = () => {
+const CardInteractions = () => {
     return (
         <div className="flex flex-row justify-between items-center w-full">
             <div className="flex flex-row space-x-3">
