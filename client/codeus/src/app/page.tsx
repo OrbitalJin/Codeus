@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import SideBarItem from "@/components/sidebar/SidebarItem";
-import Post from "@/components/Post";
+import Post from "@/components/post/Post";
 import { useEffect, useState } from "react";
 import { PostModel } from "@/lib/schema";
 import { InfinitySpin } from "react-loader-spinner";
