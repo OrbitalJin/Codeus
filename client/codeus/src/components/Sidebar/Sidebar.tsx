@@ -22,7 +22,7 @@ export default function SideBar({ children, sidebarFooter }: SideBarProps) {
     const [expanded, setExpanded] = useState<boolean>(true);
 
     return (
-        <aside className="h-screen pl-40">
+        <aside className="pl-60">
             <nav className="h-full flex flex-col border-r">
                 <SidebarContext.Provider value={{ expanded, setExpanded }}>
                     <SidebarHeader />

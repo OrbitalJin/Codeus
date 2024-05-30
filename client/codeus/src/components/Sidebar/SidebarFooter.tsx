@@ -29,10 +29,6 @@ export default function SidebarFooter(props: SidebarFooterProps) {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <DropdownMenuItem>
-                    <LogOut size={20} className="mr-2 text-destructive" />
-                    <a className="text-destructive">Logout</a>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
                     <UserIcon size={20} className="mr-2" />
                     Profile
                 </DropdownMenuItem>
@@ -47,6 +43,10 @@ export default function SidebarFooter(props: SidebarFooterProps) {
                         <Moon size={20} className="mr-2" />
                     )}
                     <a>Toggle Theme</a>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                    <LogOut size={20} className="mr-2 text-red-500" />
+                    <a className="text-red-500">Logout</a>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
@@ -81,8 +81,8 @@ const Trigger: React.FC<SidebarFooterProps> = ({
                             "opacity 0.3s, width 0.3s, margin-left 0.3s",
                     }}
                 >
-                    <div className="leading-4 text-left">
-                        <h4 className="font-semibold">{displayName}</h4>
+                    <div className="leading-3 text-left">
+                        <h4 className="text-sm font-semibold">{displayName}</h4>
                         <span className="text-xs text-gray-400">{handle}</span>
                     </div>
                     <MoreVertical size={20} className="ml-2" />
