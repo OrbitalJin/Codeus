@@ -10,7 +10,7 @@ export const usePosts = () => {
     const getPosts = async () => {
         try {
             const data = await fetchPosts();
-            setPosts(data);
+            setPosts(data.reverse());
         } catch (error) {
             console.error("Failed to fetch posts", error);
             setError(true);
