@@ -34,7 +34,7 @@ const PostUserHeader: React.FC<PostUserHeaderProps> = ({
                     </div>
                 </div>
             </div>
-            <PostMoreButton postId={post.id} onDelete={onDelete} />
+            <PostMoreButton postId={post.id || ""} onDelete={onDelete} />
         </div>
     );
 };

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 
 import SidebarFooter, { SidebarFooterProps } from "./SidebarFooter";
 import SidebarHeader from "./SidebarHeader";
+import CreatePost from "../CreatePost";
 
 interface SidebarContextProps {
     expanded: boolean;
@@ -27,13 +28,7 @@ export default function SideBar({ children, sidebarFooter }: SideBarProps) {
                 <SidebarContext.Provider value={{ expanded, setExpanded }}>
                     <SidebarHeader />
                     <ul className="flex-1 px-3">{children}</ul>
-                    <Button
-                        className={`m-3 rounded-full bg-indigo-500 text-white hover:bg-indigo-600 transition-all ${
-                            expanded ? "w-50" : "w-0 opacity-0"
-                        }`}
-                    >
-                        {expanded && "Create Post"}
-                    </Button>
+                    <CreatePost expanded={expanded} />
                     <SidebarFooter {...sidebarFooter} />
                 </SidebarContext.Provider>
             </nav>

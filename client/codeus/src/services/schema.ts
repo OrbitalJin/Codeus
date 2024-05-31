@@ -1,14 +1,15 @@
 // Post schema
 export type PostModel = {
-    id: string;
+    id?: string;
     title: string;
     description: string;
     content: string;
     language: string;
     userId: string;
-    threadId: string;
-    createdAt: string;
-    updatedAt: string;
+    author?: string; // user handle
+    threadId?: string;
+    createdAt?: string;
+    updatedAt?: string;
 };
 
 export type UserModel = {
