@@ -1,5 +1,5 @@
-import { DialogTrigger } from "@radix-ui/react-dialog";
 import {
+    DialogTrigger,
     Dialog,
     DialogClose,
     DialogContent,
