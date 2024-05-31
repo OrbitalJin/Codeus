@@ -1,12 +1,14 @@
 package orbitaljin.codeus.store.repositories;
 
 import orbitaljin.codeus.store.models.User;
-import org.hibernate.SessionFactory;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public class UserRepository extends RepositoryImpl<User> {
+import java.util.List;
 
-    public UserRepository(SessionFactory sf) {
-        super(sf, User.class);
-    }
-
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    User findByUsername(String username);
+    User findByUsernameAndPassword(String username, String password);
+    List<User> findByUsernameContaining(String username);
 }

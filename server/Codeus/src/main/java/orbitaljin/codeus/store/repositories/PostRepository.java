@@ -1,12 +1,11 @@
 package orbitaljin.codeus.store.repositories;
 
 import orbitaljin.codeus.store.models.Post;
-import org.hibernate.SessionFactory;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public class PostRepository extends RepositoryImpl<Post> {
+import java.util.List;
 
-    public PostRepository(SessionFactory sf) {
-        super(sf, Post.class);
-    }
-
+public interface PostRepository extends JpaRepository<Post, Long>{
+//    Post findByAuthor(String author);
+    List<Post> findByTitleContaining(String title);
 }

@@ -9,6 +9,7 @@ import java.sql.Date;
 
 @Entity(name = "users")
 public class User extends Model{
+    private String handle;
     private String username;
     private String password;
 
@@ -17,20 +18,32 @@ public class User extends Model{
 
     public User(
             String username,
+            String handle,
             String password
     ) {
+        this.handle = handle;
         this.username = username;
         this.password = password;
     }
 
     public User(
             Long id,
+            String handle,
             String username,
             String password
     ) {
         this.setId(id);
+        this.handle = handle;
         this.username = username;
         this.password = password;
+    }
+
+    public String getHandle() {
+        return handle;
+    }
+
+    public void setHandle(String handle) {
+        this.handle = handle;
     }
 
     public String getUsername() {

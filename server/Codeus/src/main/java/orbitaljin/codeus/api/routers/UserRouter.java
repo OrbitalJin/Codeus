@@ -1,9 +1,9 @@
 package orbitaljin.codeus.api.routers;
 
 import orbitaljin.codeus.api.APIResponse;
-import orbitaljin.codeus.store.DBHandler;
 import orbitaljin.codeus.store.models.User;
-import orbitaljin.codeus.store.repositories.Repository;
+import orbitaljin.codeus.store.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,17 +14,16 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/users")
 public class UserRouter implements Router<User> {
-    private final Repository<User> service;
-    public UserRouter() {
-        this.service = DBHandler.getInstance().getUserRepository();
-    }
+    @Autowired
+    private UserService service;
+
     @Override
     @GetMapping("/")
     public ResponseEntity<?> getAll() {
         // Return all users
         return new APIResponse<List<User>>(
                 HttpStatus.OK,
-                this.service.findAll()
+                this.service.getAllUsers()
         ).toReponseEntity();
 
     }
@@ -39,7 +38,7 @@ public class UserRouter implements Router<User> {
         ).toReponseEntity();
 
         // If the user does not exist, return a 404 Not Found response
-        if (this.service.findById(id) == null) return new APIResponse<User>(
+        if (this.service.getUserById(id) == null) return new APIResponse<User>(
                 HttpStatus.NOT_FOUND,
                 "User not found"
         ).toReponseEntity();
@@ -47,7 +46,7 @@ public class UserRouter implements Router<User> {
         // Otherwise, return a 200 OK response with the user
         return new APIResponse<User>(
                 HttpStatus.OK,
-                this.service.findById(id)
+                this.service.getUserById(id)
         ).toReponseEntity();
     }
 
@@ -63,7 +62,7 @@ public class UserRouter implements Router<User> {
         }
 
         // Check if the username already exists
-        if (!this.service.findByField("username", user.getUsername()).isEmpty()) {
+        if (this.service.getUserByUsername(user.getUsername()) != null) {
             return new APIResponse<User>(
                     HttpStatus.CONFLICT,
                     "Username already exists"
@@ -74,7 +73,7 @@ public class UserRouter implements Router<User> {
         return new APIResponse<User>(
                 HttpStatus.CREATED,
                 "User created successfully",
-                this.service.create(user)
+                this.service.createUser(user)
         ).toReponseEntity();
     }
 
@@ -93,7 +92,7 @@ public class UserRouter implements Router<User> {
         }
 
         // Check if the user exists, return a 404 Not Found response
-        if (this.service.findById(user.getId()) == null) return new APIResponse<User>(
+        if (this.service.getUserById(user.getId()) == null) return new APIResponse<User>(
                 HttpStatus.NOT_FOUND,
                 "User not found"
         ).toReponseEntity();
@@ -102,7 +101,7 @@ public class UserRouter implements Router<User> {
         return new APIResponse<User>(
                 HttpStatus.OK,
                 "User updated successfully",
-                this.service.update(user)
+                this.service.updateUser(user)
         ).toReponseEntity();
     }
 
@@ -118,22 +117,27 @@ public class UserRouter implements Router<User> {
         }
 
         // Check if the user exists, return a 404 Not Found response
-        if (!this.service.exists(user)) return new APIResponse<User>(
+        if (this.service.getUserById(user.getId()) == null) return new APIResponse<User>(
                 HttpStatus.NOT_FOUND,
                 "User not found"
         ).toReponseEntity();
 
         // Check if the password is correct, return a 401 Unauthorized response
-        if (!this.service.findById(user.getId()).getPassword().equals(user.getPassword())) return new APIResponse<User>(
+        if (
+                this.service.getByUsernameAndPassword(
+                        this.service.getUserById(user.getId()).getUsername(),
+                        user.getPassword()
+                ) == null
+        ) return new APIResponse<User>(
                 HttpStatus.UNAUTHORIZED,
                 "Incorrect password"
         ).toReponseEntity();
 
         // Delete the user and return a 200 OK response
-        return new APIResponse<User>(
+        this.service.deleteUser(user.getId());
+        return new APIResponse<>(
                 HttpStatus.OK,
-                "User deleted successfully",
-                this.service.delete(user.getId())
+                "User deleted successfully"
         ).toReponseEntity();
     }
 
@@ -149,7 +153,7 @@ public class UserRouter implements Router<User> {
         // Otherwise, return a 200 OK response with the search results
         return new APIResponse<List<User>>(
                 HttpStatus.OK,
-                this.service.search("username", query)
+                this.service.searchByUsername(query)
         ).toReponseEntity();
     }
 }

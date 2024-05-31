@@ -1,9 +1,9 @@
 package orbitaljin.codeus.api.routers;
 
 import orbitaljin.codeus.api.APIResponse;
-import orbitaljin.codeus.store.DBHandler;
 import orbitaljin.codeus.store.models.Post;
-import orbitaljin.codeus.store.repositories.PostRepository;
+import orbitaljin.codeus.store.services.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,122 +13,107 @@ import java.util.List;
 @RestController
 @RequestMapping("/posts")
 public class PostRouter implements Router<Post> {
-    private final PostRepository service;
-
-    public PostRouter() {
-        this.service = DBHandler.getInstance().getPostRepository();
-    }
+    @Autowired
+    private PostService service;
 
     @Override
     @GetMapping("/")
     public ResponseEntity<?> getAll() {
-        // Return a 200 OK response with all the Posts
+        // Return all posts
         return new APIResponse<List<Post>>(
                 HttpStatus.OK,
-                this.service.findAll()
+                this.service.getAllPosts()
         ).toReponseEntity();
     }
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Long id) {
-        // if the id is null, return a 400 Bad Request response
+    public ResponseEntity<?> get(@PathVariable  Long id) {
+        // Check if the id is null
         if (id == null) return new APIResponse<Post>(
                 HttpStatus.BAD_REQUEST,
                 "ID cannot be null"
         ).toReponseEntity();
 
-        // If the Post does not exist, return a 404 Not Found response
-        if (!this.service.exists(id)) return new APIResponse<Post>(
+        // Check if the post does not exist
+        if (this.service.getPostById(id) == null) return new APIResponse<Post>(
                 HttpStatus.NOT_FOUND,
-                "post not found"
+                "Post not found"
         ).toReponseEntity();
 
-        // Otherwise, return a 200 OK response with the Post
+        // Otherwise, return a 200 OK response with the post
         return new APIResponse<Post>(
                 HttpStatus.OK,
-                this.service.findById(id)
+                this.service.getPostById(id)
         ).toReponseEntity();
     }
 
     @Override
     @PostMapping("/")
-    // TODO: Check if user exists
-    public ResponseEntity<?> create(@RequestBody Post post) {
-        // if the content is empty, return a 400 Bad Request response
-        if (post.getContent().isEmpty() || post.getTitle().isEmpty()) return new APIResponse<Post>(
-                HttpStatus.BAD_REQUEST,
-                "post cannot be empty"
-        ).toReponseEntity();
+    public ResponseEntity<?> create(@RequestBody Post entity) {
+        // Check if the title or content is null
+        if (entity.getTitle() == null || entity.getContent() == null) {
+            return new APIResponse<Post>(
+                    HttpStatus.BAD_REQUEST,
+                    "Title and content cannot be null"
+            ).toReponseEntity();
+        }
 
-        // if the user id is null, return a 400 Bad Request response
-        if (post.getUserId() == null) return new APIResponse<Post>(
-                HttpStatus.BAD_REQUEST,
-                "User ID cannot be null"
-        ).toReponseEntity();
-
-        // Otherwise, create the Post and return a 201 Created response
+        // Create the post
         return new APIResponse<Post>(
                 HttpStatus.CREATED,
-                "Post created successfully",
-                this.service.create(post)
+                this.service.createPost(entity)
         ).toReponseEntity();
     }
 
     @Override
     @DeleteMapping("/")
-    public ResponseEntity<?> delete(@RequestBody Post post) {
-        // if the Post does not exist, return a 404 Not Found response
-        if (!this.service.exists(post)) return new APIResponse<Post>(
+    public ResponseEntity<?> delete(@RequestBody Post entity) {
+        // Check if the post does not exist
+        if (this.service.getPostById(entity.getId()) == null) return new APIResponse<Post>(
                 HttpStatus.NOT_FOUND,
-                "post not found"
+                "Post not found"
         ).toReponseEntity();
 
-        // Otherwise, delete the Post and return a 200 OK response
+        // Delete the post
+        this.service.deletePost(entity.getId());
         return new APIResponse<Post>(
                 HttpStatus.OK,
-                "post deleted successfully",
-                this.service.delete(post)
+                "Post deleted successfully"
         ).toReponseEntity();
     }
 
     @Override
     @PatchMapping("/")
-    public ResponseEntity<?> update(@RequestBody Post post) {
-        // if the id or content is null, return a 400 Bad Request response
-        if (post.getId() == null) return new APIResponse<Post>(
-                HttpStatus.BAD_REQUEST,
-                "ID cannot be null"
-        ).toReponseEntity();
+    public ResponseEntity<?> update(@RequestBody Post entity) {
+        // Check if the id, title or content is null
+        if (entity.getId() == null || entity.getTitle() == null || entity.getContent() == null) {
+            return new APIResponse<Post>(
+                    HttpStatus.BAD_REQUEST,
+                    "ID, title and content cannot be null"
+            ).toReponseEntity();
+        }
 
-        // if the Post does not exist, return a 404 Not Found response
-        if (!this.service.exists(post)) return new APIResponse<Post>(
+        // Check if the post does not exist
+        if (this.service.getPostById(entity.getId()) == null) return new APIResponse<Post>(
                 HttpStatus.NOT_FOUND,
-                "post not found"
+                "Post not found"
         ).toReponseEntity();
 
-        // otherwise, update the Post and return a 200 OK response
+        // Update the post
         return new APIResponse<Post>(
                 HttpStatus.OK,
-                "post updated successfully",
-                this.service.update(post)
+                this.service.updatePost(entity)
         ).toReponseEntity();
     }
 
     @Override
     @GetMapping("/search")
-    public ResponseEntity<?> search(@RequestParam String query) {
-        // if the query is empty, return a 400 Bad Request response
-        if (query.isEmpty()) return new APIResponse<Post>(
-                HttpStatus.BAD_REQUEST,
-                "Query cannot be empty"
-        ).toReponseEntity();
-
-        // Return a 200 OK response with the search results
+    public ResponseEntity<?> search(@RequestBody String query) {
+        // Search for posts by title
         return new APIResponse<List<Post>>(
                 HttpStatus.OK,
-                this.service.search("title", query)
+                this.service.searchByTitle(query)
         ).toReponseEntity();
     }
-
 }

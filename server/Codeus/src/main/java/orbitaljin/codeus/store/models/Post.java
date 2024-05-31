@@ -10,11 +10,8 @@ import java.sql.Date;
 @Entity
 @Table(name = "posts")
 public class Post extends Model{
-    public enum PostType {
-        QUESTION,
-        SNIPPET,
-    }
-    private Long userId;
+
+    private String author;
     private String title;
     private String content;
     private String language;
@@ -25,13 +22,13 @@ public class Post extends Model{
     }
 
     public Post(
-            Long userId,
+            String author,
             String title,
             String content,
             String description,
             String language
     ) {
-        this.userId = userId;
+        this.author= author;
         this.title = title;
         this.content = content;
         this.description = description;
@@ -39,14 +36,14 @@ public class Post extends Model{
     }
 
     public Post (
-            Long userId,
+            String author,
             String title,
             String content,
             String language,
             String description,
             Long threadId
     ) {
-        this.userId = userId;
+        this.author = author;
         this.threadId = threadId;
         this.title = title;
         this.content = content;
@@ -54,12 +51,12 @@ public class Post extends Model{
         this.language = language;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getTitle() {
@@ -108,7 +105,7 @@ public class Post extends Model{
     public String toString() {
         return "Post{" +
                 "id=" + this.getId() +
-                ", userId=" + userId +
+                ", author=" + author +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 '}';
