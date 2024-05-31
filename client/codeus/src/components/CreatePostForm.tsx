@@ -87,7 +87,12 @@ const CreatePostForm: React.FC = () => {
                         </Select>
                     )}
                 />
-                <Button type="submit">Submit</Button>
+                <Button
+                    type="submit"
+                    className="bg-indigo-500 text-white hover:bg-indigo-600 transition-colors"
+                >
+                    Post
+                </Button>
                 <DialogClose asChild>
                     <button ref={dialogCloseRef} style={{ display: "none" }} />
                 </DialogClose>
