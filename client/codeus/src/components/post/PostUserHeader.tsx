@@ -29,7 +29,7 @@ const PostUserHeader: React.FC<PostUserHeaderProps> = ({
                             {user.username}
                         </h4>
                         <span className="text-xs text-gray-400">
-                            /{user.id}
+                            /{user.handle}
                         </span>
                     </div>
                 </div>

@@ -83,7 +83,7 @@ const Trigger: React.FC<SidebarFooterProps> = ({
                 >
                     <div className="leading-3 text-left">
                         <h4 className="text-sm font-semibold">{displayName}</h4>
-                        <span className="text-xs text-gray-400">{handle}</span>
+                        <span className="text-xs text-gray-400">/{handle}</span>
                     </div>
                     <MoreVertical size={20} className="ml-2" />
                 </div>

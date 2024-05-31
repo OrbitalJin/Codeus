@@ -24,7 +24,8 @@ export default function Post({ post, onDelete }: PostProps) {
                     post={post}
                     user={{
                         id: post.userId,
-                        username: "John Doe",
+                        handle: "bunimawl",
+                        username: "Witow Kiwi",
                     }}
                     onDelete={onDelete}
                 />

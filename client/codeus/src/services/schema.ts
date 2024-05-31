@@ -13,8 +13,8 @@ export type PostModel = {
 
 export type UserModel = {
     id: string;
+    handle: string;
     username: string;
-    email?: string;
     createdAt?: string;
     updatedAt?: string;
 };

@@ -25,7 +25,7 @@ export default function Home() {
                     sidebarFooter={{
                         image: "https://i.ibb.co/L6fNFqW/images.webp",
                         displayName: "Witow Kiwi",
-                        handle: "@bunimawl",
+                        handle: "bunimawl",
                     }}
                 >
                     <SideBarItem
