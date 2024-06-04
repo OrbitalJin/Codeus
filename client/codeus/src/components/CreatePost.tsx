@@ -7,7 +7,6 @@ import {
     DialogTitle,
 } from "./ui/dialog";
 import { Button } from "./ui/button";
-import React, { useRef } from "react";
 import CreatePostForm from "./CreatePostForm";
 
 interface CreatePostProps {
