@@ -11,6 +11,7 @@ import {
 import { SidebarContext } from "./Sidebar";
 import { useTheme } from "@/providers/theme-provider";
 import { useNavigate } from "react-router-dom";
+import { useAuthenticate } from "@/hooks/useAuthenticate";
 
 export interface SidebarFooterProps {
   image: string;
@@ -21,6 +22,12 @@ export interface SidebarFooterProps {
 export default function SidebarFooter(props: SidebarFooterProps) {
   const { theme, setTheme } = useTheme();
   const navigate = useNavigate();
+  const { logOut } = useAuthenticate();
+
+  const handleLogOut = async () => {
+    await logOut();
+    navigate("/login");
+  };
 
   return (
     <DropdownMenu>
@@ -49,9 +56,7 @@ export default function SidebarFooter(props: SidebarFooterProps) {
         </DropdownMenuItem>
         <DropdownMenuItem
           className="cursor-pointer"
-          onClick={() => {
-            navigate("/login");
-          }}
+          onClick={() => handleLogOut()}
         >
           <LogOut size={20} className="mr-2 text-red-500" />
           <a className="text-red-500">Logout</a>

@@ -3,12 +3,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { userCredentialsSchema } from "@/services/validation";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAuthenticate } from "./useAuthenticate";
 
 const useLogin = () => {
   const [error, setError] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const { logIn } = useAuthenticate();
 
   const form = useForm<z.infer<typeof userCredentialsSchema>>({
     resolver: zodResolver(userCredentialsSchema),
@@ -19,10 +19,10 @@ const useLogin = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof userCredentialsSchema>) => {
-    console.log(values);
     setLoading(true);
-    setError(false);
-    navigate("/");
+    const error = await logIn(values.email, values.password);
+    setError(error ? true : false);
+    setLoading(false);
   };
 
   return { form, onSubmit, loading, error };
