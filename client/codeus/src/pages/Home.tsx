@@ -1,18 +1,16 @@
-"use client";
+import { ThemeProvider } from "@/providers/theme-provider";
+import SideBarItem from "@/components/sidebar/SidebarItem";
 import SideBar from "@/components/sidebar/Sidebar";
 import {
-  AtSignIcon,
-  BookmarkIcon,
   HomeIcon,
-  PaperclipIcon,
   SearchIcon,
+  AtSignIcon,
+  PaperclipIcon,
+  BookmarkIcon,
   UserIcon,
 } from "lucide-react";
-import { ThemeProvider } from "@/providers/ThemeProvider";
-import SideBarItem from "@/components/sidebar/SidebarItem";
 import PostList from "@/components/post/PostList";
-
-export default function Home() {
+function Home() {
   return (
     <div className="flex flex-row h-screen">
       <SideBar
@@ -39,3 +37,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;

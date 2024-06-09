@@ -1,9 +1,8 @@
 import { ChevronLast } from "lucide-react";
 import { Button } from "../ui/button";
-import Link from "next/link";
 import { useContext } from "react";
 import { SidebarContext } from "./Sidebar";
-import Logo from "../Logo";
+import Logo from "../logo";
 
 export default function SidebarHeader() {
   const { expanded, setExpanded } = useContext(SidebarContext);

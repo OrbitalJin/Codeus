@@ -1,13 +1,19 @@
-import Link from "next/link";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 interface LogoProps {
   className?: string;
 }
 
 const Logo: React.FC<LogoProps> = ({ className }: LogoProps) => {
+  const navigate = useNavigate();
   return (
-    <Link href="/" className={`group ${className}`}>
+    <a
+      onClick={() => {
+        navigate("/");
+      }}
+      className={`cursor-pointer group ${className}`}
+    >
       <span className="group-hover:text-indigo-500 group-hover:font-bold transition-all">
         Code
       </span>
@@ -15,7 +21,7 @@ const Logo: React.FC<LogoProps> = ({ className }: LogoProps) => {
         us
       </span>
       <span className="group-hover:animate-blink ">{"_"}</span>
-    </Link>
+    </a>
   );
 };
 

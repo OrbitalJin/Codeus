@@ -1,14 +1,14 @@
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { userCredentialsSchema } from "@/services/validation";
 import { useForm } from "react-hook-form";
-import { auth } from "@/lib/firebase";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const useLogin = () => {
-  const [logIn] = useSignInWithEmailAndPassword(auth);
   const [error, setError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof userCredentialsSchema>>({
     resolver: zodResolver(userCredentialsSchema),
@@ -20,12 +20,12 @@ const useLogin = () => {
 
   const onSubmit = async (values: z.infer<typeof userCredentialsSchema>) => {
     console.log(values);
-    const res = await logIn(values.email, values.password);
-    console.log(res);
-    setError(res ? false : true);
+    setLoading(true);
+    setError(false);
+    navigate("/");
   };
 
-  return { form, onSubmit, error };
+  return { form, onSubmit, loading, error };
 };
 
 export default useLogin;

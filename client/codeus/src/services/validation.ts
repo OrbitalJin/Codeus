@@ -29,5 +29,5 @@ export const userCredentialsSchema = z.object({
     .string({
       required_error: "Please enter a password",
     })
-    .min(8, "Password must contain at least 8 characters"),
+    .min(8, "It must be at least 8 characters"),
 });
