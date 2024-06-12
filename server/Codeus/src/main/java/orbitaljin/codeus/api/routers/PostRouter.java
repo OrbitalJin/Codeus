@@ -28,7 +28,7 @@ public class PostRouter implements Router<Post> {
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable  Long id) {
+    public ResponseEntity<?> get(@PathVariable  String id) {
         // Check if the id is null
         if (id == null) return new APIResponse<Post>(
                 HttpStatus.BAD_REQUEST,

@@ -23,7 +23,7 @@ public class Thread extends Model {
     }
 
     public Thread(
-            Long id,
+            String id,
             String title,
             String description
     ) {

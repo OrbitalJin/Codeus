@@ -21,7 +21,7 @@ public class UserService {
     }
 
     @Transactional
-    public User getUserById(Long id) {
+    public User getUserById(String id) {
         return userRepository.findById(id).orElse(null);
     }
 
@@ -31,18 +31,12 @@ public class UserService {
     }
 
     @Transactional
-    public User getByUsernameAndPassword(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password);
-    }
-
-
-    @Transactional
     public User createUser(User user) {
         return userRepository.save(user);
     }
 
     @Transactional
-    public void deleteUser(Long id) {
+    public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
 

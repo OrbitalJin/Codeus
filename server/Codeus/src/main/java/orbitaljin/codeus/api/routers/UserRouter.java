@@ -30,7 +30,7 @@ public class UserRouter implements Router<User> {
 
     @Override
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable Long id) {
+    public ResponseEntity<?> get(@PathVariable String id) {
         // If the id is null, return a 400 Bad Request response
         if (id == null) return new APIResponse<User>(
                 HttpStatus.BAD_REQUEST,
@@ -54,10 +54,10 @@ public class UserRouter implements Router<User> {
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody User user) {
         // If the username or password is null, return a 400 Bad Request response
-        if (Objects.equals(user.getUsername(), "") || Objects.equals(user.getPassword(), "")) {
+        if (Objects.equals(user.getUsername(), "") || Objects.equals(user.getEmail(), "") || Objects.equals(user.getHandle(), "")) {
             return new APIResponse<User>(
                     HttpStatus.BAD_REQUEST,
-                    "Username and password cannot be null"
+                    "Username, email or handlw cannot be null"
             ).toReponseEntity();
         }
 
@@ -81,10 +81,7 @@ public class UserRouter implements Router<User> {
     @PatchMapping("/")
     public ResponseEntity<?> update(@RequestBody User user) {
         // Check if the id is null, username or password is null, return a 400 Bad Request response
-        if (user.getId() == null ||
-                        Objects.equals(user.getUsername(), "") ||
-                        Objects.equals(user.getPassword(), "")
-        ) {
+        if (user.getId() == null ||Objects.equals(user.getUsername(), "")) {
             return new APIResponse<User>(
                     HttpStatus.BAD_REQUEST,
                     "ID, username and password cannot be null"
@@ -109,7 +106,7 @@ public class UserRouter implements Router<User> {
     @DeleteMapping("/")
     public ResponseEntity<?> delete(@RequestBody User user) {
         // Check if the id is null, return a 400 Bad Request response
-        if (user.getId() == null ||  user.getPassword().isEmpty()) {
+        if (user.getId() == null) {
             return new APIResponse<User>(
                     HttpStatus.BAD_REQUEST,
                     "ID cannot be null"
@@ -122,18 +119,6 @@ public class UserRouter implements Router<User> {
                 "User not found"
         ).toReponseEntity();
 
-        // Check if the password is correct, return a 401 Unauthorized response
-        if (
-                this.service.getByUsernameAndPassword(
-                        this.service.getUserById(user.getId()).getUsername(),
-                        user.getPassword()
-                ) == null
-        ) return new APIResponse<User>(
-                HttpStatus.UNAUTHORIZED,
-                "Incorrect password"
-        ).toReponseEntity();
-
-        // Delete the user and return a 200 OK response
         this.service.deleteUser(user.getId());
         return new APIResponse<>(
                 HttpStatus.OK,

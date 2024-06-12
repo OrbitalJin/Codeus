@@ -16,7 +16,7 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public Post getPostById(Long id) {
+    public Post getPostById(String id) {
         return postRepository.findById(id).orElse(null);
     }
 
@@ -28,7 +28,7 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public void deletePost(Long id) {
+    public void deletePost(String id) {
         postRepository.deleteById(id);
     }
 

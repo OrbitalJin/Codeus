@@ -27,7 +27,7 @@ public class Comment extends Model {
     }
 
     public Comment(
-            Long id,
+            String id,
             String content,
             Long postId,
             Long userId,

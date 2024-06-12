@@ -4,38 +4,59 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity(name = "users")
-public class User extends Model{
+public class User {
+    @Id
+    private String id;
+    private String email;
     private String handle;
     private String username;
-    private String password;
+    @CreationTimestamp
+    private Timestamp createdAt;
+    @UpdateTimestamp
+    private Timestamp updatedAt;
 
     public User() {
     }
 
     public User(
             String username,
-            String handle,
-            String password
+            String handle
     ) {
         this.handle = handle;
         this.username = username;
-        this.password = password;
     }
 
     public User(
-            Long id,
+            String id,
             String handle,
-            String username,
-            String password
+            String username
     ) {
         this.setId(id);
         this.handle = handle;
         this.username = username;
-        this.password = password;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getHandle() {
@@ -54,19 +75,19 @@ public class User extends Model{
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public Timestamp getCreatedAt() {
+        return this.createdAt;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public Timestamp getUpdatedAt() {
+        return this.updatedAt;
     }
 
+    @Override
     public String toString() {
         return "User{" +
                 "id=" + this.getId() +
                 ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
                 ", registeredAt=" + this.getCreatedAt() +
                 '}';
     }

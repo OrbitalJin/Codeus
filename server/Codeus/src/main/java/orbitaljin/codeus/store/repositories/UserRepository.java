@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, String> {
     User findByUsername(String username);
-    User findByUsernameAndPassword(String username, String password);
     List<User> findByUsernameContaining(String username);
 }

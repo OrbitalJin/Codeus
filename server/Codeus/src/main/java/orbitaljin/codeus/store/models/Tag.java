@@ -18,7 +18,7 @@ public class Tag extends Model {
         this.color = color;
     }
 
-    public Tag(Long id, String name, String color) {
+    public Tag(String id, String name, String color) {
         this.setId(id);
         this.name = name;
         this.color = color;

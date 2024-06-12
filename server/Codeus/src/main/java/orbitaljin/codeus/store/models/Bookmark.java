@@ -6,30 +6,30 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "bookmarks")
 public class Bookmark extends Model {
-    private Long userId;
-    private Long postId;
+    private String userId;
+    private String postId;
 
     public Bookmark() {
     }
 
-    public Bookmark(Long userId, Long postId) {
+    public Bookmark(String userId, String postId) {
         this.userId = userId;
         this.postId = postId;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    public Long getPostId() {
+    public String getPostId() {
         return postId;
     }
 
-    public void setPostId(Long postId) {
+    public void setPostId(String postId) {
         this.postId = postId;
     }
 
