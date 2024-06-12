@@ -5,16 +5,17 @@
 - [x] Basic login flow
 - [x] Basic signup flow
 - [x] Migrate to React + Vite
-- [ ] Reimplment auth flow using fire/supabase with a provider and a custom `useAuth` hook
+- [x] Reimplment auth flow using fire/supabase with a provider and a custom `useAuth` hook
 
 - [x] Create `AuthContext`
 - [x] Create `useAuth` hook for operations like signing in and out etc...
 - [x] Create Protected Route component which use the `useAuth` hook to conditionally forward to the page or navigate to the login page
 
-- [ ] Push user details i.e. handle to spring backend
-- [ ] Lock routes unless signed in
-- [ ] Style sign-up and login pages
-- [ ] Implement logout button and hook(?)
+- [x] Push user details i.e. handle to spring backend
+- [x] Lock routes unless signed in
+- [x] Style sign-up and login pages
+- [x] Implement logout button and hook(?)
+- [ ] Dynamicaly display user details in `SidebarFooter` component
 - [ ] User profile route /{handle}(?)
 
 ## Feed

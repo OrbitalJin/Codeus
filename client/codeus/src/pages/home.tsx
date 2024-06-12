@@ -1,4 +1,3 @@
-import { ThemeProvider } from "@/providers/theme-provider";
 import SideBarItem from "@/components/sidebar/SidebarItem";
 import SideBar from "@/components/sidebar/Sidebar";
 import {

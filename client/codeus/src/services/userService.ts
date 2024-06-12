@@ -1,9 +1,9 @@
 import axios from "axios";
-import { PostModel } from "./schema";
+import { UserModel } from "./schema";
 
-const endpoint: string = "http://127.0.0.1:8080/posts/";
+const endpoint: string = "http://127.0.0.1:8080/users/";
 
-export const fetchPosts = async (): Promise<PostModel[]> => {
+export const fetchUsers = async (): Promise<UserModel[]> => {
   try {
     const response = await axios.get(endpoint);
     return response.data?.data;
@@ -13,16 +13,17 @@ export const fetchPosts = async (): Promise<PostModel[]> => {
   }
 };
 
-export const deletePost = async (id: string): Promise<void> => {
+export const fetchUser = async (id: string): Promise<UserModel> => {
   try {
-    await axios.delete(endpoint, { data: { id } });
+    const response = await axios.get(endpoint, { data: { id } });
+    return response.data?.data;
   } catch (error) {
-    console.error("Error deleting post:", error);
+    console.error(error);
     throw error;
   }
 };
 
-export const createPost = async (data: PostModel): Promise<PostModel> => {
+export const createUser = async (data: UserModel): Promise<UserModel> => {
   try {
     const response = await axios.post(endpoint, data);
     return response.data;
