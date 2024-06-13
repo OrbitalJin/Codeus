@@ -11,9 +11,8 @@ const PostList = () => {
 
   return (
     <div
-      className={`flex-1 flex flex-col p-5 space-y-3 transition-all ${
-        loading || posts == null ? "justify-center items-center" : ""
-      }`}
+      className={`flex-1 flex flex-col transition-all ${loading || posts == null ? "justify-center items-center" : ""
+        }`}
     >
       {loading ? (
         <InfinitySpin color="grey" />

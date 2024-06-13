@@ -1,6 +1,8 @@
-import { type User, onAuthStateChanged, getAuth } from "firebase/auth";
+import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { AuthContext } from "@/contexts/auth-context";
+import { fetchUser } from "@/services/userService";
+import { UserModel } from "@/services/schema";
 
 type Props = {
   children: React.ReactNode;
@@ -9,7 +11,7 @@ type Props = {
 // Represents the auth state
 export type AuthState = {
   // The current signed in user
-  user: User | null;
+  user: UserModel | null;
   // The current auth status (signing in, out etc...)
   loading: boolean;
 };
@@ -25,9 +27,9 @@ const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   });
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setAuthState({
-        user: currentUser ? currentUser : null,
+        user: await fetchUser(currentUser ? currentUser.uid : null),
         loading: false,
       });
     });

@@ -14,9 +14,8 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   if (state.loading)
     return (
       <div className="h-screen flex flex-col justify-center items-center">
-        <InfinitySpin color="grey" />;
+        <InfinitySpin color="grey" />
       </div>
     );
-  console.log(state.user);
   return state.user ? children : <Navigate to="/login" replace />;
 };

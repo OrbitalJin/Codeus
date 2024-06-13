@@ -2,7 +2,7 @@
 
 import { createContext, useState } from "react";
 
-import SidebarFooter, { SidebarFooterProps } from "./SidebarFooter";
+import SidebarFooter from "./SidebarFooter";
 import SidebarHeader from "./SidebarHeader";
 import CreatePost from "../create-post";
 interface SidebarContextProps {
@@ -14,10 +14,9 @@ export const SidebarContext = createContext({} as SidebarContextProps);
 
 interface SideBarProps {
   children: React.ReactNode;
-  sidebarFooter: SidebarFooterProps;
 }
 
-export default function SideBar({ children, sidebarFooter }: SideBarProps) {
+export default function SideBar({ children }: SideBarProps) {
   const [expanded, setExpanded] = useState<boolean>(true);
 
   return (
@@ -27,7 +26,7 @@ export default function SideBar({ children, sidebarFooter }: SideBarProps) {
           <SidebarHeader />
           <ul className="flex-1 px-3">{children}</ul>
           <CreatePost expanded={expanded} />
-          <SidebarFooter {...sidebarFooter} />
+          <SidebarFooter />
         </SidebarContext.Provider>
       </nav>
     </aside>

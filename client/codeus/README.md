@@ -15,8 +15,9 @@
 - [x] Lock routes unless signed in
 - [x] Style sign-up and login pages
 - [x] Implement logout button and hook(?)
-- [ ] Dynamicaly display user details in `SidebarFooter` component
+- [x] Dynamicaly display user details in `SidebarFooter` component
 - [ ] User profile route /{handle}(?)
+- [ ] Figure out a way to fix the race confition on registration and remove the manual call to `setAuthState` from there
 
 ## Feed
 

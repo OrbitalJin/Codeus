@@ -11,27 +11,24 @@ import { useNavigate } from "react-router-dom";
 
 export const useAuthenticate = () => {
   const auth = getAuth();
+  const navigate = useNavigate();
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   const logIn = async (email: string, password: string) => {
     try {
-      signInWithEmailAndPassword(auth, email, password).then((creds) => {
-        console.log(creds.user);
-      });
+      await signInWithEmailAndPassword(auth, email, password);
       navigate("/");
     } catch (error) {
       setError(error as string);
     }
-    return error;
   };
 
   const logOut = async () => {
     try {
       await signOut(auth);
+      navigate("/login");
     } catch (error) {
-      console.error(error);
       setError(error as string);
     }
     return error;
@@ -40,26 +37,26 @@ export const useAuthenticate = () => {
   const register = async (payload: RegisterPayload) => {
     setLoading(true);
     try {
-      createUserWithEmailAndPassword(
+      const credentials = await createUserWithEmailAndPassword(
         auth,
         payload.email,
         payload.password,
-      ).then((creds) => {
-        const id = creds.user.uid;
-        const user = {
-          id: id,
-          email: payload.email,
-          handle: payload.handle,
-          username: payload.username,
-        };
-        createUser(user);
-      });
+      );
+
+      const user = {
+        id: credentials.user.uid,
+        email: payload.email,
+        handle: payload.handle,
+        username: payload.username,
+      };
+
+      await createUser(user);
+      navigate("/");
     } catch (error) {
       setError(error as string);
       console.log(error);
     }
     setLoading(false);
-    return error;
   };
 
   return {

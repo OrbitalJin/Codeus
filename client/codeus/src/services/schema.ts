@@ -5,9 +5,7 @@ export type PostModel = {
   description: string;
   content: string;
   language: string;
-  userId: string;
-  author?: string; // user handle
-  threadId?: string;
+  authorId: string; // user handle
   createdAt?: string;
   updatedAt?: string;
 };

@@ -12,13 +12,7 @@ import PostList from "@/components/post/PostList";
 function Home() {
   return (
     <div className="flex flex-row h-screen">
-      <SideBar
-        sidebarFooter={{
-          image: "https://i.ibb.co/L6fNFqW/images.webp",
-          displayName: "Witow Kiwi",
-          handle: "bunimawl",
-        }}
-      >
+      <SideBar>
         <SideBarItem icon={<HomeIcon />} text="Home" active={false} />
         <SideBarItem icon={<SearchIcon />} text="Explore" active={false} />
 

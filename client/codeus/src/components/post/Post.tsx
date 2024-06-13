@@ -18,17 +18,9 @@ interface PostProps {
 
 export default function Post({ post, onDelete }: PostProps) {
   return (
-    <Card className="shadow-sm">
+    <Card className="shadow-sm rounded-none hover:bg-muted transition-colors cursor-pointer">
       <CardHeader>
-        <PostUserHeader
-          post={post}
-          user={{
-            id: post.userId,
-            handle: "bunimawl",
-            username: "Witow Kiwi",
-          }}
-          onDelete={onDelete}
-        />
+        <PostUserHeader post={post} onDelete={onDelete} />
         <CardTitle className="text-lg font-semibold">{post.title}</CardTitle>
         <CardDescription>{post.description}</CardDescription>
       </CardHeader>

@@ -13,13 +13,16 @@ export const fetchUsers = async (): Promise<UserModel[]> => {
   }
 };
 
-export const fetchUser = async (id: string): Promise<UserModel> => {
+export const fetchUser = async (
+  id: string | null,
+): Promise<UserModel | null> => {
+  if (!id) return null;
   try {
-    const response = await axios.get(endpoint, { data: { id } });
+    const response = await axios.get(endpoint + id);
     return response.data?.data;
   } catch (error) {
     console.error(error);
-    throw error;
+    return null;
   }
 };
 

@@ -123,7 +123,9 @@ const Register = () => {
               >
                 Already have an account? Login
               </a>
-              {error && <a className="text-red-500">Wrong credentials</a>}
+              {error && (
+                <a className="text-red-500">Email address already in use</a>
+              )}
             </div>
           </form>
         </Form>
