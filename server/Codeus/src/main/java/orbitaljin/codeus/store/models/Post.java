@@ -11,7 +11,7 @@ import java.sql.Date;
 @Table(name = "posts")
 public class Post extends Model{
 
-    private String author;
+    private String authorId;
     private String title;
     private String content;
     private String language;
@@ -22,13 +22,13 @@ public class Post extends Model{
     }
 
     public Post(
-            String author,
+            String authorId,
             String title,
             String content,
             String description,
             String language
     ) {
-        this.author= author;
+        this.authorId= authorId;
         this.title = title;
         this.content = content;
         this.description = description;
@@ -36,14 +36,14 @@ public class Post extends Model{
     }
 
     public Post (
-            String author,
+            String authorId,
             String title,
             String content,
             String language,
             String description,
             Long threadId
     ) {
-        this.author = author;
+        this.authorId = authorId;
         this.threadId = threadId;
         this.title = title;
         this.content = content;
@@ -51,12 +51,12 @@ public class Post extends Model{
         this.language = language;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     public String getTitle() {
@@ -105,7 +105,7 @@ public class Post extends Model{
     public String toString() {
         return "Post{" +
                 "id=" + this.getId() +
-                ", author=" + author +
+                ", authorId=" + authorId +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 '}';
