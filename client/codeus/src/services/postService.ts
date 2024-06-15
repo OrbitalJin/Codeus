@@ -13,6 +13,18 @@ export const fetchPosts = async (): Promise<PostModel[]> => {
   }
 };
 
+export const fetchPostsByAuthorId = async (
+  authorId: string,
+): Promise<PostModel[]> => {
+  try {
+    const response = await axios.get(endpoint + "author/" + authorId);
+    return response.data?.data;
+  } catch (error) {
+    console.error("Error fetch posts:", error);
+    throw error;
+  }
+};
+
 export const deletePost = async (id: string): Promise<void> => {
   try {
     await axios.delete(endpoint, { data: { id } });

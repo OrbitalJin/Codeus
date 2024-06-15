@@ -18,6 +18,7 @@
 - [x] Dynamicaly display user details in `SidebarFooter` component
 - [x] User tooltip on post with preview
 - [x] User profile route /{handle}(?)
+- [x] User posts on profile
 - [ ] Style User tooltip on post with preview
 - [ ] Style User profile route /{handle}(?)
 - [ ] Figure out a way to fix the race confition on registration and remove the manual call to `setAuthState` from there

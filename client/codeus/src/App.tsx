@@ -7,7 +7,6 @@ import { firebaseConfig } from "./firebase-config";
 import { ProtectedRoute } from "./routes/protected-route";
 import { IndexIfAuthenticatedRoute } from "./routes/authenticated-route";
 import Register from "./pages/register";
-import { Layout } from "lucide-react";
 import Profile from "./pages/profile";
 
 // Initialize Firebase

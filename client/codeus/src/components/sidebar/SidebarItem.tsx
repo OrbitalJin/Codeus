@@ -16,7 +16,7 @@ export default function SideBarItem(props: SideBarItemProps) {
   return (
     <li
       onClick={() => {
-        props.onClick;
+        props.onClick ? props.onClick() : null;
       }}
       className={`
                 relative flex items-center py-5 px-3 my-1 font-large rounded-full cursor-pointer 
