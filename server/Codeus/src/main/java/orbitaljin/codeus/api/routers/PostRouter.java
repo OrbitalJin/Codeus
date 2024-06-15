@@ -48,6 +48,21 @@ public class PostRouter implements Router<Post> {
         ).toReponseEntity();
     }
 
+    @GetMapping("/author/{authorId}")
+    public ResponseEntity<?> getByAuthor(@PathVariable String authorId) {
+        // Check if the author is null
+        if (authorId == null) return new APIResponse<Post>(
+                HttpStatus.BAD_REQUEST,
+                "Author cannot be null"
+        ).toReponseEntity();
+
+        // Return all posts by the author
+        return new APIResponse<List<Post>>(
+                HttpStatus.OK,
+                this.service.searchByAuthorId(authorId)
+        ).toReponseEntity();
+    }
+
     @Override
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody Post entity) {

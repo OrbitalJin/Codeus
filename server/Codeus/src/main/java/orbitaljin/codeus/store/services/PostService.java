@@ -35,4 +35,8 @@ public class PostService {
     public List<Post> searchByTitle(String title) {
         return postRepository.findByTitleContaining(title);
     }
+
+    public List<Post> searchByAuthorId(String authorId) {
+        return postRepository.findByAuthorId(authorId);
+    }
 }
