@@ -1,11 +1,12 @@
 import { ChevronLast } from "lucide-react";
 import { Button } from "../ui/button";
 import { useContext } from "react";
-import { SidebarContext } from "./Sidebar";
 import Logo from "../logo";
+import { SidebarContext } from "@/contexts/sidebar-context";
 
 export default function SidebarHeader() {
   const { expanded, setExpanded } = useContext(SidebarContext);
+
   return (
     <div
       className={`p-5 pb-3 flex items-center transition-all ${

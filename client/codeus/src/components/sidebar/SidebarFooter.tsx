@@ -1,5 +1,3 @@
-"use client";
-
 import { useContext } from "react";
 import { MoreVertical, Sun, Moon, LogOut, UserIcon } from "lucide-react";
 import {
@@ -8,15 +6,16 @@ import {
   DropdownMenuTrigger,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { SidebarContext } from "./Sidebar";
 import { useTheme } from "@/providers/theme-provider";
 import { useNavigate } from "react-router-dom";
 import { useAuthenticate } from "@/hooks/useAuthenticate";
 import { AuthContext } from "@/contexts/auth-context";
+import { SidebarContext } from "@/contexts/sidebar-context";
 
 export default function SidebarFooter() {
   const { theme, setTheme } = useTheme();
   const { logOut } = useAuthenticate();
+  const { authState } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogOut = async () => {
@@ -32,7 +31,12 @@ export default function SidebarFooter() {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem className="cursor-pointer">
+        <DropdownMenuItem
+          className="cursor-pointer"
+          onClick={() => {
+            navigate("/u/" + authState?.user?.handle);
+          }}
+        >
           <UserIcon size={20} className="mr-2" />
           Profile
         </DropdownMenuItem>
@@ -77,10 +81,11 @@ const Trigger: React.FC = () => {
       />
       {expanded && (
         <div
-          className={`flex justify-between items-center overflow-hidden transition-all ${expanded
+          className={`flex justify-between items-center overflow-hidden transition-all ${
+            expanded
               ? "w-52 ml-3 opacity-100"
               : "w-0 ml-0 opacity-0 justify-center"
-            }`}
+          }`}
           style={{
             transition: "opacity 0.3s, width 0.3s, margin-left 0.3s",
           }}

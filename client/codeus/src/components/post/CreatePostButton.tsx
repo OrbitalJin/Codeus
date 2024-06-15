@@ -5,15 +5,15 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "./ui/dialog";
-import { Button } from "./ui/button";
-import CreatePostForm from "./create-post-form";
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import CreatePostModal from "./CreatePostModal";
 
 interface CreatePostProps {
   expanded: boolean;
 }
 
-const CreatePost: React.FC<CreatePostProps> = ({
+const CreatePostButton: React.FC<CreatePostProps> = ({
   expanded,
 }: CreatePostProps) => {
   return (
@@ -34,10 +34,10 @@ const CreatePost: React.FC<CreatePostProps> = ({
             You will not be able to edit it later
           </DialogDescription>
         </DialogHeader>
-        <CreatePostForm />
+        <CreatePostModal />
       </DialogContent>
     </Dialog>
   );
 };
 
-export default CreatePost;
+export default CreatePostButton;

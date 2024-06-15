@@ -1,7 +1,14 @@
-import { PostModel, UserModel } from "@/services/schema";
-import { fetchUser } from "@/services/userService";
-import { useEffect, useState } from "react";
+import { PostModel } from "@/services/schema";
 import PostMoreButton from "./PostMoreButton";
+import { useNavigate } from "react-router-dom";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider,
+} from "../ui/tooltip";
+import UserPreview from "../user/UserPreview";
+import useFetchUserById from "@/hooks/useFetchUserById";
 
 interface PostUserHeaderProps {
   post: PostModel;
@@ -12,41 +19,44 @@ const PostUserHeader: React.FC<PostUserHeaderProps> = ({
   post,
   onDelete,
 }: PostUserHeaderProps) => {
-  const [author, setAuthor] = useState<UserModel | null>(null);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        console.log(post.authorId);
-        const fetchedAuthor = await fetchUser(post.authorId);
-        setAuthor(fetchedAuthor);
-      } catch (error) {
-        console.error("Error fetching author:", error);
-      }
-    })();
-  }, [post]);
+  const author = useFetchUserById(post.authorId);
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-row justify-between items-center w-full">
-      <div className="flex items-center pb-1 cursor-pointer">
-        <img
-          src={"https://ui-avatars.com/api/?name=" + author?.username}
-          alt=""
-          width={30}
-          height={30}
-          className="w-6 h-6 rounded-full"
-        />
-        <div className="flex justify-between">
-          <div className="flex mx-2 flex-row items-center space-x-2">
-            <h4 className="text-sm font-semibold">
-              {author ? author.username : "Deleted"}
-            </h4>
-            <span className="text-xs text-gray-400">
-              /{author ? author.handle : "Deleted"}
-            </span>
-          </div>
-        </div>
-      </div>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger>
+            <div
+              onClick={() => {
+                navigate("/u/" + author?.handle);
+              }}
+              className="flex items-center rounded-full pb-1 cursor-pointer"
+            >
+              <img
+                src={"https://ui-avatars.com/api/?name=" + author?.username}
+                alt=""
+                width={30}
+                height={30}
+                className="w-6 h-6 rounded-full"
+              />
+              <div className="flex justify-between">
+                <div className="flex mx-2 flex-row items-center space-x-2">
+                  <h4 className="text-sm font-semibold">
+                    {author ? author.username : "Deleted"}
+                  </h4>
+                  <span className="text-xs text-gray-400">
+                    /{author ? author.handle : "Deleted"}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>
+            <UserPreview handle={author?.handle as string} />
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
       <PostMoreButton postId={post.id || ""} onDelete={onDelete} />
     </div>
   );

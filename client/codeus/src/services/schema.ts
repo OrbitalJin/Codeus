@@ -12,6 +12,7 @@ export type PostModel = {
 
 export type UserModel = {
   id: string;
+  email: string;
   handle: string;
   username: string;
   createdAt?: string;

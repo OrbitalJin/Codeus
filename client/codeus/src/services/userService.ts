@@ -22,8 +22,21 @@ export const fetchUser = async (
     return response.data?.data;
   } catch (error) {
     console.error(error);
-    return null;
   }
+  return null;
+};
+
+export const fetchUserByHandle = async (
+  handle: string | null,
+): Promise<UserModel | null> => {
+  if (!handle) return null;
+  try {
+    const response = await axios.get(endpoint + "handle/" + handle);
+    return response.data?.data;
+  } catch (error) {
+    console.log(error);
+  }
+  return null;
 };
 
 export const createUser = async (data: UserModel): Promise<UserModel> => {

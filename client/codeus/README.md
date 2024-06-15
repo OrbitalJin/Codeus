@@ -16,13 +16,17 @@
 - [x] Style sign-up and login pages
 - [x] Implement logout button and hook(?)
 - [x] Dynamicaly display user details in `SidebarFooter` component
-- [ ] User profile route /{handle}(?)
+- [x] User tooltip on post with preview
+- [x] User profile route /{handle}(?)
+- [ ] Style User tooltip on post with preview
+- [ ] Style User profile route /{handle}(?)
 - [ ] Figure out a way to fix the race confition on registration and remove the manual call to `setAuthState` from there
 
 ## Feed
 
 - [x] Load posts in a general field
 - [ ] Implement bookmarks on posts
+- [ ] Implement up/downvotes
 
 ## Threads
 

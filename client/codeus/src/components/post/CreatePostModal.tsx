@@ -6,15 +6,21 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "./ui/select";
-import { Form, FormControl, FormField, FormItem, FormMessage } from "./ui/form";
-import { Textarea } from "./ui/textarea";
-import { Input } from "./ui/input";
+} from "@/components/ui/select";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { useCreatePostForm } from "@/hooks/useCreatePostForm";
-import { Button } from "./ui/button";
-import { DialogClose } from "@radix-ui/react-dialog";
+import { Button } from "@/components/ui/button";
+import { DialogClose } from "@/components/ui/dialog";
 
-const CreatePostForm: React.FC = () => {
+const CreatePostModal: React.FC = () => {
   const { form, onSubmit, dialogCloseRef } = useCreatePostForm();
 
   return (
@@ -94,4 +100,4 @@ const CreatePostForm: React.FC = () => {
   );
 };
 
-export default CreatePostForm;
+export default CreatePostModal;

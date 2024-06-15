@@ -1,16 +1,17 @@
 import SideBar from "@/components/sidebar/Sidebar";
-import PostList from "@/components/post/PostList";
+import React from "react";
+import UserPage from "./user";
 
-function Home() {
+const Profile: React.FC = () => {
   return (
     <div className="flex flex-row h-screen">
       <SideBar />
       <main className="flex justify-center flex-1 overflow-y-auto">
-        <PostList />
-        <div className="grow border-l h-full "></div>
+        <UserPage />
+        <div className="grow border-l h-full " />
       </main>
     </div>
   );
-}
+};
 
-export default Home;
+export default Profile;
