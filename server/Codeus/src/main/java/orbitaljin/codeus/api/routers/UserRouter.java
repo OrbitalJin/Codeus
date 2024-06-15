@@ -50,6 +50,27 @@ public class UserRouter implements Router<User> {
         ).toReponseEntity();
     }
 
+    @GetMapping("/handle/{handle}")
+    public ResponseEntity<?> getByHandle(@PathVariable String handle) {
+        // if the handles is null, return a 400 Bad Request response
+        if (handle == null) return new APIResponse<User>(
+                HttpStatus.BAD_REQUEST,
+                "Handle cannot be null"
+        ).toReponseEntity();
+
+        // If the user does not exist, return a 404 Not Found response
+        if (this.service.getUserByHandle(handle) == null) return new APIResponse<User>(
+                HttpStatus.NOT_FOUND,
+                "User not found"
+        ).toReponseEntity();
+
+        // Otherwise, return a 200 OK response with the user
+        return new APIResponse<User>(
+                HttpStatus.OK,
+                this.service.getUserByHandle(handle)
+        ).toReponseEntity();
+    }
+
     @Override
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody User user) {

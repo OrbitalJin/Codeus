@@ -28,6 +28,11 @@ public class UserService {
     }
 
     @Transactional
+    public User getUserByHandle(String handle) {
+        return userRepository.findByHandle(handle);
+    }
+
+    @Transactional
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
