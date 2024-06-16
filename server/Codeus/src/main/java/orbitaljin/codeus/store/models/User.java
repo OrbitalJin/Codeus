@@ -17,6 +17,7 @@ public class User {
     private String email;
     private String handle;
     private String username;
+    private String bio;
     @CreationTimestamp
     private Timestamp createdAt;
     @UpdateTimestamp
@@ -49,6 +50,14 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getBio() {
+        return this.bio;
     }
 
     public String getEmail() {
@@ -88,6 +97,9 @@ public class User {
         return "User{" +
                 "id=" + this.getId() +
                 ", username='" + username + '\'' +
+                ", handle='" + handle + '\'' +
+                ", email='" + email + '\'' +
+                ", bio='" + bio + '\'' +
                 ", registeredAt=" + this.getCreatedAt() +
                 '}';
     }

@@ -11,11 +11,12 @@ import java.sql.Date;
 @Table(name = "posts")
 public class Post extends Model{
 
+    private String threadId;
     private String authorId;
     private String title;
     private String content;
     private String language;
-    private Long threadId;
+    private String theme;
     private String description;
 
     public Post() {
@@ -41,7 +42,7 @@ public class Post extends Model{
             String content,
             String language,
             String description,
-            Long threadId
+            String threadId
     ) {
         this.authorId = authorId;
         this.threadId = threadId;
@@ -49,6 +50,14 @@ public class Post extends Model{
         this.content = content;
         this.description = description;
         this.language = language;
+    }
+
+    public String getTheme() {
+        return this.theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 
     public String getAuthorId() {
@@ -75,11 +84,11 @@ public class Post extends Model{
         this.content = content;
     }
 
-    public Long getThreadId() {
+    public String getThreadId() {
         return threadId;
     }
 
-    public void setThreadId(Long threadId) {
+    public void setThreadId(String threadId) {
         this.threadId = threadId;
     }
 
@@ -107,6 +116,9 @@ public class Post extends Model{
                 "id=" + this.getId() +
                 ", authorId=" + authorId +
                 ", title='" + title + '\'' +
+                ", threadId='" + threadId + '\'' +
+                ", language='" + language + '\'' +
+                ", description='" + description + '\'' +
                 ", content='" + content + '\'' +
                 '}';
     }
