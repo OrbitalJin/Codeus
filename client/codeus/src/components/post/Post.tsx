@@ -47,7 +47,7 @@ export default function Post({ post, onDelete }: PostProps) {
         />
       </CardContent>
       <CardFooter>
-        <PostFooter language={post.language} />
+        <PostFooter post={post} />
       </CardFooter>
     </Card>
   );
