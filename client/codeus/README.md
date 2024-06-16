@@ -19,8 +19,12 @@
 - [x] User tooltip on post with preview
 - [x] User profile route /{handle}(?)
 - [x] User posts on profile
+- [x] Add user bio
+- [x] Add Post time stamps
+- [ ] Add copy snippet to clipboard
+- [ ] Add post badges (lang, theme...)
+- [ ] Add profile edit & (maybe follow?)
 - [ ] Style User tooltip on post with preview
-- [ ] Style User profile route /{handle}(?)
 - [ ] Figure out a way to fix the race confition on registration and remove the manual call to `setAuthState` from there
 
 ## Feed
@@ -30,6 +34,8 @@
 - [ ] Implement up/downvotes
 
 ## Threads
+
+- [ ] Create basic thread page
 
 ## Snippet sharing
 

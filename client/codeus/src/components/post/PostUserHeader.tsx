@@ -9,6 +9,7 @@ import {
 } from "../ui/tooltip";
 import UserPreview from "../user/UserPreview";
 import useFetchUserById from "@/hooks/useFetchUserById";
+import moment from "moment";
 
 interface PostUserHeaderProps {
   post: PostModel;
@@ -22,16 +23,18 @@ const PostUserHeader: React.FC<PostUserHeaderProps> = ({
   const author = useFetchUserById(post.authorId);
   const navigate = useNavigate();
 
+  const relativeTime = moment(post.createdAt).fromNow();
+
   return (
     <div className="flex flex-row justify-between items-center w-full">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger>
             <div
+              className="flex items-center rounded-full hover:p-1 cursor-pointer transition-all hover:bg-muted"
               onClick={() => {
                 navigate("/u/" + author?.handle);
               }}
-              className="flex items-center rounded-full pb-1 cursor-pointer"
             >
               <img
                 src={"https://ui-avatars.com/api/?name=" + author?.username}
@@ -48,6 +51,7 @@ const PostUserHeader: React.FC<PostUserHeaderProps> = ({
                   <span className="text-xs text-gray-400">
                     /{author ? author.handle : "Deleted"}
                   </span>
+                  <span className="text-xs text-gray-400">{relativeTime}</span>
                 </div>
               </div>
             </div>
@@ -57,7 +61,7 @@ const PostUserHeader: React.FC<PostUserHeaderProps> = ({
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
-      <PostMoreButton postId={post.id || ""} onDelete={onDelete} />
+      <PostMoreButton post={post} onDelete={onDelete} />
     </div>
   );
 };

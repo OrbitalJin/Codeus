@@ -6,9 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { CodeBlock, nord } from "react-code-blocks";
+import { CodeBlock, nord, obsidian, monokai, rainbow } from "react-code-blocks";
 import PostUserHeader from "./PostUserHeader";
-import PostInteractions from "./PostInteractions";
+import PostFooter from "./PostFooter";
 import { PostModel } from "@/services/schema";
 
 interface PostProps {
@@ -17,8 +17,22 @@ interface PostProps {
 }
 
 export default function Post({ post, onDelete }: PostProps) {
+  const theme = (() => {
+    switch (post.theme) {
+      case "nord":
+        return nord;
+      case "obsidian":
+        return obsidian;
+      case "monokai":
+        return monokai;
+      case "rainbow":
+        return rainbow;
+    }
+    return nord;
+  })();
+
   return (
-    <Card className="shadow-sm rounded-none hover:bg-muted transition-colors cursor-pointer">
+    <Card className="shadow-sm rounded-none border-t-0 border-l-0 border-r-0 border-b-2 border-muted transition-colors cursor-pointer">
       <CardHeader>
         <PostUserHeader post={post} onDelete={onDelete} />
         <CardTitle className="text-lg font-semibold">{post.title}</CardTitle>
@@ -29,11 +43,11 @@ export default function Post({ post, onDelete }: PostProps) {
           text={post.content}
           language={post.language}
           showLineNumbers={true}
-          theme={nord}
+          theme={theme}
         />
       </CardContent>
       <CardFooter>
-        <PostInteractions />
+        <PostFooter language={post.language} />
       </CardFooter>
     </Card>
   );

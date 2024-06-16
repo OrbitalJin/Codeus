@@ -2,6 +2,7 @@
 export type PostModel = {
   id?: string;
   title: string;
+  theme: string;
   description: string;
   content: string;
   language: string;
@@ -12,6 +13,7 @@ export type PostModel = {
 
 export type UserModel = {
   id: string;
+  bio?: string;
   email: string;
   handle: string;
   username: string;

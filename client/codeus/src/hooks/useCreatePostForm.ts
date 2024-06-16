@@ -18,6 +18,7 @@ export const useCreatePostForm = () => {
       title: "",
       description: "",
       content: "",
+      theme: "nord",
       language: "go",
     },
   });

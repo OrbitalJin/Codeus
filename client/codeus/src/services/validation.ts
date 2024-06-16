@@ -17,6 +17,9 @@ export const createPostFormSchema = z.object({
   language: z.string({
     required_error: "Please select a language",
   }),
+  theme: z.string({
+    required_error: "Please select a theme",
+  }),
 });
 
 // Describes login schema
