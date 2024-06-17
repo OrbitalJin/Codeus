@@ -23,7 +23,7 @@
 - [x] Add Post time stamps
 - [x] Add copy snippet to clipboard
 - [x] Add post badges (lang, theme...)
-- [ ] Add profile edit & (maybe follow?)
+- [x] Add profile edit & (maybe follow? <- Not yet)
 - [ ] Style User tooltip on post with preview
 - [ ] Figure out a way to fix the race confition on registration and remove the manual call to `setAuthState` from there
 

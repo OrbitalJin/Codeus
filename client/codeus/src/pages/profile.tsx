@@ -2,9 +2,9 @@ import React from "react";
 import SideBar from "@/components/sidebar/Sidebar";
 import { useNavigate, useParams } from "react-router-dom";
 import useFetchUserByHandle from "@/hooks/useFetchUserByHandle";
-import ProfileHeader from "./ProfileHeader";
-import ProfileInfo from "./ProfileInfo";
-import ProfileTabs from "./ProfileTabs";
+import ProfileHeader from "@/components/profile/ProfileHeader";
+import ProfileInfo from "@/components/profile/ProfileInfo";
+import ProfileTabs from "@/components/profile/ProfileTabs";
 
 const Profile: React.FC = () => {
   const { handle } = useParams();

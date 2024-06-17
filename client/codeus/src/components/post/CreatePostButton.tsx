@@ -1,5 +1,6 @@
 import {
   DialogTrigger,
+  DialogClose,
   Dialog,
   DialogContent,
   DialogDescription,
@@ -7,7 +8,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import CreatePostModal from "./CreatePostModal";
+import CreatePostForm from "./CreatePostForm";
+import { useState } from "react";
 
 interface CreatePostProps {
   expanded: boolean;
@@ -16,8 +18,11 @@ interface CreatePostProps {
 const CreatePostButton: React.FC<CreatePostProps> = ({
   expanded,
 }: CreatePostProps) => {
+  const [open, setOpen] = useState<boolean>(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogClose />
       <DialogTrigger asChild>
         <Button
           className={`m-3 py-7 rounded-full bg-indigo-500 text-white hover:bg-indigo-600 transition-all ${
@@ -34,7 +39,7 @@ const CreatePostButton: React.FC<CreatePostProps> = ({
             You will not be able to edit it later
           </DialogDescription>
         </DialogHeader>
-        <CreatePostModal />
+        <CreatePostForm setOpen={setOpen} />
       </DialogContent>
     </Dialog>
   );

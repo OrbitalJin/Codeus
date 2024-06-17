@@ -48,3 +48,13 @@ export const createUser = async (data: UserModel): Promise<UserModel> => {
     throw error;
   }
 };
+
+export const updateUser = async (user: UserModel): Promise<UserModel> => {
+  try {
+    const response = await axios.patch(endpoint, user);
+    return response.data;
+  } catch (error) {
+    console.log("Error updating user:", error);
+    throw error;
+  }
+};

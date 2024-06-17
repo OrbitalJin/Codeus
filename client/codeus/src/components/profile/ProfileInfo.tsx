@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Verified } from "lucide-react";
+import EditProfileButton from "./EditProfileButton";
 
 interface ProfileInfoProps {
   username: string;
   handle: string;
-  bio: string | null | undefined;
+  bio: string;
 }
 
 const ProfileInfo: React.FC<ProfileInfoProps> = ({ username, handle, bio }) => {
@@ -16,10 +17,12 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ username, handle, bio }) => {
         height={120}
         src="https://64.media.tumblr.com/e44bf87ad01b3dd7dade37a2e30e359f/5f3a0cd53b41ec9d-3a/s500x750/8ea32ea7789c3cb9ee7e928b65ab291fcbf156da.jpg"
       />
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         <div className="flex flex-row items-center space-x-1">
           <a className="font-bold text-lg">{username}</a>
           <Verified size={20} color="#6364E2" />
+          <div className="grow" />
+          <EditProfileButton bio={bio} />
         </div>
         <a className="text-xs text-gray-400">/{handle}</a>
         <p className="text-sm pt-3 text-gray-500">

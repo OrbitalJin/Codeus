@@ -18,10 +18,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { useCreatePostForm } from "@/hooks/useCreatePostForm";
 import { Button } from "@/components/ui/button";
-import { DialogClose } from "@/components/ui/dialog";
 
-const CreatePostModal: React.FC = () => {
-  const { form, onSubmit, dialogCloseRef } = useCreatePostForm();
+type CreatePostFormProps = {
+  setOpen: (open: boolean) => void;
+};
+
+const CreatePostForm: React.FC<CreatePostFormProps> = ({
+  setOpen,
+}: CreatePostFormProps) => {
+  const { form, onSubmit } = useCreatePostForm();
 
   return (
     <Form {...form}>
@@ -112,15 +117,15 @@ const CreatePostModal: React.FC = () => {
         <Button
           type="submit"
           className="bg-indigo-500 text-white hover:bg-indigo-600 transition-colors"
+          onClick={() => {
+            setOpen(false);
+          }}
         >
           Post
         </Button>
-        <DialogClose asChild>
-          <button ref={dialogCloseRef} style={{ display: "none" }} />
-        </DialogClose>
       </form>
     </Form>
   );
 };
 
-export default CreatePostModal;
+export default CreatePostForm;
