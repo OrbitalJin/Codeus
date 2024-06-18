@@ -4,6 +4,7 @@ export type PostModel = {
   title: string;
   theme: string;
   description: string;
+  voteCount: number;
   content: string;
   language: string;
   authorId: string; // user handle

@@ -9,32 +9,38 @@ import {
 
 import copy from "copy-to-clipboard";
 import { PostModel } from "@/services/schema";
+import { downvotePost, upvotePost } from "@/services/upvoteService";
+import { useContext } from "react";
+import { AuthContext } from "@/contexts/auth-context";
 
 type PostInteractionsProps = {
   post: PostModel;
 };
 
 const PostFooter = ({ post }: PostInteractionsProps) => {
+  const { authState } = useContext(AuthContext);
   return (
     <div className="flex flex-row justify-between items-center w-full">
       <div className="flex flex-row space-x-3">
         <div
-          className="flex flex-row justify-between py-1 px-2 shadow-sm bg-muted rounded-full cursor-pointer transition-all
-          hover:shadow-orange-500/25
-          hover:shadow-md
-          hover:text-orange-500"
+          className="group flex flex-row justify-between items-center p-1 space-x-2 shadow-sm bg-muted rounded-full cursor-pointer transition-all
+          hover:shadow-md"
         >
-          <ArrowUp size={15} className="cursor-pointer" />
-          <span className="text-xs text-primary">10</span>
-        </div>
-        <div
-          className="flex flex-row justify-between py-1 px-2 shadow-sm bg-muted rounded-full cursor-pointer transition-all 
-          hover:shadow-blue-500/25
-          hover:shadow-md
-          hover:text-blue-500"
-        >
-          <ArrowDown size={15} />
-          <span className="text-xs text-primary">10</span>
+          <ArrowUp
+            size={25}
+            className="cursor-pointer transition-all rounded-full hover:text-orange-500 p-1"
+            onClick={() => {
+              upvotePost(post.id as string, authState.user?.id as string);
+            }}
+          />
+          <span className="text-xs text-primary">{post.voteCount}</span>
+          <ArrowDown
+            size={25}
+            className="cursor-pointer transition-all rounded-full hover:text-blue-500 p-1"
+            onClick={() => {
+              downvotePost(post.id as string, authState.user?.id as string);
+            }}
+          />
         </div>
 
         <Badge

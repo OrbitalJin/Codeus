@@ -30,8 +30,9 @@
 ## Feed
 
 - [x] Load posts in a general field
+- [x] Implement up/downvotes
+- [ ] Disable upvote for author
 - [ ] Implement bookmarks on posts
-- [ ] Implement up/downvotes
 
 ## Threads
 
