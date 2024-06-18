@@ -3,6 +3,7 @@ package orbitaljin.codeus.api.routers;
 import orbitaljin.codeus.api.APIResponse;
 import orbitaljin.codeus.store.models.Post;
 import orbitaljin.codeus.store.services.PostService;
+import orbitaljin.codeus.store.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,9 @@ import java.util.List;
 public class PostRouter implements Router<Post> {
     @Autowired
     private PostService service;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     @GetMapping("/")
