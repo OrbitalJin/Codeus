@@ -1,6 +1,7 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfilePostList from "./ProfilePostList";
+import ProfileUpvotedPostList from "./ProfileUpvotedList";
 
 interface ProfileTabsProps {
   userId: string;
@@ -18,7 +19,9 @@ const ProfileTabs: React.FC<ProfileTabsProps> = ({ userId }) => {
         <ProfilePostList uid={userId} />
       </TabsContent>
       <TabsContent value="threads">Threads</TabsContent>
-      <TabsContent value="votes">Upvoted posts</TabsContent>
+      <TabsContent value="votes">
+        <ProfileUpvotedPostList uid={userId} />
+      </TabsContent>
     </Tabs>
   );
 };

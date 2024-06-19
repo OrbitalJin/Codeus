@@ -24,6 +24,7 @@
 - [x] Add copy snippet to clipboard
 - [x] Add post badges (lang, theme...)
 - [x] Add profile edit & (maybe follow? <- Not yet)
+- [x] Add upvote list
 - [ ] Style User tooltip on post with preview
 - [ ] Figure out a way to fix the race confition on registration and remove the manual call to `setAuthState` from there
 
@@ -31,7 +32,6 @@
 
 - [x] Load posts in a general field
 - [x] Implement up/downvotes
-- [ ] Disable upvote for author
 - [ ] Implement bookmarks on posts
 
 ## Threads

@@ -12,6 +12,7 @@ import { PostModel } from "@/services/schema";
 import { downvotePost, upvotePost } from "@/services/upvoteService";
 import { useContext } from "react";
 import { AuthContext } from "@/contexts/auth-context";
+import useVotes from "@/hooks/useVotes";
 
 type PostInteractionsProps = {
   post: PostModel;
@@ -19,6 +20,10 @@ type PostInteractionsProps = {
 
 const PostFooter = ({ post }: PostInteractionsProps) => {
   const { authState } = useContext(AuthContext);
+  const { upvoted, downvoted } = useVotes(
+    post.id as string,
+    authState.user?.id as string,
+  );
   return (
     <div className="flex flex-row justify-between items-center w-full">
       <div className="flex flex-row space-x-3">
@@ -28,7 +33,7 @@ const PostFooter = ({ post }: PostInteractionsProps) => {
         >
           <ArrowUp
             size={25}
-            className="cursor-pointer transition-all rounded-full hover:text-orange-500 p-1"
+            className={`cursor-pointer transition-all rounded-full p-1 ${upvoted ? "text-orange-500 hover:text-primary" : "text-primary hover:text-orange-500"}`}
             onClick={() => {
               upvotePost(post.id as string, authState.user?.id as string);
             }}
@@ -36,7 +41,7 @@ const PostFooter = ({ post }: PostInteractionsProps) => {
           <span className="text-xs text-primary">{post.voteCount}</span>
           <ArrowDown
             size={25}
-            className="cursor-pointer transition-all rounded-full hover:text-blue-500 p-1"
+            className={`cursor-pointer transition-all rounded-full p-1 ${downvoted ? "text-blue-500 hover:text-primary" : "text-primary hover:text-blue-500"}`}
             onClick={() => {
               downvotePost(post.id as string, authState.user?.id as string);
             }}
