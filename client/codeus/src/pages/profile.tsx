@@ -27,7 +27,7 @@ const Profile: React.FC = () => {
           <ProfileInfo
             username={user?.username as string}
             handle={user?.handle as string}
-            bio={user?.bio}
+            bio={user?.bio as string}
           />
           <ProfileTabs userId={user?.id as string} />
         </div>

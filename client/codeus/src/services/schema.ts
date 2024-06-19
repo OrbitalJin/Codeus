@@ -1,3 +1,9 @@
+export type BookmarkModel = {
+  id: string;
+  userId: string;
+  postId: string;
+};
+
 // Post schema
 export type PostModel = {
   id?: string;

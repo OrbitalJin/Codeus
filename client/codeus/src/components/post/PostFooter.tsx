@@ -13,6 +13,7 @@ import { downvotePost, upvotePost } from "@/services/upvoteService";
 import { useContext } from "react";
 import { AuthContext } from "@/contexts/auth-context";
 import useVotes from "@/hooks/useVotes";
+import { useBookmark } from "@/hooks/useBookmarked";
 
 type PostInteractionsProps = {
   post: PostModel;
@@ -20,6 +21,10 @@ type PostInteractionsProps = {
 
 const PostFooter = ({ post }: PostInteractionsProps) => {
   const { authState } = useContext(AuthContext);
+  const { bookMarked, toggleBookmark } = useBookmark(
+    post.id as string,
+    authState.user?.id as string,
+  );
   const { upvoted, downvoted } = useVotes(
     post.id as string,
     authState.user?.id as string,
@@ -76,7 +81,17 @@ const PostFooter = ({ post }: PostInteractionsProps) => {
             <TooltipTrigger>
               <Bookmark
                 size={35}
-                className="cursor-pointer transition-colors p-2 hover:text-indigo-500 hover:shadow-indigo-500/35"
+                className={`cursor-pointer transition-colors p-2 ${
+                  bookMarked
+                    ? "text-indigo-500 shadow-indigo-500/35 hover:text-primary"
+                    : "hover:text-indigo-500 hover:shadow-indigo-500/35"
+                }`}
+                onClick={() => {
+                  toggleBookmark(
+                    post.id as string,
+                    authState.user?.id as string,
+                  );
+                }}
               />
             </TooltipTrigger>
             <TooltipContent>Add to your Bookmarks</TooltipContent>

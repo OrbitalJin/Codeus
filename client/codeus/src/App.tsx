@@ -1,4 +1,10 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Router,
+  Routes,
+} from "react-router-dom";
 import { initializeApp, getApps, getApp } from "firebase/app";
 import Home from "./pages/home";
 import Login from "./pages/login";
@@ -8,6 +14,7 @@ import { ProtectedRoute } from "./routes/protected-route";
 import { IndexIfAuthenticatedRoute } from "./routes/authenticated-route";
 import Register from "./pages/register";
 import Profile from "./pages/profile";
+import BookMarks from "./pages/bookmarks";
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -46,6 +53,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/bookmarks"
+          element={
+            <ProtectedRoute>
+              <BookMarks />
             </ProtectedRoute>
           }
         />

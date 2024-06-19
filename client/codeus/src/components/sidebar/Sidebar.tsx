@@ -26,12 +26,12 @@ export default function SideBar() {
           <SidebarHeader />
           <ul className="flex-1 px-3">
             <SideBarItem
-              onClick={() => {
-                navigate("/home");
-              }}
               icon={<HomeIcon />}
               text="Home"
               active={false}
+              onClick={() => {
+                navigate("/home");
+              }}
             />
             <SideBarItem icon={<SearchIcon />} text="Explore" active={false} />
 
@@ -46,6 +46,9 @@ export default function SideBar() {
               icon={<BookmarkIcon />}
               text="Bookmarks"
               active={false}
+              onClick={() => {
+                navigate("/bookmarks");
+              }}
             />
             <SideBarItem icon={<UserIcon />} text="Profile" active={false} />
           </ul>

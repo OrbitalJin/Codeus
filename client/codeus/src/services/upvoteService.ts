@@ -51,7 +51,6 @@ export const hasUpvoted = async (
 ): Promise<boolean> => {
   try {
     const response = await axios.get(`${endpoint}/upvoted/${postId}/${userId}`);
-    console.log(response);
     return response.data?.data;
   } catch (error) {
     console.log("Error downvoting post:", error);
