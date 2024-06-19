@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 public class VoteService {
+
     @Autowired
     private VoteRepository voteRepository;
 
@@ -20,61 +21,92 @@ public class VoteService {
 
     @Transactional
     public void upvote(String userId, String postId) {
-        if (hasUpvoted(userId, postId) || hasDownvoted(userId, postId)) {
-            if (hasDownvoted(userId, postId)) removeUpvote(userId, postId);
-            if (hasUpvoted(userId, postId)) removeDownvote(userId, postId);
-            return;
+        Vote existingVote = voteRepository.findByUserIdAndPostId(userId, postId);
+        if (existingVote != null) {
+            if (existingVote.getValue() == 1) {
+                // User has already upvoted, delete the vote
+                voteRepository.delete(existingVote);
+                updatePostVoteCount(postId);
+                return;
+            } else {
+                // User is changing from downvote to upvote
+                existingVote.setValue(1);
+            }
+        } else {
+            // User has not voted before
+            existingVote = new Vote(userId, postId, 1);
         }
-        voteRepository.save(new Vote(userId, postId, 1));
-        Post post = postRepository.findById(postId).get();
-        post.setVoteCount(post.getVoteCount() + 1);
-        postRepository.save(post);
-    }
 
-    @Transactional
-    public void removeUpvote(String userId, String postId) {
-        voteRepository.deleteByUserIdAndPostId(userId, postId);
-        Post post = postRepository.findById(postId).get();
-        post.setVoteCount(post.getVoteCount() - 1);
-        postRepository.save(post);
+        voteRepository.save(existingVote);
+        updatePostVoteCount(postId);
     }
 
     @Transactional
     public void downvote(String userId, String postId) {
-        if (hasDownvoted(userId, postId) || hasUpvoted(userId, postId)) {
-            if (hasUpvoted(userId, postId)) removeUpvote(userId, postId);
-            if (hasDownvoted(userId, postId)) removeDownvote(userId, postId);
-            return;
+        Vote existingVote = voteRepository.findByUserIdAndPostId(userId, postId);
+        if (existingVote != null) {
+            if (existingVote.getValue() == -1) {
+                // User has already downvoted, delete the vote
+                voteRepository.delete(existingVote);
+                updatePostVoteCount(postId);
+                return;
+            } else {
+                // User is changing from upvote to downvote
+                existingVote.setValue(-1);
+            }
+        } else {
+            // User has not voted before
+            existingVote = new Vote(userId, postId, -1);
         }
 
-        voteRepository.save(new Vote(userId, postId, -1));
-        Post post = postRepository.findById(postId).get();
-        post.setVoteCount(post.getVoteCount() -1 );
-        postRepository.save(post);
+        voteRepository.save(existingVote);
+        updatePostVoteCount(postId);
     }
 
     @Transactional
-    public void removeDownvote(String userId, String postId) {
-        voteRepository.deleteByUserIdAndPostId(userId, postId);
-        Post post = postRepository.findById(postId).get();
-        post.setVoteCount(post.getVoteCount() + 1);
+    public void removeVote(String userId, String postId) {
+        Vote existingVote = voteRepository.findByUserIdAndPostId(userId, postId);
+        if (existingVote != null) {
+            voteRepository.delete(existingVote);
+            updatePostVoteCount(postId);
+        }
+    }
+
+    private void updatePostVoteCount(String postId) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+        int upvotes = voteRepository.countByPostIdAndValue(postId, 1);
+        int downvotes = voteRepository.countByPostIdAndValue(postId, -1);
+        post.setVoteCount((long)upvotes - downvotes);
         postRepository.save(post);
     }
 
-    @Transactional
+    public List<Post> getUserUpvotedPosts(String userId) {
+        List<Vote> votes = voteRepository.findByUserId(userId);
+        // Return only posts that have been upvoted
+        return postRepository.findAllById(votes.stream()
+                .filter(vote -> vote.getValue() == 1)
+                .map(Vote::getPostId)
+                .toList()
+        );
+    }
+
+    public List<Post> getUserDownvotedPosts(String userId) {
+        List<Vote> votes = voteRepository.findByUserId(userId);
+        // Return only posts that have been downvoted
+        return postRepository.findAllById(votes.stream()
+                .filter(vote -> vote.getValue() == -1)
+                .map(Vote::getPostId)
+                .toList()
+        );
+    }
+
     public boolean hasUpvoted(String userId, String postId) {
         Vote vote = voteRepository.findByUserIdAndPostId(userId, postId);
         return vote != null && vote.getValue() == 1;
     }
 
-    @Transactional
     public boolean hasDownvoted(String userId, String postId) {
         Vote vote = voteRepository.findByUserIdAndPostId(userId, postId);
         return vote != null && vote.getValue() == -1;
-    }
-
-    @Transactional
-    public List<Vote> getUpvotesByUserId(String userId) {
-        return voteRepository.findByUserId(userId);
     }
 }
