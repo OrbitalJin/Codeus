@@ -33,7 +33,7 @@
 - [x] Load posts in a general field
 - [x] Implement up/downvotes
 - [x] Implement bookmarks on posts
-- [ ] Add ability to clear bookmarks
+- [x] Add ability to clear bookmarks
 
 ## Threads
 

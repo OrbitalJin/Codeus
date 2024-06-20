@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { useContext, useState } from "react";
 
 import SidebarFooter from "./SidebarFooter";
 import SidebarHeader from "./SidebarHeader";
@@ -14,9 +14,11 @@ import SideBarItem from "./SidebarItem";
 import CreatePostButton from "@/components/post/CreatePostButton";
 import { SidebarContext } from "@/contexts/sidebar-context";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "@/contexts/auth-context";
 
 export default function SideBar() {
   const [expanded, setExpanded] = useState<boolean>(true);
+  const { authState } = useContext(AuthContext);
   const navigate = useNavigate();
 
   return (
@@ -50,7 +52,14 @@ export default function SideBar() {
                 navigate("/bookmarks");
               }}
             />
-            <SideBarItem icon={<UserIcon />} text="Profile" active={false} />
+            <SideBarItem
+              icon={<UserIcon />}
+              text="Profile"
+              active={false}
+              onClick={() => {
+                navigate("/u/" + authState.user?.handle);
+              }}
+            />
           </ul>
           <CreatePostButton expanded={expanded} />
           <SidebarFooter />

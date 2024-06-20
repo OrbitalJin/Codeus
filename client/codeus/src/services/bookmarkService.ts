@@ -28,6 +28,16 @@ export const fetchUserBookmarks = async (
   }
 };
 
+export const clearUserBookmarks = async (userId: string): Promise<boolean> => {
+  try {
+    await axios.delete(endpoint + "/" + userId);
+    return true;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const isBookmarked = async (
   postId: string,
   userId: string,
