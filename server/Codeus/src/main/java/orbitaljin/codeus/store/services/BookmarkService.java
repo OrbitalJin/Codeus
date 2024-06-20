@@ -56,6 +56,6 @@ public class BookmarkService {
 
     @Transactional
     public void deleteAllBookmarks(String userId) {
-repository.deleteAllByUserId(userId);
+        repository.deleteAllByUserId(userId);
     }
 }
