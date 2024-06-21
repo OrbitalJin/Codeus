@@ -47,3 +47,4 @@
 
 - [ ] Fullscreen (center) view with comments below
 - [ ] Comments list & items components
+- [ ] Add comments

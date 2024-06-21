@@ -15,6 +15,7 @@ import { IndexIfAuthenticatedRoute } from "./routes/authenticated-route";
 import Register from "./pages/register";
 import Profile from "./pages/profile";
 import BookMarks from "./pages/bookmarks";
+import Post from "./pages/post";
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -53,6 +54,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/p/:postId"
+          element={
+            <ProtectedRoute>
+              <Post />
             </ProtectedRoute>
           }
         />

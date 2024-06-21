@@ -13,6 +13,8 @@ import { clearUserBookmarks } from "@/services/bookmarkService";
 import { PostModel } from "@/services/schema";
 import { MoreHorizontal, Trash } from "lucide-react";
 import { useContext } from "react";
+import PageWrapper from "./page-wrapper";
+import Banner from "./banner";
 
 const BookMarks: React.FC = () => {
   const { authState } = useContext(AuthContext);
@@ -22,35 +24,21 @@ const BookMarks: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-row h-screen">
-      <SideBar />
-      <main className="flex justify-center flex-1 overflow-y-auto">
-        <div className="flex-1 flex flex-col">
-          <div
-            id="banner"
-            className="flex flex-row items-center px-2 shadow-sm sticky top-0 z-10 backdrop-blur-lg"
-          >
-            <a className="font-bold text-xl p-5">Bookmarks</a>
-            <a className="text-sm text-gray-400">/{authState.user?.handle}</a>
-            <div className="grow" />
-            <MoreButton userId={authState.user?.id as string} />
-          </div>
-          {bookmarks && bookmarks?.length > 0 ? (
-            <PostList
-              error={error}
-              loading={loading}
-              posts={bookmarks as PostModel[]}
-              handleDelete={handleDelete}
-            />
-          ) : (
-            <a className="self-center text-gray-400 text-sm p-10">
-              No Bookmarks
-            </a>
-          )}
-        </div>
-        <div className="grow border-l h-full" />
-      </main>
-    </div>
+    <PageWrapper>
+      <Banner title="Bookmarks" back>
+        <MoreButton userId={authState.user?.id as string} />
+      </Banner>
+      {bookmarks && bookmarks?.length > 0 ? (
+        <PostList
+          error={error}
+          loading={loading}
+          posts={bookmarks as PostModel[]}
+          handleDelete={handleDelete}
+        />
+      ) : (
+        <a className="self-center text-gray-400 text-sm p-10">No Bookmarks</a>
+      )}
+    </PageWrapper>
   );
 };
 

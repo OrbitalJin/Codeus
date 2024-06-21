@@ -29,9 +29,7 @@ const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setAuthState({
-        user: await fetchUser(
-          currentUser ? currentUser.uid : "fgryJDo8WfcbTjchwoNdLApJhgf1",
-        ),
+        user: await fetchUser(currentUser ? currentUser.uid : null),
         loading: false,
       });
     });

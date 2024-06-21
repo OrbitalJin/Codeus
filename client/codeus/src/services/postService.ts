@@ -3,6 +3,17 @@ import { PostModel } from "./schema";
 
 const endpoint: string = "http://127.0.0.1:8080/posts/";
 
+export const fetchPost = async (id: string): Promise<PostModel> => {
+  try {
+    const response = await axios.get(endpoint + id);
+    console.log(response.data?.data);
+    return response.data?.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const fetchPosts = async (): Promise<PostModel[]> => {
   try {
     const response = await axios.get(endpoint);

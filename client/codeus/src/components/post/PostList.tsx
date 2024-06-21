@@ -1,6 +1,6 @@
 import { InfinitySpin } from "react-loader-spinner";
-import Post from "./Post";
 import { PostModel } from "@/services/schema";
+import PostComponent from "./PostComponent";
 
 // I should consider using a context to avoid prop-drilling hte handleDelete function
 // Or perhaps use a custom hook to handle the delete functionality
@@ -16,17 +16,21 @@ type PostListProps = {
 const PostList = (props: PostListProps) => {
   return (
     <div
-      className={`flex-1 flex flex-col transition-all ${
-        props.loading || props.posts == null
+      className={`flex-1 flex flex-col transition-all ${props.loading || props.posts == null
           ? "justify-center items-center"
           : ""
-      }`}
+        }`}
     >
       {props.loading ? (
         <InfinitySpin color="grey" />
       ) : props.posts ? (
         props.posts.map((post) => (
-          <Post key={post.id} post={post} onDelete={props.handleDelete} />
+          <PostComponent
+            key={post.id}
+            post={post}
+            clickable
+            onDelete={props.handleDelete}
+          />
         ))
       ) : (
         <h1 className="text-center  text-gray-400">
