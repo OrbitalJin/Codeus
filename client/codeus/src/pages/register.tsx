@@ -18,7 +18,7 @@ const Register = () => {
   const { form, onSubmit, loading, error } = useRegister();
 
   return (
-    <div className="relative">
+    <div className="flex justify-center items-center w-screen h-screen">
       <ModeToggle className="absolute top-4 right-4" />
       <div className="flex flex-col text-center justify-center items-center h-screen">
         <Form {...form}>

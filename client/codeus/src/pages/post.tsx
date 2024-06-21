@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import PageWrapper from "./page-wrapper";
-import PostComponent from "@/components/post/PostComponent";
+import Post from "@/components/post/PostComponent";
 import usePost from "@/hooks/usePost";
 import { InfinitySpin } from "react-loader-spinner";
 import Banner from "./banner";
 
-const Post = () => {
+const PostPage = () => {
   const { postId } = useParams();
   const { loading, post, handleDelete } = usePost(postId as string);
   return (
@@ -15,10 +15,15 @@ const Post = () => {
       {loading ? (
         <InfinitySpin />
       ) : (
-        post && <PostComponent post={post} onDelete={handleDelete} />
+        post && (
+          <div className="flex flex-col">
+            <Post post={post} onDelete={handleDelete} />
+            <div>hello</div>
+          </div>
+        )
       )}
     </PageWrapper>
   );
 };
 
-export default Post;
+export default PostPage;
