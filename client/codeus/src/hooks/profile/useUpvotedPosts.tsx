@@ -2,7 +2,6 @@ import { deletePost } from "@/services/post-service";
 import { PostModel } from "@/services/schema";
 import { getUserUpvoted } from "@/services/upvote-service";
 import { useEffect, useState } from "react";
-import usePosts from "../post/usePosts";
 
 const useUpvotedPosts = (userId: string) => {
   const [loading, setLoading] = useState<boolean>(true);

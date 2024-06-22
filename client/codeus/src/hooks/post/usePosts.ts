@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PostModel } from "@/services/schema";
 import {
+  createPost,
   deletePost,
   fetchPosts,
   fetchPostsByAuthorId,
@@ -10,6 +11,15 @@ const usePosts = (id?: string) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [posts, setPosts] = useState<PostModel[]>([]);
   const [error, setError] = useState<boolean>(false);
+
+  const handleCreate = async (post: PostModel) => {
+    try {
+      setPosts([...posts, await createPost(post)]);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
 
   const handleDelete = async (id: string) => {
     try {
@@ -38,6 +48,7 @@ const usePosts = (id?: string) => {
     loading,
     posts,
     error,
+    handleCreate,
     handleDelete,
   };
 };

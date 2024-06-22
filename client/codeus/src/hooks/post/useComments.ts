@@ -35,7 +35,7 @@ const useComments = (postId: string) => {
   useEffect(() => {
     (async () => {
       try {
-        setComments(await fetchComments(postId));
+        setComments((await fetchComments(postId)).reverse());
       } catch (error) {
         console.error("Failed to fetch posts", error);
         setError(true);

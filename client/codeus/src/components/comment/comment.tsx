@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { CommentModel } from "@/services/schema";
 import CommentHeader from "./comment-header";
+import { useNavigate } from "react-router-dom";
 
 interface CommentProps {
   comment: CommentModel;
@@ -11,6 +12,7 @@ const Comment: React.FC<CommentProps> = ({
   comment,
   onDelete,
 }: CommentProps) => {
+  const navigate = useNavigate();
   return (
     <Card
       className="shadow-sm rounded-none hover:bg-muted 
@@ -19,7 +21,12 @@ const Comment: React.FC<CommentProps> = ({
       <CardHeader>
         <CommentHeader comment={comment} onDelete={onDelete} />
       </CardHeader>
-      <CardContent>
+      <CardContent
+        className="cursor-pointer"
+        onClick={() => {
+          navigate("/p/" + comment.postId);
+        }}
+      >
         <p>{comment.content}</p>
       </CardContent>
     </Card>

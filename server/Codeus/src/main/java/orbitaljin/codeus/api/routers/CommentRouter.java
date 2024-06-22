@@ -87,7 +87,7 @@ public class CommentRouter {
         ).toReponseEntity();
     }
 
-    @GetMapping("/author/{authorId}")
+    @GetMapping("/user/{authorId}")
     public ResponseEntity<?> getCommentsByAuthorId(@PathVariable String authorId) {
         // Check if author exists
         if (userService.getUserById(authorId) == null) {

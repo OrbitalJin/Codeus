@@ -3,13 +3,14 @@ import { CommentModel } from "./schema";
 
 const endpoint: string = "http://127.0.0.1:8080/comments/";
 
-export const fetchComment = async (id: string): Promise<CommentModel> => {
+export const fetchUserComments = async (
+  userId: string,
+): Promise<CommentModel[]> => {
   try {
-    const response = await axios.get(endpoint + id);
-    console.log(response.data?.data);
-    return response.data?.data;
+    const response = await axios.get(endpoint + "user/" + userId);
+    return response.data?.data || null;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching posts:", error);
     throw error;
   }
 };

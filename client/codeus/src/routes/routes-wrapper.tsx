@@ -12,7 +12,6 @@ const RoutesWrapper: React.FC<RoutesWrapperProps> = ({
     <div className="flex flex-row h-screen">
       <Sidebar />
       {children}
-      <div className="grow border-l h-full" />
     </div>
   );
 };
