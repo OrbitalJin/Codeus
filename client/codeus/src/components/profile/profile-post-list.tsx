@@ -1,5 +1,5 @@
 import PostList from "../post/post-list";
-import { usePosts } from "@/hooks/usePosts";
+import usePosts from "@/hooks/post/usePosts";
 
 type ProfilePostListProps = {
   uid: string;

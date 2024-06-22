@@ -1,11 +1,26 @@
 import { useEffect, useState } from "react";
 import { CommentModel } from "@/services/schema";
-import { deleteComment, fetchComments } from "@/services/comment-service";
+import {
+  createComment,
+  deleteComment,
+  fetchComments,
+} from "@/services/comment-service";
 
-export const useComments = (postId: string) => {
+const useComments = (postId: string) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [comments, setComments] = useState<CommentModel[]>([]);
   const [error, setError] = useState<boolean>(false);
+
+  const handleCreate = async (comment: CommentModel) => {
+    console.log(comment);
+    try {
+      await createComment(comment);
+      setComments([...comments, comment]);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
 
   const handleDelete = async (id: string) => {
     try {
@@ -33,6 +48,9 @@ export const useComments = (postId: string) => {
     loading,
     comments,
     error,
+    handleCreate,
     handleDelete,
   };
 };
+
+export default useComments;

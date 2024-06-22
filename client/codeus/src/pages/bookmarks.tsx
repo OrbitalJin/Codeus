@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { AuthContext } from "@/contexts/auth-context";
 import { useBookmarks } from "@/hooks/useBookmarked";
-import { usePosts } from "@/hooks/usePosts";
+import usePosts from "@/hooks/post/usePosts";
 import { clearUserBookmarks } from "@/services/bookmark-service";
 import { PostModel } from "@/services/schema";
 import { MoreHorizontal, Trash } from "lucide-react";

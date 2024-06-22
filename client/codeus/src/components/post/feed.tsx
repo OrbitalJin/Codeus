@@ -1,4 +1,4 @@
-import { usePosts } from "@/hooks/usePosts";
+import usePosts from "@/hooks/post/usePosts";
 import PostList from "./post-list";
 
 const Feed = () => {

@@ -15,25 +15,39 @@
 - [x] Lock routes unless signed in
 - [x] Style sign-up and login pages
 - [x] Implement logout button and hook(?)
+
+## Sidebar
+
 - [x] Dynamicaly display user details in `SidebarFooter` component
-- [x] User tooltip on post with preview
+
+## Profile
+
 - [x] User profile route /{handle}(?)
 - [x] User posts on profile
 - [x] Add user bio
-- [x] Add Post time stamps
-- [x] Add copy snippet to clipboard
-- [x] Add post badges (lang, theme...)
 - [x] Add profile edit & (maybe follow? <- Not yet)
 - [x] Add upvote list
-- [ ] Style User tooltip on post with preview
 - [ ] Figure out a way to fix the race confition on registration and remove the manual call to `setAuthState` from there
 
-## Feed
+## Bookmarks
+
+- [x] Add ability to clear bookmarks
+
+## Feed/Post
 
 - [x] Load posts in a general field
 - [x] Implement up/downvotes
 - [x] Implement bookmarks on posts
-- [x] Add ability to clear bookmarks
+- [x] Add Post time stamps
+- [x] Add copy snippet to clipboard
+- [x] Add post badges (lang, theme...)
+- [x] User tooltip on post with preview
+- [x] Fullscreen (center) view with comments below
+- [x] Comments list & items components
+- [x] Add comments
+- [x] Update changes in realtime by using state (e.g. delete is instant)
+- [ ] Style User tooltip on post with preview
+- [ ] Update changes in realtime by using state (e.g. delete is instant)
 
 ## Threads
 
@@ -42,9 +56,3 @@
 ## Snippet sharing
 
 ## Explore / search
-
-## Posts /{postId}
-
-- [ ] Fullscreen (center) view with comments below
-- [ ] Comments list & items components
-- [ ] Add comments

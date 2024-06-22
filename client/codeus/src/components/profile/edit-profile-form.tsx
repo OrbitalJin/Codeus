@@ -1,4 +1,4 @@
-import useEditProfile from "@/hooks/useEditProfile";
+import useEditProfile from "@/hooks/profile/useEditProfile";
 import {
   Form,
   FormControl,

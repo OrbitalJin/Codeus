@@ -35,7 +35,9 @@ export const deleteComment = async (id: string): Promise<void> => {
   }
 };
 
-export const createPost = async (data: CommentModel): Promise<CommentModel> => {
+export const createComment = async (
+  data: CommentModel,
+): Promise<CommentModel> => {
   try {
     const response = await axios.post(endpoint, data);
     return response.data;

@@ -8,7 +8,7 @@ import {
   TooltipProvider,
 } from "../ui/tooltip";
 import UserPreview from "../user/user-preview-tooltip";
-import useFetchUserById from "@/hooks/useFetchUserById";
+import useFetchUserById from "@/hooks/auth/useFetchUserById";
 import moment from "moment";
 
 interface PostHeaderProps {

@@ -1,5 +1,5 @@
 export type CommentModel = {
-  id: string;
+  id?: string;
   content: string;
   authorId: string;
   postId: string;

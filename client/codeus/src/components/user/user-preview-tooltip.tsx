@@ -1,4 +1,4 @@
-import useFetchUserByHandle from "@/hooks/useFetchUserByHandle";
+import useFetchUserByHandle from "@/hooks/auth/useFetchUserByHandle";
 
 type UserPreviewProps = {
   handle: string;

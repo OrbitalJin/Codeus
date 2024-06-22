@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTheme } from "@/providers/theme-provider";
 import { useNavigate } from "react-router-dom";
-import { useAuthenticate } from "@/hooks/useAuthenticate";
+import { useAuthenticate } from "@/hooks/auth/useAuthenticate";
 import { AuthContext } from "@/contexts/auth-context";
 import { SidebarContext } from "@/contexts/sidebar-context";
 

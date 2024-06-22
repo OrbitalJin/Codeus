@@ -1,4 +1,11 @@
-import { ArrowDown, ArrowUp, Bookmark, Copy } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUp,
+  Bookmark,
+  Copy,
+  MessageCircle,
+  Share,
+} from "lucide-react";
 import { Badge } from "../ui/badge";
 import {
   Tooltip,
@@ -12,8 +19,9 @@ import { PostModel } from "@/services/schema";
 import { downvotePost, upvotePost } from "@/services/upvote-service";
 import { useContext } from "react";
 import { AuthContext } from "@/contexts/auth-context";
-import useVotes from "@/hooks/useVotes";
+import useVotes from "@/hooks/post/useVotes";
 import { useBookmark } from "@/hooks/useBookmarked";
+import { useNavigate } from "react-router-dom";
 
 type PostInteractionsProps = {
   post: PostModel;
@@ -21,6 +29,7 @@ type PostInteractionsProps = {
 
 const PostFooter = ({ post }: PostInteractionsProps) => {
   const { authState } = useContext(AuthContext);
+  const navigate = useNavigate();
   const { bookMarked, toggleBookmark } = useBookmark(
     post.id as string,
     authState.user?.id as string,
@@ -53,6 +62,19 @@ const PostFooter = ({ post }: PostInteractionsProps) => {
           />
         </div>
 
+        <div
+          className="group flex flex-row justify-between items-center p-1 px-3 space-x-2 shadow-sm bg-muted rounded-full cursor-pointer transition-all
+          hover:shadow-md"
+          onClick={() => {
+            navigate("/p/" + post.id);
+          }}
+        >
+          <MessageCircle
+            size={20}
+            className="transition-all group-hover:text-indigo-500"
+          />
+          <a className="text-xs">20</a>
+        </div>
         <Badge
           variant="outline"
           className="shadow-sm transition-all hover:text-orange-500 hover:shadow-orange-500/25"
@@ -95,6 +117,20 @@ const PostFooter = ({ post }: PostInteractionsProps) => {
               />
             </TooltipTrigger>
             <TooltipContent>Add to your Bookmarks</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>
+              <Share
+                onClick={() => {
+                  copy("http://localhost:5173/p/" + post.id);
+                }}
+                size={35}
+                className="cursor-pointer transition-colors p-2 hover:text-indigo-500 hover:shadow-indigo-500/35"
+              />
+            </TooltipTrigger>
+            <TooltipContent>Share post!</TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </div>

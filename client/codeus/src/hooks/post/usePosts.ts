@@ -1,9 +1,12 @@
-import { deletePost } from "@/services/post-service";
-import { PostModel } from "@/services/schema";
-import { getUserUpvoted } from "@/services/upvote-service";
 import { useEffect, useState } from "react";
+import { PostModel } from "@/services/schema";
+import {
+  deletePost,
+  fetchPosts,
+  fetchPostsByAuthorId,
+} from "@/services/post-service";
 
-export const useUpvotedPosts = (userId: string) => {
+const usePosts = (id?: string) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [posts, setPosts] = useState<PostModel[]>([]);
   const [error, setError] = useState<boolean>(false);
@@ -20,11 +23,16 @@ export const useUpvotedPosts = (userId: string) => {
 
   useEffect(() => {
     (async () => {
-      setLoading(true);
-      setPosts(await getUserUpvoted(userId));
+      try {
+        const data = id ? await fetchPostsByAuthorId(id) : await fetchPosts();
+        setPosts(data.reverse());
+      } catch (error) {
+        console.error("Failed to fetch posts", error);
+        setError(true);
+      }
       setLoading(false);
     })();
-  }, [userId]);
+  }, [id]);
 
   return {
     loading,
@@ -33,3 +41,5 @@ export const useUpvotedPosts = (userId: string) => {
     handleDelete,
   };
 };
+
+export default usePosts;

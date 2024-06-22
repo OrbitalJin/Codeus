@@ -1,12 +1,12 @@
 import { useParams } from "react-router-dom";
 import PageWrapper from "./page-wrapper";
 import PostComponent from "@/components/post/post-component";
-import usePost from "@/hooks/usePost";
 import { InfinitySpin } from "react-loader-spinner";
 import Banner from "./banner";
 import CommentInput from "@/components/comment/comment-input";
 import CommentList from "@/components/comment/comment-list";
-import { useComments } from "@/hooks/useComments";
+import useComments from "@/hooks/post/useComments";
+import usePost from "@/hooks/post/usePost";
 
 const PostPage = () => {
   const { postId } = useParams();
@@ -22,7 +22,7 @@ const PostPage = () => {
         post && (
           <div className="flex flex-col">
             <PostComponent post={post} onDelete={handleDelete} />
-            <CommentInput />
+            <CommentInput post={post} onCreate={commentsProps.handleCreate} />
             <CommentList {...commentsProps} />
           </div>
         )

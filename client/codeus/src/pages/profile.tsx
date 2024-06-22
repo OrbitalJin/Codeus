@@ -4,8 +4,8 @@ import ProfileInfo from "@/components/profile/profile-info";
 import ProfileTabs from "@/components/profile/profile-tabs";
 import PageWrapper from "./page-wrapper";
 import Banner from "./banner";
-import useUser from "@/hooks/useUser";
 import { InfinitySpin } from "react-loader-spinner";
+import useUser from "@/hooks/auth/useUser";
 
 const Profile: React.FC = () => {
   const { handle } = useParams();

@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Logo from "@/components/logo";
 import { ModeToggle } from "@/components/mode-toggle";
-import useLogin from "@/hooks/useLogin";
+import useLogin from "@/hooks/auth/useLogin";
 
 const Login = () => {
   const { form, onSubmit, loading, error } = useLogin();

@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Logo from "@/components/logo";
 import { ModeToggle } from "@/components/mode-toggle";
-import useRegister from "@/hooks/useRegister";
+import useRegister from "@/hooks/auth/useRegister";
 
 const Register = () => {
   const { form, onSubmit, loading, error } = useRegister();
