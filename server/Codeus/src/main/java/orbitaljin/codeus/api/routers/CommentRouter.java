@@ -31,7 +31,8 @@ public class CommentRouter {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> createComment(Comment comment) {
+    public ResponseEntity<?> createComment(@RequestBody Comment comment) {
+        System.out.println(comment);
         // check if comment is valid
         if (comment == null) {
             return new APIResponse<Comment>(
