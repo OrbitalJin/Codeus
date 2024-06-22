@@ -7,8 +7,8 @@ import {
   CardTitle,
 } from "../ui/card";
 import { CodeBlock, nord, obsidian, monokai, rainbow } from "react-code-blocks";
-import PostUserHeader from "./PostUserHeader";
-import PostFooter from "./PostFooter";
+import PostFooter from "./post-footer";
+import PostHeader from "./post-header";
 import { PostModel } from "@/services/schema";
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +21,7 @@ interface PostProps {
 export default function PostComponent({
   post,
   clickable,
-  onDelete,
+  onDelete: onDelete,
 }: PostProps) {
   const navigate = useNavigate();
   const theme = (() => {
@@ -40,21 +40,29 @@ export default function PostComponent({
 
   return (
     <Card
-      className="shadow-sm rounded-none hover:bg-muted 
-          border-t-0 border-l-0 border-r-0 border-b-2 border-muted transition-colors"
+      className={`shadow-sm rounded-none border-t-0 border-l-0 border-r-0 border-b-2 border-muted transition-colors ${
+        clickable ? "hover:bg-muted" : ""
+      }`}
     >
-      <div
-        className={`${clickable ? "cursor-pointer" : ""}`}
-        onClick={() => {
-          clickable && navigate("/p/" + post.id);
-        }}
-      >
+      <div className={`${clickable ? "cursor-pointer" : ""}`}>
         <CardHeader>
-          <PostUserHeader post={post} onDelete={onDelete} />
-          <CardTitle className="text-lg font-semibold">{post.title}</CardTitle>
-          <CardDescription>{post.description}</CardDescription>
+          <PostHeader post={post} onDelete={onDelete} />
+          <div
+            onClick={() => {
+              clickable && navigate("/p/" + post.id);
+            }}
+          >
+            <CardTitle className="text-lg font-semibold">
+              {post.title}
+            </CardTitle>
+            <CardDescription>{post.description}</CardDescription>
+          </div>
         </CardHeader>
-        <CardContent>
+        <CardContent
+          onClick={() => {
+            clickable && navigate("/p/" + post.id);
+          }}
+        >
           <CodeBlock
             text={post.content}
             language={post.language}

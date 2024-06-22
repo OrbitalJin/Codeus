@@ -1,4 +1,4 @@
-import { hasDownvoted, hasUpvoted } from "@/services/upvoteService";
+import { hasDownvoted, hasUpvoted } from "@/services/upvote-service";
 import { useEffect, useState } from "react";
 
 const useVotes = (postId: string, userId: string) => {

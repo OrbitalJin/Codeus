@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 type BannerProps = {
   title: string;
+  subTitle?: string;
   back?: boolean;
   children?: ReactNode;
 };
@@ -12,6 +13,7 @@ type BannerProps = {
 const Banner: React.FC<BannerProps> = ({
   title,
   back,
+  subTitle,
   children,
 }: BannerProps) => {
   const { authState } = useContext(AuthContext);
@@ -32,7 +34,9 @@ const Banner: React.FC<BannerProps> = ({
         </button>
       )}
       <a className="font-bold text-xl p-5">{title}</a>
-      <a className="text-sm text-gray-400">/{authState.user?.handle}</a>
+      <a className="text-sm text-gray-400">
+        {subTitle || "/" + authState.user?.handle}
+      </a>
       <div className="grow" />
       {children}
     </div>

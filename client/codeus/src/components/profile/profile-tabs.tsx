@@ -1,7 +1,7 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ProfilePostList from "./ProfilePostList";
-import ProfileUpvotedPostList from "./ProfileUpvotedList";
+import ProfilePostList from "./profile-post-list";
+import ProfileUpvotedPostList from "./profile-upvoted-list";
 
 interface ProfileTabsProps {
   userId: string;

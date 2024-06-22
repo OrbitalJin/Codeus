@@ -10,7 +10,6 @@ const PageWrapper: React.FC<PageWrapperProps> = ({
       <div id="container" className="flex-1 flex flex-col">
         {children}
       </div>
-      <div className="grow border-l h-full" />
     </main>
   );
 };

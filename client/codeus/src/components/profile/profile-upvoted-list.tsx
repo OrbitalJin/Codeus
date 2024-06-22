@@ -1,4 +1,4 @@
-import PostList from "@/components/post/PostList";
+import PostList from "../post/post-list";
 import { useUpvotedPosts } from "@/hooks/useUpvotedPosts";
 
 type ProfileUpvotedPostListProps = {

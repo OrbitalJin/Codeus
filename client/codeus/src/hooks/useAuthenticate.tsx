@@ -1,5 +1,5 @@
 import { RegisterPayload } from "@/services/schema";
-import { createUser } from "@/services/userService";
+import { createUser } from "@/services/user-service";
 import {
   getAuth,
   createUserWithEmailAndPassword,

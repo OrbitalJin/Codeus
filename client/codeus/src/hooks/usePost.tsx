@@ -1,4 +1,4 @@
-import { deletePost, fetchPost } from "@/services/postService";
+import { deletePost, fetchPost } from "@/services/post-service";
 import { PostModel } from "@/services/schema";
 import { useEffect, useState } from "react";
 

@@ -1,10 +1,18 @@
+export type CommentModel = {
+  id: string;
+  content: string;
+  authorId: string;
+  postId: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
 export type BookmarkModel = {
   id: string;
   userId: string;
   postId: string;
 };
 
-// Post schema
 export type PostModel = {
   id?: string;
   title: string;

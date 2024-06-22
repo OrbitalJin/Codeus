@@ -1,7 +1,4 @@
 import { useContext, useState } from "react";
-
-import SidebarFooter from "./SidebarFooter";
-import SidebarHeader from "./SidebarHeader";
 import {
   HomeIcon,
   SearchIcon,
@@ -10,13 +7,15 @@ import {
   BookmarkIcon,
   UserIcon,
 } from "lucide-react";
-import SideBarItem from "./SidebarItem";
-import CreatePostButton from "@/components/post/CreatePostButton";
+import SidebarHeader from "./sidebar-header";
+import SidebarFooter from "./sidebar-footer";
+import SideBarItem from "./sidebar-item";
+import CreatePostButton from "../post/create-post-button";
 import { SidebarContext } from "@/contexts/sidebar-context";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "@/contexts/auth-context";
 
-export default function SideBar() {
+const Sidebar = () => {
   const [expanded, setExpanded] = useState<boolean>(true);
   const { authState } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -81,4 +80,6 @@ export default function SideBar() {
       </aside>
     )
   );
-}
+};
+
+export default Sidebar;

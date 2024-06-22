@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigate, useParams } from "react-router-dom";
-import ProfileInfo from "@/components/profile/ProfileInfo";
-import ProfileTabs from "@/components/profile/ProfileTabs";
+import ProfileInfo from "@/components/profile/profile-info";
+import ProfileTabs from "@/components/profile/profile-tabs";
 import PageWrapper from "./page-wrapper";
 import Banner from "./banner";
 import useUser from "@/hooks/useUser";
@@ -10,7 +10,6 @@ import { InfinitySpin } from "react-loader-spinner";
 const Profile: React.FC = () => {
   const { handle } = useParams();
   const { user, loading, error } = useUser(handle as string);
-  console.log(loading);
 
   return (
     <PageWrapper>
@@ -20,7 +19,11 @@ const Profile: React.FC = () => {
         <InfinitySpin />
       ) : (
         <>
-          <Banner title={user?.username as string} back />
+          <Banner
+            title={user?.username as string}
+            subTitle={"/" + user?.handle}
+            back
+          />
           <ProfileInfo
             username={user?.username as string}
             handle={user?.handle as string}

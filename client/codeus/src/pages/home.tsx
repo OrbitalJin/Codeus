@@ -1,4 +1,4 @@
-import Feed from "@/components/post/Feed";
+import Feed from "@/components/post/feed";
 import PageWrapper from "./page-wrapper";
 import Banner from "./banner";
 

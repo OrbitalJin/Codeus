@@ -9,7 +9,7 @@ import {
 
 import copy from "copy-to-clipboard";
 import { PostModel } from "@/services/schema";
-import { downvotePost, upvotePost } from "@/services/upvoteService";
+import { downvotePost, upvotePost } from "@/services/upvote-service";
 import { useContext } from "react";
 import { AuthContext } from "@/contexts/auth-context";
 import useVotes from "@/hooks/useVotes";

@@ -1,6 +1,6 @@
-import { deletePost } from "@/services/postService";
+import { deletePost } from "@/services/post-service";
 import { PostModel } from "@/services/schema";
-import { getUserUpvoted } from "@/services/upvoteService";
+import { getUserUpvoted } from "@/services/upvote-service";
 import { useEffect, useState } from "react";
 
 export const useUpvotedPosts = (userId: string) => {

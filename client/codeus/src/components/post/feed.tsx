@@ -1,5 +1,5 @@
 import { usePosts } from "@/hooks/usePosts";
-import PostList from "./PostList";
+import PostList from "./post-list";
 
 const Feed = () => {
   const { loading, posts, error, handleDelete } = usePosts();

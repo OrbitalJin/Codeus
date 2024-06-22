@@ -10,7 +10,7 @@ import Register from "./pages/register";
 import Profile from "./pages/profile";
 import BookMarks from "./pages/bookmarks";
 import Post from "./pages/post";
-import SideBar from "./components/sidebar/Sidebar";
+import RoutesWrapper from "./routes/routes-wrapper";
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -18,8 +18,7 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 function App() {
   return (
     <BrowserRouter>
-      <div className="flex flex-row h-screen">
-        <SideBar />
+      <RoutesWrapper>
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
           <Route
@@ -71,7 +70,7 @@ function App() {
             }
           />
         </Routes>
-      </div>
+      </RoutesWrapper>
     </BrowserRouter>
   );
 }

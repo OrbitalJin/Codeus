@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Verified } from "lucide-react";
-import EditProfileButton from "./EditProfileButton";
+import EditProfileButton from "./edit-profile-button";
 
 interface ProfileInfoProps {
   username: string;

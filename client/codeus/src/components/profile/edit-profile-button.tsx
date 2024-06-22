@@ -11,7 +11,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import EditProfileForm from "./EditProfileForm";
+import EditProfileForm from "./edit-profile-form";
 
 type EditProfileButton = {
   className?: string;

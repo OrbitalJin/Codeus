@@ -1,5 +1,5 @@
 import { UserModel } from "@/services/schema";
-import { fetchUserByHandle } from "@/services/userService";
+import { fetchUserByHandle } from "@/services/user-service";
 import { useEffect, useState } from "react";
 
 const useUser = (handle: string) => {

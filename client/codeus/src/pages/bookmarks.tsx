@@ -1,5 +1,3 @@
-import PostList from "@/components/post/PostList";
-import SideBar from "@/components/sidebar/Sidebar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,12 +7,13 @@ import {
 import { AuthContext } from "@/contexts/auth-context";
 import { useBookmarks } from "@/hooks/useBookmarked";
 import { usePosts } from "@/hooks/usePosts";
-import { clearUserBookmarks } from "@/services/bookmarkService";
+import { clearUserBookmarks } from "@/services/bookmark-service";
 import { PostModel } from "@/services/schema";
 import { MoreHorizontal, Trash } from "lucide-react";
 import { useContext } from "react";
 import PageWrapper from "./page-wrapper";
 import Banner from "./banner";
+import PostList from "@/components/post/post-list";
 
 const BookMarks: React.FC = () => {
   const { authState } = useContext(AuthContext);

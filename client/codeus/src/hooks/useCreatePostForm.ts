@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createPost } from "@/services/postService";
+import { createPost } from "@/services/post-service";
 import { PostModel } from "@/services/schema";
 import { useContext } from "react";
 import { createPostFormSchema } from "@/services/validation";

@@ -1,22 +1,18 @@
 import { useEffect, useState } from "react";
-import { PostModel } from "@/services/schema";
-import {
-  deletePost,
-  fetchPosts,
-  fetchPostsByAuthorId,
-} from "@/services/post-service";
+import { CommentModel } from "@/services/schema";
+import { deleteComment, fetchComments } from "@/services/comment-service";
 
-export const usePosts = (id?: string) => {
+export const useComments = (postId: string) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [posts, setPosts] = useState<PostModel[]>([]);
+  const [comments, setComments] = useState<CommentModel[]>([]);
   const [error, setError] = useState<boolean>(false);
 
   const handleDelete = async (id: string) => {
     try {
-      await deletePost(id);
-      setPosts(posts.filter((post) => post.id !== id));
+      await deleteComment(id);
+      setComments(comments.filter((comment) => comment.id !== id));
     } catch (error) {
-      console.error("Failed to delete post", error);
+      console.error("Failed to delete comment", error);
       setError(true);
     }
   };
@@ -24,19 +20,18 @@ export const usePosts = (id?: string) => {
   useEffect(() => {
     (async () => {
       try {
-        const data = id ? await fetchPostsByAuthorId(id) : await fetchPosts();
-        setPosts(data.reverse());
+        setComments(await fetchComments(postId));
       } catch (error) {
         console.error("Failed to fetch posts", error);
         setError(true);
       }
       setLoading(false);
     })();
-  }, [id]);
+  }, [postId]);
 
   return {
     loading,
-    posts,
+    comments,
     error,
     handleDelete,
   };

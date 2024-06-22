@@ -1,7 +1,7 @@
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { AuthContext } from "@/contexts/auth-context";
-import { fetchUser } from "@/services/userService";
+import { fetchUser } from "@/services/user-service";
 import { UserModel } from "@/services/schema";
 
 type Props = {

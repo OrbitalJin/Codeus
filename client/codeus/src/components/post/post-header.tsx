@@ -1,5 +1,5 @@
 import { PostModel } from "@/services/schema";
-import PostMoreButton from "./PostMoreButton";
+import PostMoreButton from "./post-more-button";
 import { useNavigate } from "react-router-dom";
 import {
   Tooltip,
@@ -7,19 +7,19 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from "../ui/tooltip";
-import UserPreview from "../user/UserPreview";
+import UserPreview from "../user/user-preview-tooltip";
 import useFetchUserById from "@/hooks/useFetchUserById";
 import moment from "moment";
 
-interface PostUserHeaderProps {
+interface PostHeaderProps {
   post: PostModel;
   onDelete: (id: string) => void;
 }
 
-const PostUserHeader: React.FC<PostUserHeaderProps> = ({
+const PostHeader: React.FC<PostHeaderProps> = ({
   post,
   onDelete,
-}: PostUserHeaderProps) => {
+}: PostHeaderProps) => {
   const author = useFetchUserById(post.authorId);
   const navigate = useNavigate();
 
@@ -66,4 +66,4 @@ const PostUserHeader: React.FC<PostUserHeaderProps> = ({
   );
 };
 
-export default PostUserHeader;
+export default PostHeader;

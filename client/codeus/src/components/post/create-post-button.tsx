@@ -8,8 +8,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import CreatePostForm from "./CreatePostForm";
 import { useState } from "react";
+import CreatePostForm from "./create-post-form";
 
 interface CreatePostProps {
   expanded: boolean;

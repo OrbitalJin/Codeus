@@ -2,7 +2,7 @@ import {
   bookmarkPost,
   fetchUserBookmarks,
   isBookmarked,
-} from "@/services/bookmarkService";
+} from "@/services/bookmark-service";
 import { PostModel } from "@/services/schema";
 import { useEffect, useState } from "react";
 

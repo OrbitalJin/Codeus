@@ -1,5 +1,5 @@
 import { UserModel } from "@/services/schema";
-import { fetchUser } from "@/services/userService";
+import { fetchUser } from "@/services/user-service";
 import { useEffect, useState } from "react";
 
 const useFetchUserById = (id: string) => {

@@ -13,7 +13,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   const { authState: state } = useContext(AuthContext);
   if (state.loading)
     return (
-      <div className="h-screen flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center">
         <InfinitySpin color="grey" />
       </div>
     );

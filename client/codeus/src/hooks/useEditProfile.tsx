@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { editProfileSchema } from "@/services/validation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { updateUser } from "@/services/userService";
+import { updateUser } from "@/services/user-service";
 import { UserModel } from "@/services/schema";
 import { useState } from "react";
 
