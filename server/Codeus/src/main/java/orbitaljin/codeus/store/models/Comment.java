@@ -7,37 +7,32 @@ import jakarta.persistence.Table;
 @Table(name = "comments")
 public class Comment extends Model {
     private String content;
-    private Long postId;
-    private Long userId;
-    private Long upvoteCount;
+    private String postId;
+    private String authorId;
 
     public Comment() {
     }
 
     public Comment(
             String content,
-            Long postId,
-            Long userId,
-            Long upvoteCount
+            String postId,
+            String authorId
     ) {
         this.content = content;
         this.postId = postId;
-        this.userId = userId;
-        this.upvoteCount = upvoteCount;
+        this.authorId = authorId;
     }
 
     public Comment(
             String id,
             String content,
-            Long postId,
-            Long userId,
-            Long upvoteCount
+            String postId,
+            String authorId
     ) {
         this.setId(id);
         this.content = content;
         this.postId = postId;
-        this.userId = userId;
-        this.upvoteCount = upvoteCount;
+        this.authorId = authorId;
     }
 
     public String getContent() {
@@ -48,28 +43,20 @@ public class Comment extends Model {
         this.content = content;
     }
 
-    public Long getPostId() {
+    public String getPostId() {
         return postId;
     }
 
-    public void setPostId(Long postId) {
+    public void setPostId(String postId) {
         this.postId = postId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getAuthorId() {
+        return authorId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getUpvoteCount() {
-        return upvoteCount;
-    }
-
-    public void setUpvoteCount(Long upvoteCount) {
-        this.upvoteCount = upvoteCount;
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
     public String toString() {
@@ -77,8 +64,7 @@ public class Comment extends Model {
                 "id=" + this.getId() +
                 ", content='" + content + '\'' +
                 ", postId=" + postId +
-                ", userId=" + userId +
-                ", upvoteCount=" + upvoteCount +
+                ", authorId=" + authorId +
                 ", createdAt=" + this.getCreatedAt() +
                 '}';
     }
