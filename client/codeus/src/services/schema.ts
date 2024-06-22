@@ -19,6 +19,7 @@ export type PostModel = {
   theme: string;
   description: string;
   voteCount: number;
+  commentCount: number;
   content: string;
   language: string;
   authorId: string; // user handle

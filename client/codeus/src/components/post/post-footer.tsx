@@ -73,7 +73,7 @@ const PostFooter = ({ post }: PostInteractionsProps) => {
             size={20}
             className="transition-all group-hover:text-indigo-500"
           />
-          <a className="text-xs">20</a>
+          <a className="text-xs">{post.commentCount}</a>
         </div>
         <Badge
           variant="outline"

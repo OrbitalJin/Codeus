@@ -19,6 +19,7 @@ public class Post extends Model{
     private String theme;
     private String description;
     private Long voteCount = 0L;
+    private Long commentCount = 0L;
 
     public Post() {
     }
@@ -51,6 +52,14 @@ public class Post extends Model{
         this.content = content;
         this.description = description;
         this.language = language;
+    }
+
+    public Long getCommentCount() {
+        return this.commentCount;
+    }
+
+    public void setCommentCount(Long commentCount) {
+        this.commentCount = commentCount;
     }
 
     public Long getVoteCount() {
@@ -130,6 +139,7 @@ public class Post extends Model{
                 ", description='" + description + '\'' +
                 ", content='" + content + '\'' +
                 ", voteCount='" + voteCount + '\'' +
+                ", commentCount='" + commentCount + '\'' +
                 '}';
     }
 }

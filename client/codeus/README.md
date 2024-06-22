@@ -46,6 +46,7 @@
 - [x] Comments list & items components
 - [x] Add comments
 - [x] Update changes in realtime by using state (e.g. delete is instant)
+- [ ] Fix first comment post bug (spread operator)
 - [ ] Style User tooltip on post with preview
 - [ ] Update changes in realtime by using state (e.g. delete is instant)
 
