@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import CreatePostForm from "./create-post-form";
+import Logo from "../logo";
 
 interface CreatePostProps {
   expanded: boolean;
@@ -34,6 +35,7 @@ const CreatePostButton: React.FC<CreatePostProps> = ({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
+          <Logo className="self-center p-1" />
           <DialogTitle>Create Post</DialogTitle>
           <DialogDescription>
             You will not be able to edit it later

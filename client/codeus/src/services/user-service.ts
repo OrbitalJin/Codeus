@@ -1,60 +1,72 @@
 import axios from "axios";
 import { UserModel } from "./schema";
+import Service from "./service";
 
-const endpoint: string = "http://127.0.0.1:8080/users/";
+export default class UserService extends Service {
+  private endpoint: string = "http://127.0.0.1:8080/users/";
 
-export const fetchUsers = async (): Promise<UserModel[]> => {
-  try {
-    const response = await axios.get(endpoint);
-    return response.data?.data;
-  } catch (error) {
-    console.error("Error fetching posts:", error);
-    throw error;
+  private constructor() {
+    super();
   }
-};
 
-export const fetchUser = async (
-  id: string | null,
-): Promise<UserModel | null> => {
-  if (!id) return null;
-  try {
-    const response = await axios.get(endpoint + id);
-    return response.data?.data;
-  } catch (error) {
-    console.error(error);
+  public static getInstance(): UserService {
+    if (!UserService.instance) {
+      UserService.instance = new UserService();
+    }
+    return UserService.instance as UserService;
   }
-  return null;
-};
 
-export const fetchUserByHandle = async (
-  handle: string | null,
-): Promise<UserModel | null> => {
-  if (!handle) return null;
-  try {
-    const response = await axios.get(endpoint + "handle/" + handle);
-    return response.data?.data;
-  } catch (error) {
-    console.log(error);
+  public async fetchUsers(): Promise<UserModel[]> {
+    try {
+      const response = await axios.get(this.endpoint);
+      return response.data?.data;
+    } catch (error) {
+      console.error("Error fetching users:", error);
+      throw error;
+    }
   }
-  return null;
-};
 
-export const createUser = async (data: UserModel): Promise<UserModel> => {
-  try {
-    const response = await axios.post(endpoint, data);
-    return response.data;
-  } catch (error) {
-    console.error("Error creating post:", error);
-    throw error;
+  public async fetchUser(id: string | null): Promise<UserModel | null> {
+    if (!id) return null;
+    try {
+      const response = await axios.get(this.endpoint + id);
+      return response.data?.data;
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      throw error;
+    }
   }
-};
 
-export const updateUser = async (user: UserModel): Promise<UserModel> => {
-  try {
-    const response = await axios.patch(endpoint, user);
-    return response.data;
-  } catch (error) {
-    console.log("Error updating user:", error);
-    throw error;
+  public async fetchUserByHandle(
+    handle: string | null,
+  ): Promise<UserModel | null> {
+    if (!handle) return null;
+    try {
+      const response = await axios.get(this.endpoint + "handle/" + handle);
+      return response.data?.data;
+    } catch (error) {
+      console.error("Error fetching user by handle:", error);
+      throw error;
+    }
   }
-};
+
+  public async createUser(data: UserModel): Promise<UserModel> {
+    try {
+      const response = await axios.post(this.endpoint, data);
+      return response.data;
+    } catch (error) {
+      console.error("Error creating user:", error);
+      throw error;
+    }
+  }
+
+  public async updateUser(user: UserModel): Promise<UserModel> {
+    try {
+      const response = await axios.patch(this.endpoint + user.id, user);
+      return response.data;
+    } catch (error) {
+      console.error("Error updating user:", error);
+      throw error;
+    }
+  }
+}

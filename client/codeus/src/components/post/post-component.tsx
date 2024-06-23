@@ -6,7 +6,14 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { CodeBlock, nord, obsidian, monokai, rainbow } from "react-code-blocks";
+import {
+  CodeBlock as CodeBlock,
+  nord,
+  obsidian,
+  monokai,
+  rainbow,
+  dracula,
+} from "react-code-blocks";
 import PostFooter from "./post-footer";
 import PostHeader from "./post-header";
 import { PostModel } from "@/services/schema";
@@ -34,6 +41,8 @@ export default function PostComponent({
         return monokai;
       case "rainbow":
         return rainbow;
+      case "dracula":
+        return dracula;
     }
     return nord;
   })();

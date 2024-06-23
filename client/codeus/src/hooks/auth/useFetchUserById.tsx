@@ -1,5 +1,5 @@
 import { UserModel } from "@/services/schema";
-import { fetchUser } from "@/services/user-service";
+import UserService from "@/services/user-service";
 import { useEffect, useState } from "react";
 
 const useFetchUserById = (id: string) => {
@@ -7,7 +7,7 @@ const useFetchUserById = (id: string) => {
 
   useEffect(() => {
     (async () => {
-      setUser(await fetchUser(id ? id : null));
+      setUser(await UserService.getInstance().fetchUser(id ? id : null));
     })();
   }, [id]);
 

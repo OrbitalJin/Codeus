@@ -1,8 +1,8 @@
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { AuthContext } from "@/contexts/auth-context";
-import { fetchUser } from "@/services/user-service";
 import { UserModel } from "@/services/schema";
+import UserService from "@/services/user-service";
 
 type Props = {
   children: React.ReactNode;
@@ -29,7 +29,9 @@ const AuthContextProvider: React.FC<Props> = ({ children }: Props) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setAuthState({
-        user: await fetchUser(currentUser ? currentUser.uid : null),
+        user: await UserService.getInstance().fetchUser(
+          currentUser ? currentUser.uid : null,
+        ),
         loading: false,
       });
     });

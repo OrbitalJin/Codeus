@@ -1,5 +1,5 @@
 import { UserModel } from "@/services/schema";
-import { fetchUserByHandle } from "@/services/user-service";
+import UserService from "@/services/user-service";
 import { useEffect, useState } from "react";
 
 const useUser = (handle: string) => {
@@ -11,7 +11,9 @@ const useUser = (handle: string) => {
     setLoading(true);
     (async (handle: string) => {
       try {
-        const user = await fetchUserByHandle(handle as string);
+        const user = await UserService.getInstance().fetchUserByHandle(
+          handle as string,
+        );
         setUser(user);
       } catch (error) {
         console.log(error);

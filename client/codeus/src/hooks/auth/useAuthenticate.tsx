@@ -1,5 +1,5 @@
 import { RegisterPayload } from "@/services/schema";
-import { createUser } from "@/services/user-service";
+import UserService from "@/services/user-service";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -50,7 +50,7 @@ export const useAuthenticate = () => {
         username: payload.username,
       };
 
-      await createUser(user);
+      await UserService.getInstance().createUser(user);
       navigate("/");
     } catch (error) {
       setError(error as string);

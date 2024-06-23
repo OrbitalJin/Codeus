@@ -1,11 +1,10 @@
 import { useForm } from "react-hook-form";
-
 import { editProfileSchema } from "@/services/validation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { updateUser } from "@/services/user-service";
 import { UserModel } from "@/services/schema";
 import { useState } from "react";
+import UserService from "@/services/user-service";
 
 type useEditProfileProps = {
   user: UserModel;
@@ -23,7 +22,11 @@ const useEditProfile = ({ user }: useEditProfileProps) => {
 
   const onSubmit = async (values: z.infer<typeof editProfileSchema>) => {
     setLoading(true);
-    await updateUser({ ...user, bio: values.bio, username: values.username });
+    await UserService.getInstance().updateUser({
+      ...user,
+      bio: values.bio,
+      username: values.username,
+    });
     setLoading(false);
   };
   return {

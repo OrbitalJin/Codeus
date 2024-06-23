@@ -14,10 +14,11 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { useCreatePostForm } from "@/hooks/post/useCreatePostForm";
 import { Button } from "@/components/ui/button";
+import CodeEditor from "@uiw/react-textarea-code-editor";
+import { useState } from "react";
 
 type CreatePostFormProps = {
   setOpen: (open: boolean) => void;
@@ -27,6 +28,7 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({
   setOpen,
 }: CreatePostFormProps) => {
   const { form, onSubmit } = useCreatePostForm();
+  const [lang, setLang] = useState<string>("go");
 
   return (
     <Form {...form}>
@@ -64,7 +66,17 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Textarea placeholder="Content" {...field} />
+                <CodeEditor
+                  {...field}
+                  className="rounded-md text-sm"
+                  language={lang}
+                  placeholder={`Please enter ${lang} code.`}
+                  padding={15}
+                  style={{
+                    fontFamily:
+                      "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -75,7 +87,13 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({
             control={form.control}
             name="language"
             render={({ field }) => (
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select
+                onValueChange={(value: string) => {
+                  field.onChange(value);
+                  setLang(value);
+                }}
+                defaultValue={field.value}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select a language" />
                 </SelectTrigger>
@@ -83,8 +101,8 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({
                   <SelectGroup>
                     <SelectLabel>Languages</SelectLabel>
                     <SelectItem value="python">Python</SelectItem>
-                    <SelectItem value="java">C++</SelectItem>
-                    <SelectItem value="javascript">TypeScript</SelectItem>
+                    <SelectItem value="java">Java</SelectItem>
+                    <SelectItem value="typescript">TypeScript</SelectItem>
                     <SelectItem value="go">Go</SelectItem>
                     <SelectItem value="rust">Rust</SelectItem>
                   </SelectGroup>
@@ -105,6 +123,7 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({
                   <SelectGroup>
                     <SelectLabel>Themes</SelectLabel>
                     <SelectItem value="nord">Nord</SelectItem>
+                    <SelectItem value="dracula">Dracula</SelectItem>
                     <SelectItem value="obsidian">Obsidian</SelectItem>
                     <SelectItem value="rainbow">Rainbow</SelectItem>
                     <SelectItem value="monokai">Monokai</SelectItem>
