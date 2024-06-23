@@ -2,6 +2,7 @@ type PageWrapperProps = {
   children: React.ReactNode;
 };
 
+// TODO
 const PageWrapper: React.FC<PageWrapperProps> = ({
   children,
 }: PageWrapperProps) => {
@@ -10,7 +11,9 @@ const PageWrapper: React.FC<PageWrapperProps> = ({
       <div id="container" className="flex-1 flex flex-col">
         {children}
       </div>
-      <div className="grow border-l h-screen sticky top-0" />
+      <div className="grow border-l h-screen sticky top-0 flex flex-row justify-center items-center">
+        Heelo
+      </div>
     </main>
   );
 };

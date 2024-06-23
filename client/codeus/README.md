@@ -1,5 +1,22 @@
 # Codeus client
 
+## Todo today
+
+- [ ] User card on Side
+- [ ] Thread system
+- [ ] Remove snippet section
+- [ ] Fix first comment bug (or create one comment under post to prevent it)
+- [ ] Search bar
+
+## Threads
+
+- [x] Thread service
+- [x] Thread hooks
+- [ ] Thread Component
+- [ ] Thread List
+- [ ] Thread page with post list
+- [ ] Add thread origin to post if applicable
+
 ## User auth
 
 - [x] Basic login flow

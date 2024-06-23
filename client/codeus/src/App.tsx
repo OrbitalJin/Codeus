@@ -11,6 +11,7 @@ import Profile from "./pages/profile";
 import BookMarks from "./pages/bookmarks";
 import Post from "./pages/post";
 import RoutesWrapper from "./routes/routes-wrapper";
+import Threads from "./pages/threads";
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -66,6 +67,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <BookMarks />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/threads"
+            element={
+              <ProtectedRoute>
+                <Threads />
               </ProtectedRoute>
             }
           />

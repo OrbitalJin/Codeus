@@ -1,3 +1,10 @@
+export type ThreadModel = {
+  id: string;
+  title: string;
+  description: string;
+  createdAt?: string;
+};
+
 export type CommentModel = {
   id?: string;
   content: string;
