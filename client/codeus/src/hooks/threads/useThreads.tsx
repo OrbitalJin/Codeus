@@ -6,12 +6,13 @@ const useThreads = () => {
   const [threads, setThreads] = useState<ThreadModel[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+  const service = ThreadService.getInstance();
 
   useEffect(() => {
     setLoading(true);
     (async () => {
       try {
-        const fetchedThreads = await ThreadService.getInstance().fetchThreads();
+        const fetchedThreads = await service.fetchThreads();
         setThreads(fetchedThreads);
       } catch (error) {
         console.log(error);
@@ -19,7 +20,7 @@ const useThreads = () => {
       }
     })();
     setLoading(false);
-  }, []);
+  }, [service]);
 
   return {
     threads,

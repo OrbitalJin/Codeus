@@ -16,12 +16,12 @@ import {
 
 import copy from "copy-to-clipboard";
 import { PostModel } from "@/services/schema";
-import { downvotePost, upvotePost } from "@/services/upvote-service";
 import { useContext } from "react";
 import { AuthContext } from "@/contexts/auth-context";
 import useVotes from "@/hooks/post/useVotes";
 import { useBookmark } from "@/hooks/useBookmarked";
 import { useNavigate } from "react-router-dom";
+import VoteService from "@/services/vote-service";
 
 type PostInteractionsProps = {
   post: PostModel;
@@ -49,7 +49,10 @@ const PostFooter = ({ post }: PostInteractionsProps) => {
             size={25}
             className={`cursor-pointer transition-all rounded-full p-1 ${upvoted ? "text-orange-500 hover:text-primary" : "text-primary hover:text-orange-500"}`}
             onClick={() => {
-              upvotePost(post.id as string, authState.user?.id as string);
+              VoteService.getInstance().upvotePost(
+                post.id as string,
+                authState.user?.id as string,
+              );
             }}
           />
           <span className="text-xs text-primary">{post.voteCount}</span>
@@ -57,7 +60,10 @@ const PostFooter = ({ post }: PostInteractionsProps) => {
             size={25}
             className={`cursor-pointer transition-all rounded-full p-1 ${downvoted ? "text-blue-500 hover:text-primary" : "text-primary hover:text-blue-500"}`}
             onClick={() => {
-              downvotePost(post.id as string, authState.user?.id as string);
+              VoteService.getInstance().downvotePost(
+                post.id as string,
+                authState.user?.id as string,
+              );
             }}
           />
         </div>

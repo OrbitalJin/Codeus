@@ -1,10 +1,8 @@
-import {
-  bookmarkPost,
-  fetchUserBookmarks,
-  isBookmarked,
-} from "@/services/bookmark-service";
+import BookmarkService from "@/services/bookmark-service";
 import { PostModel } from "@/services/schema";
 import { useEffect, useState } from "react";
+
+const service = BookmarkService.getIntance();
 
 export const useBookmarks = (userId: string) => {
   const [bookmarks, setBookmarks] = useState<PostModel[] | null>(null);
@@ -15,7 +13,7 @@ export const useBookmarks = (userId: string) => {
     (async () => {
       setLoading(true);
       try {
-        const bookmarks = await fetchUserBookmarks(userId);
+        const bookmarks = await service.fetchUserBookmarks(userId);
         setBookmarks(bookmarks);
       } catch (error) {
         setError(error ? true : false);
@@ -35,12 +33,12 @@ export const useBookmark = (postId: string, userId: string) => {
   const [bookMarked, setBookmarked] = useState<boolean>(false);
 
   const toggleBookmark = async (postId: string, userId: string) => {
-    bookmarkPost(postId, userId);
+    service.bookmarkPost(postId, userId);
   };
 
   useEffect(() => {
     (async () => {
-      setBookmarked(await isBookmarked(postId, userId));
+      setBookmarked(await service.isBookmarked(postId, userId));
     })();
   }, [postId, userId]);
 

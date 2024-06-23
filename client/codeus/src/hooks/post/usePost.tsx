@@ -1,4 +1,4 @@
-import { deletePost, fetchPost } from "@/services/post-service";
+import PostService from "@/services/post-service";
 import { PostModel } from "@/services/schema";
 import { useEffect, useState } from "react";
 
@@ -9,7 +9,7 @@ const usePost = (id: string) => {
   const handleDelete = async (id: string) => {
     setLoading(true);
     try {
-      await deletePost(id);
+      await PostService.getInstance().deletePost(id);
       setPost(null);
     } catch (error) {
       console.log(error);
@@ -20,7 +20,7 @@ const usePost = (id: string) => {
   useEffect(() => {
     setLoading(true);
     (async (id: string) => {
-      setPost(await fetchPost(id as string));
+      setPost(await PostService.getInstance().fetchPost(id as string));
     })(id);
     setLoading(false);
   }, [id]);

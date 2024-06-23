@@ -7,13 +7,13 @@ import {
 import { AuthContext } from "@/contexts/auth-context";
 import { useBookmarks } from "@/hooks/useBookmarked";
 import usePosts from "@/hooks/post/usePosts";
-import { clearUserBookmarks } from "@/services/bookmark-service";
 import { PostModel } from "@/services/schema";
 import { MoreHorizontal, Trash } from "lucide-react";
 import { useContext } from "react";
 import PageWrapper from "./page-wrapper";
 import Banner from "./banner";
 import PostList from "@/components/post/post-list";
+import BookmarkService from "@/services/bookmark-service";
 
 const BookMarks: React.FC = () => {
   const { authState } = useContext(AuthContext);
@@ -58,7 +58,7 @@ const MoreButton: React.FC<MoreButtonProps> = ({ userId }: MoreButtonProps) => {
         <DropdownMenuItem
           className="cursor-pointer"
           onClick={() => {
-            clearUserBookmarks(userId);
+            BookmarkService.getIntance().clearUserBookmarks(userId);
           }}
         >
           <Trash size={20} className="mr-2 text-red-500" />

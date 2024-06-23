@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react";
 import { PostModel } from "@/services/schema";
-import {
-  createPost,
-  deletePost,
-  fetchPosts,
-  fetchPostsByAuthorId,
-} from "@/services/post-service";
+import PostService from "@/services/post-service";
 
 const usePosts = (id?: string) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [posts, setPosts] = useState<PostModel[]>([]);
   const [error, setError] = useState<boolean>(false);
+  const postService = PostService.getInstance();
 
   const handleCreate = async (post: PostModel) => {
     try {
-      setPosts([...posts, await createPost(post)]);
+      setPosts([...posts, await postService.createPost(post)]);
     } catch (error) {
       console.log(error);
       throw error;
@@ -23,7 +19,7 @@ const usePosts = (id?: string) => {
 
   const handleDelete = async (id: string) => {
     try {
-      await deletePost(id);
+      await postService.deletePost(id);
       setPosts(posts.filter((post) => post.id !== id));
     } catch (error) {
       console.error("Failed to delete post", error);
@@ -34,7 +30,9 @@ const usePosts = (id?: string) => {
   useEffect(() => {
     (async () => {
       try {
-        const data = id ? await fetchPostsByAuthorId(id) : await fetchPosts();
+        const data = id
+          ? await postService.fetchPostsByAuthorId(id)
+          : await postService.fetchPosts();
         setPosts(data.reverse());
       } catch (error) {
         console.error("Failed to fetch posts", error);
@@ -42,7 +40,7 @@ const usePosts = (id?: string) => {
       }
       setLoading(false);
     })();
-  }, [id]);
+  }, [id, postService]);
 
   return {
     loading,

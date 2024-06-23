@@ -12,13 +12,9 @@ import {
   DialogTrigger,
 } from "../ui/dialog";
 import EditProfileForm from "./edit-profile-form";
+import Logo from "../logo";
 
-type EditProfileButton = {
-  className?: string;
-  bio: string;
-};
-
-const EditProfileButton = ({ className }: EditProfileButton) => {
+const EditProfileButton = () => {
   const { handle } = useParams();
   const { authState } = useContext(AuthContext);
   const [open, setOpen] = useState<boolean>(false);
@@ -30,12 +26,16 @@ const EditProfileButton = ({ className }: EditProfileButton) => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogClose />
         <DialogTrigger asChild>
-          <Button className={className} size="sm">
+          <Button
+            className="bg-indigo-500 hover:bg-indigo-600 text-primary"
+            size="sm"
+          >
             Edit Profile
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
+            <Logo className="self-center" />
             <DialogTitle>Edit</DialogTitle>
             <DialogDescription>Edit your profile</DialogDescription>
           </DialogHeader>

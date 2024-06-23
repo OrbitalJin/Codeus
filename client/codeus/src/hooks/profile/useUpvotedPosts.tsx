@@ -1,6 +1,6 @@
-import { deletePost } from "@/services/post-service";
+import PostService from "@/services/post-service";
 import { PostModel } from "@/services/schema";
-import { getUserUpvoted } from "@/services/upvote-service";
+import VoteService from "@/services/vote-service";
 import { useEffect, useState } from "react";
 
 const useUpvotedPosts = (userId: string) => {
@@ -10,7 +10,7 @@ const useUpvotedPosts = (userId: string) => {
 
   const handleDelete = async (id: string) => {
     try {
-      await deletePost(id);
+      await PostService.getInstance().deletePost(id);
       setPosts(posts.filter((post) => post.id !== id));
     } catch (error) {
       console.error("Failed to delete post", error);
@@ -21,7 +21,7 @@ const useUpvotedPosts = (userId: string) => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      setPosts(await getUserUpvoted(userId));
+      setPosts(await VoteService.getInstance().getUserUpvoted(userId));
       setLoading(false);
     })();
   }, [userId]);

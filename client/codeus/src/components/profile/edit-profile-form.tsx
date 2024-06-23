@@ -55,7 +55,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({
           />
           <Button
             type="submit"
-            className="w-full bg-indigo-500 text-secondary transition-all hover:bg-indigo-600"
+            className="w-full bg-indigo-500 text-primary transition-all hover:bg-indigo-600"
             onClick={() => {
               setOpen(false);
             }}

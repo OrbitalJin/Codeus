@@ -1,54 +1,58 @@
 import axios from "axios";
 import { PostModel } from "./schema";
 
-const endpoint: string = "http://localhost:8080/bookmarks";
+export default class BookmarkService {
+  private static instance: BookmarkService;
+  private endpoint: string = "http://localhost:8080/bookmarks";
 
-export const bookmarkPost = async (
-  postId: string,
-  userId: string,
-): Promise<boolean> => {
-  try {
-    await axios.post(`${endpoint}/toggle/${postId}/${userId}`);
-    return true;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
+  private constructor() {}
 
-export const fetchUserBookmarks = async (
-  userId: string,
-): Promise<PostModel[]> => {
-  try {
-    const response = await axios.get(`${endpoint}/${userId}`);
-    return response.data?.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
+  public static getIntance(): BookmarkService {
+    if (!BookmarkService.instance) {
+      BookmarkService.instance = new BookmarkService();
+    }
+    return BookmarkService.instance;
   }
-};
 
-export const clearUserBookmarks = async (userId: string): Promise<boolean> => {
-  try {
-    await axios.delete(endpoint + "/" + userId);
-    return true;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
+  bookmarkPost = async (postId: string, userId: string): Promise<boolean> => {
+    try {
+      await axios.post(`${this.endpoint}/toggle/${postId}/${userId}`);
+      return true;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
 
-export const isBookmarked = async (
-  postId: string,
-  userId: string,
-): Promise<boolean> => {
-  try {
-    const response = await axios.get(
-      `${endpoint}/isBookmarked/${postId}/${userId}`,
-    );
-    return response.data?.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
+  fetchUserBookmarks = async (userId: string): Promise<PostModel[]> => {
+    try {
+      const response = await axios.get(`${this.endpoint}/${userId}`);
+      return response.data?.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  clearUserBookmarks = async (userId: string): Promise<boolean> => {
+    try {
+      await axios.delete(this.endpoint + "/" + userId);
+      return true;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  isBookmarked = async (postId: string, userId: string): Promise<boolean> => {
+    try {
+      const response = await axios.get(
+        `${this.endpoint}/isBookmarked/${postId}/${userId}`,
+      );
+      return response.data?.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+}

@@ -1,13 +1,11 @@
 import axios from "axios";
 import { UserModel } from "./schema";
-import Service from "./service";
 
-export default class UserService extends Service {
+export default class UserService {
+  private static instance: UserService;
   private endpoint: string = "http://127.0.0.1:8080/users/";
 
-  private constructor() {
-    super();
-  }
+  private constructor() {}
 
   public static getInstance(): UserService {
     if (!UserService.instance) {
