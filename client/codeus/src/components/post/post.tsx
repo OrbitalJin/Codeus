@@ -25,7 +25,7 @@ interface PostProps {
   onDelete: (id: string) => void;
 }
 
-export default function PostComponent({
+export default function Post({
   post,
   clickable,
   onDelete: onDelete,

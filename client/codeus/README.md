@@ -12,7 +12,7 @@
 
 - [x] Thread service
 - [x] Thread hooks
-- [ ] Thread Component
+- [x] Thread Component
 - [ ] Thread List
 - [ ] Thread page with post list
 - [ ] Add thread origin to post if applicable

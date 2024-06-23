@@ -1,17 +1,19 @@
 import useThreads from "@/hooks/threads/useThreads";
 import Banner from "./banner";
 import PageWrapper from "./page-wrapper";
+import ThreadList from "@/components/thread/thread-list";
 
 const Threads = () => {
-  const { threads } = useThreads();
+  const { threads, loading, error, handleDelete } = useThreads();
   return (
     <PageWrapper>
-      <Banner title="@Thread" />
-      <div className="flex flex-col bg-red-500">
-        {threads.map((thread) => (
-          <div key={thread.id}>{thread.title}</div>
-        ))}
-      </div>
+      <Banner title="Threads" />
+      <ThreadList
+        threads={threads}
+        loading={loading}
+        error={error}
+        handleDelete={handleDelete}
+      />
     </PageWrapper>
   );
 };

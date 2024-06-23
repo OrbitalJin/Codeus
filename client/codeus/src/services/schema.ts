@@ -2,6 +2,7 @@ export type ThreadModel = {
   id: string;
   title: string;
   description: string;
+  postCount: string;
   createdAt?: string;
 };
 

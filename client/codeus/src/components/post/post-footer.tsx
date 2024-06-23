@@ -83,7 +83,7 @@ const PostFooter = ({ post }: PostInteractionsProps) => {
         </div>
         <Badge
           variant="outline"
-          className="shadow-sm transition-all hover:text-orange-500 hover:shadow-orange-500/25"
+          className="shadow-sm transition-all hover:text-indigo-500 hover:shadow-indigo-500/25"
         >
           @{post.language}
         </Badge>

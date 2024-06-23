@@ -27,7 +27,7 @@ const EditProfileButton = () => {
         <DialogClose />
         <DialogTrigger asChild>
           <Button
-            className="bg-indigo-500 hover:bg-indigo-600 text-primary"
+            className="bg-indigo-500 hover:bg-indigo-600 text-white"
             size="sm"
           >
             Edit Profile
@@ -35,7 +35,7 @@ const EditProfileButton = () => {
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <Logo className="self-center" />
+            <Logo className="self-center text-3xl" />
             <DialogTitle>Edit</DialogTitle>
             <DialogDescription>Edit your profile</DialogDescription>
           </DialogHeader>

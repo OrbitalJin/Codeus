@@ -35,7 +35,7 @@ const CreatePostButton: React.FC<CreatePostProps> = ({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <Logo className="self-center p-1" />
+          <Logo className="self-center text-3xl p-1" />
           <DialogTitle>Create Post</DialogTitle>
           <DialogDescription>
             You will not be able to edit it later

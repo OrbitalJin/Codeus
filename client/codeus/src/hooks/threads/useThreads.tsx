@@ -8,6 +8,16 @@ const useThreads = () => {
   const [error, setError] = useState<boolean>(false);
   const service = ThreadService.getInstance();
 
+  const handleDelete = async (id: string) => {
+    try {
+      await service.deleteThread(id);
+      setThreads(threads.filter((thread) => thread.id !== id));
+    } catch (error) {
+      console.log(error);
+      setError(error ? true : false);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     (async () => {
@@ -26,6 +36,7 @@ const useThreads = () => {
     threads,
     loading,
     error,
+    handleDelete,
   };
 };
 

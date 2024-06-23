@@ -10,7 +10,10 @@ interface ProfileInfoProps {
 
 const ProfileInfo: React.FC<ProfileInfoProps> = ({ username, handle, bio }) => {
   return (
-    <div id="container-profile" className="flex flex-row space-x-5 p-5">
+    <div
+      id="container-profile"
+      className="flex flex-row space-x-5 p-5 backdrop-blur"
+    >
       <img
         className="cursor-pointer rounded-lg shadow-sm"
         width={120}
@@ -22,7 +25,7 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ username, handle, bio }) => {
           <a className="font-bold text-lg">{username}</a>
           <Verified size={20} color="#6364E2" />
           <div className="grow" />
-          <EditProfileButton bio={bio} />
+          <EditProfileButton />
         </div>
         <a className="text-xs text-gray-400">/{handle}</a>
         <p className="text-sm pt-3 text-gray-500">
