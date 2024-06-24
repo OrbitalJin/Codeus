@@ -1,6 +1,6 @@
 import { ThreadModel } from "@/services/schema";
 import { InfinitySpin } from "react-loader-spinner";
-import Thread from "./thread";
+import Thread from "./thread-card";
 
 type ThreadListProps = {
   threads: ThreadModel[];

@@ -1,6 +1,7 @@
 import { ThreadModel } from "@/services/schema";
 import { MessageCircle, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Badge } from "../ui/badge";
 
 type ThreadProps = {
   thread: ThreadModel;

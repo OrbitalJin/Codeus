@@ -26,6 +26,7 @@ export type PostModel = {
   id?: string;
   title: string;
   theme: string;
+  threadId?: string;
   description: string;
   voteCount: number;
   commentCount: number;

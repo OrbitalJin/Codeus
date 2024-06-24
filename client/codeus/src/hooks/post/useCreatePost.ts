@@ -7,7 +7,7 @@ import { z } from "zod";
 import { AuthContext } from "@/contexts/auth-context";
 import PostService from "@/services/post-service";
 
-export const useCreatePostForm = () => {
+export const useCreatePost = () => {
   const { authState } = useContext(AuthContext);
   const { user } = authState;
 
@@ -17,6 +17,7 @@ export const useCreatePostForm = () => {
       title: "",
       description: "",
       content: "",
+      threadId: "-1",
       theme: "nord",
       language: "go",
     },

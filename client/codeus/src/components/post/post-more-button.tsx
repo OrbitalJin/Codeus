@@ -6,8 +6,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { AuthContext } from "@/contexts/auth-context";
 import { PostModel } from "@/services/schema";
-import { Flag, MoreHorizontal, ShareIcon, Trash } from "lucide-react";
+import { AtSign, Flag, MoreHorizontal, ShareIcon, Trash } from "lucide-react";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface PostMoreButtonProps {
   post: PostModel;
@@ -19,6 +20,7 @@ const PostMoreButton: React.FC<PostMoreButtonProps> = ({
   onDelete,
 }: PostMoreButtonProps) => {
   const { authState } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const isAuthor: boolean = authState?.user?.id === post.authorId;
 
@@ -34,6 +36,16 @@ const PostMoreButton: React.FC<PostMoreButtonProps> = ({
         <DropdownMenuItem className="cursor-pointer">
           <ShareIcon size={20} className="mr-2" /> Share
         </DropdownMenuItem>
+        {post.threadId && (
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => {
+              navigate(("/@/" + post.threadId) as string);
+            }}
+          >
+            <AtSign size={20} className="mr-2" /> Thread
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem className="cursor-pointer">
           <Flag size={20} className="mr-2" /> Report
         </DropdownMenuItem>

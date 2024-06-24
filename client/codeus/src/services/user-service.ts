@@ -60,7 +60,7 @@ export default class UserService {
 
   public async updateUser(user: UserModel): Promise<UserModel> {
     try {
-      const response = await axios.patch(this.endpoint + user.id, user);
+      const response = await axios.patch(this.endpoint, user);
       return response.data;
     } catch (error) {
       console.error("Error updating user:", error);

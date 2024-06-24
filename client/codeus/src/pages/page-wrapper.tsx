@@ -1,3 +1,5 @@
+import AlwaysOnCard from "@/components/always-on-card";
+
 type PageWrapperProps = {
   children: React.ReactNode;
 };
@@ -7,11 +9,11 @@ const PageWrapper: React.FC<PageWrapperProps> = ({
   children,
 }: PageWrapperProps) => {
   return (
-    <main className="flex justify-center flex-1 overflow-y-auto">
+    <main className="flex justify-center grow overflow-y-auto">
       <div id="container" className="flex-1 flex flex-col">
         {children}
       </div>
-      <div className="grow border-l h-screen sticky top-0 flex flex-row justify-center items-center"></div>
+      <AlwaysOnCard />
     </main>
   );
 };

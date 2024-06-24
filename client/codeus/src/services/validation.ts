@@ -14,6 +14,7 @@ export const createPostFormSchema = z.object({
       required_error: "Please enter a content",
     })
     .min(3),
+  threadId: z.string(),
   language: z.string({
     required_error: "Please select a language",
   }),

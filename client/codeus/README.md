@@ -2,9 +2,9 @@
 
 ## Todo today
 
-- [ ] User card on Side
-- [ ] Thread system
-- [ ] Remove snippet section
+- [x] User card on Side
+- [x] Thread system
+- [x] Remove snippet section
 - [ ] Fix first comment bug (or create one comment under post to prevent it)
 - [ ] Search bar
 
@@ -15,7 +15,7 @@
 - [x] Thread Component
 - [x] Thread List
 - [x] Thread page with post list
-- [ ] Add thread origin to post if applicable
+- [x] Add thread origin to post if applicable
 
 ## User auth
 

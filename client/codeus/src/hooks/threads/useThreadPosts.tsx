@@ -19,7 +19,7 @@ const useThreadPosts = (threadId: string) => {
     (async () => {
       try {
         const fetchedPosts = await service.fetchPostsByThreadId(threadId);
-        setPosts(fetchedPosts);
+        setPosts(fetchedPosts.reverse());
       } catch (error) {
         setError(error ? true : false);
       }

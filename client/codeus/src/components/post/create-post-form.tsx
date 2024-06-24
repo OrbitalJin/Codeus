@@ -15,10 +15,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useCreatePostForm } from "@/hooks/post/useCreatePostForm";
+import { useCreatePost } from "@/hooks/post/useCreatePost";
 import { Button } from "@/components/ui/button";
 import CodeEditor from "@uiw/react-textarea-code-editor";
 import { useState } from "react";
+import useThreads from "@/hooks/threads/useThreads";
 
 type CreatePostFormProps = {
   setOpen: (open: boolean) => void;
@@ -27,7 +28,8 @@ type CreatePostFormProps = {
 const CreatePostForm: React.FC<CreatePostFormProps> = ({
   setOpen,
 }: CreatePostFormProps) => {
-  const { form, onSubmit } = useCreatePostForm();
+  const { form, onSubmit } = useCreatePost();
+  const { threads } = useThreads();
   const [lang, setLang] = useState<string>("go");
 
   return (
@@ -133,6 +135,29 @@ const CreatePostForm: React.FC<CreatePostFormProps> = ({
             )}
           />
         </div>
+        <FormField
+          control={form.control}
+          name="threadId"
+          render={({ field }) => (
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a thread" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Threads</SelectLabel>
+                  <SelectItem value="-1">None</SelectItem>
+                  {threads &&
+                    threads.map((thread) => (
+                      <SelectItem key={thread.id} value={thread.id}>
+                        {thread.title}
+                      </SelectItem>
+                    ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          )}
+        />
         <Button
           type="submit"
           className="bg-indigo-500 text-white hover:bg-indigo-600 transition-colors"

@@ -1,5 +1,5 @@
 import React from "react";
-import { AtSign, Verified } from "lucide-react";
+import { Verified } from "lucide-react";
 import { ThreadModel } from "@/services/schema";
 
 type ThreadInfoProps = {
