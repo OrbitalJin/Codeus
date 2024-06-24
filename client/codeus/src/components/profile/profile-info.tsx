@@ -1,5 +1,4 @@
 import React from "react";
-import { Verified } from "lucide-react";
 import EditProfileButton from "./edit-profile-button";
 
 interface ProfileInfoProps {
@@ -8,7 +7,11 @@ interface ProfileInfoProps {
   bio: string;
 }
 
-const ProfileInfo: React.FC<ProfileInfoProps> = ({ username, handle, bio }) => {
+const ProfileInfo: React.FC<ProfileInfoProps> = ({
+  username,
+  handle,
+  bio,
+}: ProfileInfoProps) => {
   return (
     <div
       id="container-profile"
@@ -23,7 +26,6 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ username, handle, bio }) => {
       <div className="flex flex-col w-full">
         <div className="flex flex-row items-center space-x-1">
           <a className="font-bold text-lg">{username}</a>
-          <Verified size={20} color="#6364E2" />
           <div className="grow" />
           <EditProfileButton />
         </div>

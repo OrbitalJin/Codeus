@@ -12,6 +12,7 @@ import BookMarks from "./pages/bookmarks";
 import Post from "./pages/post";
 import RoutesWrapper from "./routes/routes-wrapper";
 import Threads from "./pages/threads";
+import ThreadPage from "./pages/thread";
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
@@ -22,14 +23,6 @@ function App() {
       <RoutesWrapper>
         <Routes>
           <Route path="/" element={<Navigate to="/home" replace />} />
-          <Route
-            path="/home"
-            element={
-              <ProtectedRoute>
-                <Home />
-              </ProtectedRoute>
-            }
-          />
           <Route
             path="/login"
             element={
@@ -47,18 +40,10 @@ function App() {
             }
           />
           <Route
-            path="/u/:handle"
+            path="/home"
             element={
               <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/p/:postId"
-            element={
-              <ProtectedRoute>
-                <Post />
+                <Home />
               </ProtectedRoute>
             }
           />
@@ -75,6 +60,30 @@ function App() {
             element={
               <ProtectedRoute>
                 <Threads />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/u/:handle"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/@/:threadId"
+            element={
+              <ProtectedRoute>
+                <ThreadPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/p/:postId"
+            element={
+              <ProtectedRoute>
+                <Post />
               </ProtectedRoute>
             }
           />

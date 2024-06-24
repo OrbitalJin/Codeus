@@ -34,7 +34,21 @@ export default class PostService {
     }
   };
 
-  fetchPostsByAuthorId = async (authorId: string): Promise<PostModel[]> => {
+  public fetchPostsByThreadId = async (
+    threadId: string,
+  ): Promise<PostModel[]> => {
+    try {
+      const response = await axios.get(this.endpoint + "thread/" + threadId);
+      return response.data?.data;
+    } catch (error) {
+      console.error("Error fetching posts for thread: ", threadId);
+      throw error;
+    }
+  };
+
+  public fetchPostsByAuthorId = async (
+    authorId: string,
+  ): Promise<PostModel[]> => {
     try {
       const response = await axios.get(this.endpoint + "author/" + authorId);
       return response.data?.data;
@@ -44,7 +58,7 @@ export default class PostService {
     }
   };
 
-  deletePost = async (id: string): Promise<void> => {
+  public deletePost = async (id: string): Promise<void> => {
     try {
       await axios.delete(this.endpoint, { data: { id } });
     } catch (error) {
@@ -53,7 +67,7 @@ export default class PostService {
     }
   };
 
-  createPost = async (data: PostModel): Promise<PostModel> => {
+  public createPost = async (data: PostModel): Promise<PostModel> => {
     try {
       const response = await axios.post(this.endpoint, data);
       return response.data;

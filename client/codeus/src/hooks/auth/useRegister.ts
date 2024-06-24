@@ -11,11 +11,11 @@ const useRegister = () => {
   const form = useForm<z.infer<typeof registerCredentialsSchema>>({
     resolver: zodResolver(registerCredentialsSchema),
     defaultValues: {
-      email: "epic@gamer.com",
-      username: "Gamer",
-      handle: "EpicGamer69",
-      password: "password",
-      confirmPassword: "password",
+      email: "",
+      username: "",
+      handle: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 

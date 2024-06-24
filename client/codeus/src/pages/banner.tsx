@@ -7,6 +7,7 @@ type BannerProps = {
   title: string;
   subTitle?: string;
   back?: boolean;
+  thread?: boolean;
   children?: ReactNode;
 };
 

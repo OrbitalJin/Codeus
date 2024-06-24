@@ -1,16 +1,22 @@
 import { ThreadModel } from "@/services/schema";
 import { MessageCircle, Users } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 type ThreadProps = {
   thread: ThreadModel;
   onDelete: (id: string) => void;
 };
 
-const Thread: React.FC<ThreadProps> = ({ thread }: ThreadProps) => {
+const ThreadCard: React.FC<ThreadProps> = ({ thread }: ThreadProps) => {
+  const navigate = useNavigate();
   return (
     <div
       id="card"
       className="group flex flex-row items-center p-6 border-2 space-x-5 rounded-md cursor-pointer bg-background transition-all hover:bg-muted"
+      onClick={() => {
+        console.log("yo");
+        navigate("/@/" + thread.id);
+      }}
     >
       <img
         src={"https://ui-avatars.com/api/?name=" + thread.title}
@@ -41,4 +47,4 @@ const Thread: React.FC<ThreadProps> = ({ thread }: ThreadProps) => {
   );
 };
 
-export default Thread;
+export default ThreadCard;

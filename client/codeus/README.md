@@ -14,7 +14,7 @@
 - [x] Thread hooks
 - [x] Thread Component
 - [x] Thread List
-- [ ] Thread page with post list
+- [x] Thread page with post list
 - [ ] Add thread origin to post if applicable
 
 ## User auth
