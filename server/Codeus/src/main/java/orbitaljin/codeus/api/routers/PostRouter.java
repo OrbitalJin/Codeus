@@ -135,4 +135,19 @@ public class PostRouter implements Router<Post> {
                 this.service.searchByTitle(query)
         ).toReponseEntity();
     }
+
+    @GetMapping("/thread/{threadId}")
+    public ResponseEntity<?> getByThread(@PathVariable String threadId) {
+        // Check if the thread is null
+        if (threadId == null) return new APIResponse<Post>(
+                HttpStatus.BAD_REQUEST,
+                "Thread cannot be null"
+        ).toReponseEntity();
+
+        // Return all posts by the thread
+        return new APIResponse<List<Post>>(
+                HttpStatus.OK,
+                this.service.getPostsByThreadId(threadId)
+        ).toReponseEntity();
+    }
 }

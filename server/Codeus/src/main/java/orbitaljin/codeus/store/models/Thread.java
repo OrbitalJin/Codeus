@@ -10,6 +10,8 @@ import jakarta.persistence.Table;
 public class Thread extends Model {
     private String title;
     private String description;
+    private String language;
+    private int postCount = 0;
 
     public Thread() {
     }
@@ -25,12 +27,31 @@ public class Thread extends Model {
     public Thread(
             String id,
             String title,
-            String description
+            String description,
+            String language
     ) {
         this.setId(id);
         this.title = title;
         this.description = description;
+        this.language = language;
     }
+
+    public int getPostCount() {
+        return postCount;
+    }
+
+    public void setPostCount(int postCount) {
+        this.postCount = postCount;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -52,6 +73,8 @@ public class Thread extends Model {
                 "id=" + this.getId() +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
+                ", postCount='" + postCount + '\'' +
+                ", language='" + language + '\'' +
                 '}';
     }
 }

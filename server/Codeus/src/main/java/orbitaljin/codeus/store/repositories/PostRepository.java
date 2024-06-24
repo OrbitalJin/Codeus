@@ -8,4 +8,6 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, String>{
     List<Post> findByTitleContaining(String title);
     List<Post> findByAuthorId(String authorId);
+    List<Post> findByThreadId(String threadId);
+    List<Post> findByLanguage(String language);
 }
