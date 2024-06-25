@@ -14,7 +14,13 @@ import {
 import EditProfileForm from "./edit-profile-form";
 import Logo from "../logo";
 
-const EditProfileButton = () => {
+type EditProfileButtonProps = {
+  setBio: (bio: string) => void;
+};
+
+const EditProfileButton: React.FC<EditProfileButtonProps> = ({
+  setBio,
+}: EditProfileButtonProps) => {
   const { handle } = useParams();
   const { authState } = useContext(AuthContext);
   const [open, setOpen] = useState<boolean>(false);
@@ -39,7 +45,7 @@ const EditProfileButton = () => {
             <DialogTitle>Edit</DialogTitle>
             <DialogDescription>Edit your profile</DialogDescription>
           </DialogHeader>
-          <EditProfileForm setOpen={setOpen} />
+          <EditProfileForm setBio={setBio} setOpen={setOpen} />
         </DialogContent>
       </Dialog>
     )

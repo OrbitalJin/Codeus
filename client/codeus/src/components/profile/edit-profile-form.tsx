@@ -16,14 +16,17 @@ import { InfinitySpin } from "react-loader-spinner";
 
 type EditProfileFormProps = {
   setOpen: (open: boolean) => void;
+  setBio: (bio: string) => void;
 };
 
 const EditProfileForm: React.FC<EditProfileFormProps> = ({
   setOpen,
+  setBio,
 }: EditProfileFormProps) => {
   const { authState } = useContext(AuthContext);
   const { form, loading, onSubmit } = useEditProfile({
     user: authState.user as UserModel,
+    setBio: setBio,
   });
 
   return (

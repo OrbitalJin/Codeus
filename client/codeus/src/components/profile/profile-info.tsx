@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import EditProfileButton from "./edit-profile-button";
 
 interface ProfileInfoProps {
@@ -12,6 +12,7 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
   handle,
   bio,
 }: ProfileInfoProps) => {
+  const [bio_, setBio_] = useState<string>(bio);
   return (
     <div
       id="container-profile"
@@ -27,11 +28,11 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({
         <div className="flex flex-row items-center space-x-1">
           <a className="font-bold text-lg">{username}</a>
           <div className="grow" />
-          <EditProfileButton />
+          <EditProfileButton setBio={setBio_} />
         </div>
         <a className="text-xs text-gray-400">/{handle}</a>
         <p className="text-sm pt-3 text-gray-500">
-          {bio ?? <span className="italic">Much empty</span>}
+          {bio_ ?? <span className="italic">Much empty</span>}
         </p>
       </div>
     </div>

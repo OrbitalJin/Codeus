@@ -8,9 +8,10 @@ import UserService from "@/services/user-service";
 
 type useEditProfileProps = {
   user: UserModel;
+  setBio: (bio: string) => void;
 };
 
-const useEditProfile = ({ user }: useEditProfileProps) => {
+const useEditProfile = ({ user, setBio }: useEditProfileProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const form = useForm<z.infer<typeof editProfileSchema>>({
     resolver: zodResolver(editProfileSchema),
@@ -27,6 +28,7 @@ const useEditProfile = ({ user }: useEditProfileProps) => {
       bio: values.bio,
       username: values.username,
     });
+    setBio(values.bio);
     setLoading(false);
   };
   return {
