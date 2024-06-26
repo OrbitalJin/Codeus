@@ -6,7 +6,7 @@
 - [x] Thread system
 - [x] Remove snippet section
 - [ ] Fix first comment bug (or create one comment under post to prevent it)
-- [ ] Search bar
+- [ ] Search bar (todo)
 
 ## Threads
 
