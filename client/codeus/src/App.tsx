@@ -1,9 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { initializeApp, getApps, getApp } from "firebase/app";
 import Home from "./pages/home";
 import Login from "./pages/login";
 
-import { firebaseConfig } from "./firebase-config";
 import { ProtectedRoute } from "./routes/protected-route";
 import { IndexIfAuthenticatedRoute } from "./routes/authenticated-route";
 import Register from "./pages/register";
@@ -13,9 +11,9 @@ import Post from "./pages/post";
 import RoutesWrapper from "./routes/routes-wrapper";
 import Threads from "./pages/threads";
 import ThreadPage from "./pages/thread";
+import { app } from "./lib/firebase";
 
-// Initialize Firebase
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+const instance = app;
 
 function App() {
   return (
